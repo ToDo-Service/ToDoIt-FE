@@ -1,3 +1,16 @@
+import Sidebar from "@/organisms/Sidebar";
+import PageTemp from "@/templates/PageTemp";
+import styled from "styled-components";
+
+const MainLayout = styled.div`
+  display: flex;
+`;
+
 export default function Home() {
-  return <div>h2</div>;
+  return (
+    <MainLayout>
+      <Sidebar />
+      <PageTemp />
+    </MainLayout>
+  );
 }
