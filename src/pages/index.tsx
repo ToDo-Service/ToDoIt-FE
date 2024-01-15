@@ -1,4 +1,4 @@
-import Sidebar from "@/organisms/Sidebar";
+import Sidebar from "@/templates/Sidebar";
 import PageTemp from "@/templates/PageTemp";
 import styled from "styled-components";
 

@@ -1,6 +1,6 @@
 import FollowAnaylyticsIcon from "@/atoms/ANAYLYTICS/FollowAnaylyticsIcon";
 
-export const FollowAnaylytics = () => {
+const FollowAnaylytics = () => {
   return (
     <>
       팔로우 평균
@@ -8,3 +8,5 @@ export const FollowAnaylytics = () => {
     </>
   );
 };
+
+export default FollowAnaylytics;

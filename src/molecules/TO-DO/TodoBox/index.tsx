@@ -1,7 +1,7 @@
 const TodoBox = () => {
   return (
     <section>
-      <div>TodoBox입니다</div>
+      <div>투두박스입니다</div>
     </section>
   );
 };

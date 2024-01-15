@@ -1,0 +1,62 @@
+import styled from "styled-components";
+import TodaySchedule from "@/molecules/TO-DO/TodaySchedule";
+import NextSchedule from "@/molecules/TO-DO/NextSchedule";
+import FollowAnaylytics from "@/molecules/ANAYLYTICS/FollowAnaylytics";
+import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
+import SidebarHeader from "@/organisms/SidebarHeader";
+
+const S_Background = styled.nav`
+  height: 100vh;
+  width: 20vw;
+  background-color: #f7f8f9;
+  border-radius: 6px;
+  filter: drop-shadow(0.5px 0.5px 0.5px #f7f8f9);
+  font-family: "Pretendard";
+
+  & ul {
+    list-style: none;
+  }
+
+  & ul li {
+    width: 95%;
+    height: 5vh;
+    line-height: 5vh;
+  }
+
+  & h3 {
+    margin-left: 10%;
+    margin-top: 20%;
+    color: #b3b3bd;
+    font-size: 20px;
+    font-weight: 400;
+  }
+`;
+
+const Sidebar = () => {
+  return (
+    <S_Background>
+      <SidebarHeader />
+      <h3>TO-DO</h3>
+      <ul>
+        <li>
+          <TodaySchedule />
+        </li>
+        <li>
+          <NextSchedule />
+        </li>
+      </ul>
+      <h3>ANAYLYTICS</h3>
+      <ul>
+        <li>
+          <MyAnaylytics />
+        </li>
+        <li>
+          <FollowAnaylytics />
+        </li>
+      </ul>
+      <h3>PROJECT</h3>
+    </S_Background>
+  );
+};
+
+export default Sidebar;

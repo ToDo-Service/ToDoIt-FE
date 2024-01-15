@@ -1,9 +1,9 @@
-const TodoBox = () => {
+const NextSchedule = () => {
   return (
     <section>
-      <div>TodoBox입니다</div>
+      <div>계획된 할 일</div>
     </section>
   );
 };
 
-export default TodoBox;
+export default NextSchedule;
