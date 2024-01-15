@@ -22,7 +22,7 @@ const UserNickName = styled.div`
   margin-left: 10%;
   color: black;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 const Alarm = styled.div`
