@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as Icon from "react-bootstrap-icons";
 
 const SidebarHeaderContainer = styled.div`
   width: 100%;
@@ -26,8 +27,7 @@ const UserNickName = styled.div`
 `;
 
 const Alarm = styled.div`
-  font-family: "Pretendard";
-  margin-left: 23%;
+  margin-left: 74px;
 `;
 
 const SidebarHeader = () => {
@@ -35,7 +35,9 @@ const SidebarHeader = () => {
     <SidebarHeaderContainer>
       <UserIcon />
       <UserNickName>닉네임</UserNickName>
-      <Alarm>종아이콘</Alarm>
+      <Alarm>
+        <Icon.Bell size={"20px"} />
+      </Alarm>
     </SidebarHeaderContainer>
   );
 };

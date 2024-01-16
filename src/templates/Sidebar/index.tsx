@@ -21,10 +21,15 @@ const S_Background = styled.nav`
     width: 95%;
     height: 5vh;
     line-height: 5vh;
+    border-radius: 6px;
+  }
+  & ul li:hover {
+    background-color: #f1ebf9;
+    transition: 0.5s ease-in-out;
   }
 
   & h3 {
-    margin-left: 10%;
+    margin-left: 14%;
     margin-top: 20%;
     color: #b3b3bd;
     font-size: 20px;

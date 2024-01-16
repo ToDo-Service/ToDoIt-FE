@@ -1,5 +1,7 @@
+import * as Icon from "react-bootstrap-icons";
+
 const MyAnaylyticsIcon = () => {
-  return <>아이콘</>;
+  return <Icon.BarChart style={{ marginLeft: "1vw" }}></Icon.BarChart>;
 };
 
 export default MyAnaylyticsIcon;
