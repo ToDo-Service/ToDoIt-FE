@@ -4,6 +4,7 @@ import NextSchedule from "@/molecules/TO-DO/NextSchedule";
 import FollowAnaylytics from "@/molecules/ANAYLYTICS/FollowAnaylytics";
 import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
+import { useSession } from "next-auth/react";
 
 const S_Background = styled.nav`
   height: 100vh;
@@ -38,6 +39,10 @@ const S_Background = styled.nav`
 `;
 
 const Sidebar = () => {
+  const { data: session, status } = useSession();
+
+  console.log("s_session", session);
+
   return (
     <S_Background>
       <SidebarHeader />

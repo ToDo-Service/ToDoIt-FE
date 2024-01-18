@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import * as Icon from "react-bootstrap-icons";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { UserIcon } from "@/atoms/UserIcon";
 
 const SidebarHeaderContainer = styled.div`
   width: 100%;
@@ -12,13 +14,13 @@ const SidebarHeaderContainer = styled.div`
   align-items: center;
 `;
 
-const UserIcon = styled.div`
-  border-radius: 50px;
-  background-color: lightpink;
-  width: 40px;
-  height: 40px;
-  margin-left: 10%;
-`;
+// const UserIcon = styled.div`
+//   border-radius: 50px;
+//   background-color: lightpink;
+//   width: 40px;
+//   height: 40px;
+//   margin-left: 10%;
+// `;
 
 const UserNickName = styled.div`
   font-family: "Pretendard";
@@ -33,12 +35,19 @@ const Alarm = styled.div`
 `;
 
 const SidebarHeader = () => {
-  //테스트
+  const { data: session, status } = useSession();
+  const [userImage, setUserImage] = useState("");
+
+  useEffect(() => {
+    setUserImage(session?.user.image);
+  }, [userImage]);
+
+  console.log(typeof userImage);
 
   return (
     <SidebarHeaderContainer>
-      <UserIcon />
-      <UserNickName>닉네임</UserNickName>
+      <UserIcon Img={userImage} />
+      <UserNickName>{session?.user.name}</UserNickName>
       <Alarm>
         <Icon.Bell size={"20px"} />
       </Alarm>

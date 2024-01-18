@@ -1,28 +1,29 @@
-import { InferGetServerSidePropsType } from "next";
-import { getCsrfToken, signIn, signOut, useSession } from "next-auth/react";
-import { getServerSideProps } from "next/dist/build/templates/pages";
-import { useSearchParams } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Login = () => {
-  const { data: session } = useSession();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "";
+  const { data: session, status } = useSession();
 
-  console.log(callbackUrl);
-
-  console.log(session);
-
-  const GetToken = async () => {
-    const csrfToken = await getCsrfToken();
-    console.log(csrfToken);
-  };
-  GetToken(); //토큰 발급
+  if (status === "authenticated") {
+    return undefined;
+  }
 
   return (
     <>
-      로그인되지 않았습니다 <br />
-      <button onClick={() => signIn("kakao", { callbackUrl })}>kakao</button>
-      <button onClick={() => signIn("google")}>google</button>
+      <button
+        onClick={() =>
+          signIn("kakao", { redirect: true, callbackUrl: "/main" })
+        }
+      >
+        kakao
+      </button>
+      <br />
+      <button
+        onClick={() =>
+          signIn("google", { redirect: true, callbackUrl: "/main" })
+        }
+      >
+        google
+      </button>
     </>
   );
 };

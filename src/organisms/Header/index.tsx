@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import * as Icon from "react-bootstrap-icons";
+import { signOut } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 const HeaderContainer = styled.div`
   width: 80vw;
@@ -39,8 +41,13 @@ const Header = ({ Headername }: any) => {
           }}
         />
         <HeaderTest>{Headername}</HeaderTest>
-        <HeaderLogin>로그아웃</HeaderLogin>
-        {/* <HeaderSignUp>회원가입</HeaderSignUp> */}
+        <HeaderLogin
+          onClick={() =>
+            signOut({ redirect: true, callbackUrl: "/auth/signin" })
+          }
+        >
+          로그아웃
+        </HeaderLogin>
       </HeaderContainer>
     </header>
   );
