@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import * as Icon from "react-bootstrap-icons";
+import Link from "next/link";
+import { useEffect } from "react";
+import axios from "axios";
 
 const SidebarHeaderContainer = styled.div`
   width: 100%;
-  height: 13vh;
+  height: 110px;
   display: flex;
   border-bottom: solid 0.02px #c8c5cb;
-
   align-items: center;
 `;
 
@@ -31,6 +33,8 @@ const Alarm = styled.div`
 `;
 
 const SidebarHeader = () => {
+  //테스트
+
   return (
     <SidebarHeaderContainer>
       <UserIcon />

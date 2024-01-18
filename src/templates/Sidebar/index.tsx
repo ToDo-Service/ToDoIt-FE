@@ -7,7 +7,7 @@ import SidebarHeader from "@/organisms/SidebarHeader";
 
 const S_Background = styled.nav`
   height: 100vh;
-  width: 20vw;
+  width: 270px;
   background-color: #f7f8f9;
   border-radius: 6px;
   filter: drop-shadow(0.5px 0.5px 0.5px #f7f8f9);

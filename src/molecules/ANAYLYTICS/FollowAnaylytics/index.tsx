@@ -4,10 +4,7 @@ import styled from "styled-components";
 const FollowAnaylyticsBox = styled.section`
   & span {
     margin-left: 16px;
-  }
-  & .CalendarEvent {
-    margin-left: 1vw;
-  }
+  }  
 `;
 
 const FollowAnaylytics = () => {
