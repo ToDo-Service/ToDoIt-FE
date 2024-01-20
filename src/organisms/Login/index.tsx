@@ -1,29 +1,30 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useQuery, gql } from "@apollo/client";
+
+interface User {
+  id: number;
+  name: string;
+  jwttoken: string;
+  image: string;
+}
+
+const GET_USER = gql`
+  query Users {
+    users {
+      id
+      name
+      jwttoken
+      image
+    }
+  }
+`;
 
 const Login = () => {
-  const { data: session, status } = useSession();
-
-  if (status === "authenticated") {
-    return undefined;
-  }
-
   return (
     <>
-      <button
-        onClick={() =>
-          signIn("kakao", { redirect: true, callbackUrl: "/main" })
-        }
-      >
-        kakao
-      </button>
+      <button>kakao</button>
+      {/* <a href="https://laoh.site/oauth2/authorization/kakao">구글 로그인</a> */}
       <br />
-      <button
-        onClick={() =>
-          signIn("google", { redirect: true, callbackUrl: "/main" })
-        }
-      >
-        google
-      </button>
+      <button>google</button>
     </>
   );
 };
