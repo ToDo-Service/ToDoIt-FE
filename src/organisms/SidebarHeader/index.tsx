@@ -38,16 +38,16 @@ const SidebarHeader = () => {
   const { data: session, status } = useSession();
   const [userImage, setUserImage] = useState("");
 
-  useEffect(() => {
-    setUserImage(session?.user.image);
-  }, [userImage]);
+  // useEffect(() => {
+  //   setUserImage(session?.user.image);
+  // }, [userImage]);
 
   console.log(typeof userImage);
 
   return (
     <SidebarHeaderContainer>
       <UserIcon Img={userImage} />
-      <UserNickName>{session?.user.name}</UserNickName>
+      {/* <UserNickName>{session?.user.name}</UserNickName> */}
       <Alarm>
         <Icon.Bell size={"20px"} />
       </Alarm>
