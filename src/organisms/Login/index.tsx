@@ -18,10 +18,6 @@ const LoginContainer = styled.div`
 
   justify-content: center;
   align-items: center;
-
-  & div:not(:last-child) {
-    margin-bottom: 12px;
-  }
 `;
 
 const LoginModalContainer = styled.div`
@@ -41,9 +37,8 @@ const Login = () => {
     <LoginContainer>
       <LoginModalContainer>
         <Kakao />
-        {/* <a href="https://laoh.site/oauth2/authorization/kakao">구글 로그인</a> */}
-        <Naver />
         <Google />
+        <Naver />
       </LoginModalContainer>
     </LoginContainer>
   );

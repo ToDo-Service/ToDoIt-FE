@@ -39,10 +39,6 @@ const S_Background = styled.nav`
 `;
 
 const Sidebar = () => {
-  const { data: session, status } = useSession();
-
-  console.log("s_session", session);
-
   return (
     <S_Background>
       <SidebarHeader />

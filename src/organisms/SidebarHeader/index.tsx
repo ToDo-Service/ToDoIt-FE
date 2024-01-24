@@ -35,14 +35,13 @@ const Alarm = styled.div`
 `;
 
 const SidebarHeader = () => {
-  const { data: session, status } = useSession();
   const [userImage, setUserImage] = useState("");
 
   // useEffect(() => {
   //   setUserImage(session?.user.image);
   // }, [userImage]);
 
-  console.log(typeof userImage);
+  
 
   return (
     <SidebarHeaderContainer>

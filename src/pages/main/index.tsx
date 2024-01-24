@@ -7,12 +7,10 @@ const MainLayout = styled.div`
 `;
 
 export default function Home() {
-  if (status === "authenticated") {
-    return (
-      <MainLayout>
-        <Sidebar />
-        <PageTemp />
-      </MainLayout>
-    );
-  }
+  return (
+    <MainLayout>
+      <Sidebar />
+      <PageTemp />
+    </MainLayout>
+  );
 }
