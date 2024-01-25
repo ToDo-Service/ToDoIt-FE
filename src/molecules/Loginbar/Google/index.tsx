@@ -20,7 +20,7 @@ const GoogleLoginBar = styled.div`
 const Google = () => {
   return (
     <Link
-      href={"/https://laoh.site/oauth2/authorization/google"}
+      href={"https://laoh.site/oauth2/authorization/google"}
       style={{ textDecoration: "none", color: "black" }}
     >
       <GoogleLoginBar>

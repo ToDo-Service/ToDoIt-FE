@@ -19,7 +19,7 @@ const KakaoLoginBar = styled.div`
 const Kakao = () => {
   return (
     <Link
-      href={"/https://laoh.site/oauth2/authorization/kakao"}
+      href={"https://laoh.site/oauth2/authorization/kakao"}
       style={{ textDecoration: "none", color: "black" }}
     >
       <KakaoLoginBar>

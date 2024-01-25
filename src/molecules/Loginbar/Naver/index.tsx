@@ -14,13 +14,12 @@ const NaverLoginBar = styled.div`
   & span {
     margin-left: 30px;
   }
-  margin-bottom: 14px;
 `;
 
 const Naver = () => {
   return (
     <Link
-      href={"/https://laoh.site/oauth2/authorization/kakao"}
+      href={"https://laoh.site/oauth2/authorization/kakao"}
       style={{ textDecoration: "none", color: "black" }}
     >
       <NaverLoginBar>
