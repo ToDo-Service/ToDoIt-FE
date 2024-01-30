@@ -100,7 +100,7 @@ const TodoList = () => {
             <ModalBackdrop>
               <ModalView>
                 <ExitBtn
-                  src="/icon/ModalExit.png"
+                  src="/Icon/ModalExit.png"
                   alt="/"
                   onClick={openModalHandler}
                 />
