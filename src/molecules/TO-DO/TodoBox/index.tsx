@@ -11,12 +11,6 @@ const TodoMainBox = styled.div`
   padding-left: 23px;
 `;
 
-const TodoRecentHeaderText = styled.h3`
-  font-family: "Pretendard";
-  font-weight: 700;
-  font-size: 20px;
-`;
-
 const CheckBox = styled.input`
   appearance: none;
   appearance: none;
@@ -70,7 +64,6 @@ const TodoBoxDetail = styled.div`
 const TodoBox = () => {
   return (
     <article>
-      <TodoRecentHeaderText>지난 일정</TodoRecentHeaderText>
       <TodoMainBox>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>

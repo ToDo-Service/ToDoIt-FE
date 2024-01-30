@@ -7,10 +7,16 @@ const TodoListMainBox = styled.section`
   margin-top: 57px;
   margin-left: 67px;
 `;
+const TodoRecentHeaderText = styled.h3`
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 20px;
+`;
 
 const TodoList = () => {
   return (
     <TodoListMainBox>
+      <TodoRecentHeaderText>지난 일정</TodoRecentHeaderText>
       <TodoBox />
     </TodoListMainBox>
   );

@@ -1,6 +1,12 @@
 import Header from "@/organisms/Header";
-import TodoList from "@/organisms/\bTodoList";
+import TodoList from "@/organisms/TodoRecent";
+import TodoToday from "@/organisms/TodoToday";
 import { useState } from "react";
+import styled from "styled-components";
+
+const TodoPageMainBox = styled.div`
+  display: flex;
+`;
 
 const PageTemp = () => {
   const [HeaderName, setHeaderName] = useState(["오늘의 할 일 "]);
@@ -8,7 +14,10 @@ const PageTemp = () => {
   return (
     <div>
       <Header Headername={HeaderName[0]} />
-      <TodoList />
+      <TodoPageMainBox>
+        <TodoList />
+        <TodoToday />
+      </TodoPageMainBox>
     </div>
   );
 };
