@@ -11,7 +11,7 @@ const S_Background = styled.nav`
   width: 270px;
   background-color: #f7f8f9;
   border-radius: 6px;
-  filter: drop-shadow(0.5px 0.5px 0.5px #f7f8f9);
+  filter: drop-shadow(1px 2px 4 #c5c5c5);
   font-family: "Pretendard";
 
   & ul {

@@ -12,15 +12,8 @@ const SidebarHeaderContainer = styled.div`
   display: flex;
   border-bottom: solid 0.02px #c8c5cb;
   align-items: center;
+  filter: drop-shadow(1px 2px 4 #c5c5c5);
 `;
-
-// const UserIcon = styled.div`
-//   border-radius: 50px;
-//   background-color: lightpink;
-//   width: 40px;
-//   height: 40px;
-//   margin-left: 10%;
-// `;
 
 const UserNickName = styled.div`
   font-family: "Pretendard";
@@ -41,12 +34,10 @@ const SidebarHeader = () => {
   //   setUserImage(session?.user.image);
   // }, [userImage]);
 
-  
-
   return (
     <SidebarHeaderContainer>
       <UserIcon Img={userImage} />
-      {/* <UserNickName>{session?.user.name}</UserNickName> */}
+      <UserNickName>테스트</UserNickName>
       <Alarm>
         <Icon.Bell size={"20px"} />
       </Alarm>

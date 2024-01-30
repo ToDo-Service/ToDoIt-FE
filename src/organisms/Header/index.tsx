@@ -16,12 +16,13 @@ const HeaderTest = styled.h3`
   font-size: 30px;
   font-weight: 700;
   margin-top: 7px;
+  margin-left: 12px;
 `;
 
 const HeaderLogin = styled.p`
   font-family: "Pretendard";
   font-size: 16px;
-  margin-left: 49vw;
+  margin-left: 741px;
 `;
 const HeaderSignUp = styled.p`
   font-family: "Pretendard";
