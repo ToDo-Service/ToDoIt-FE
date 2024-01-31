@@ -2,7 +2,8 @@ import Kakao from "@/molecules/Loginbar/Kakao";
 import Naver from "@/molecules/Loginbar/Naver";
 import Google from "@/molecules/Loginbar/Google";
 import styled from "styled-components";
-import { stripTypename } from "@apollo/client/utilities";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 interface User {
   id: number;

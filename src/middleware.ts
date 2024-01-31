@@ -1,25 +1,27 @@
-import type { NextRequest, NextFetchEvent } from "next/server";
-import { NextResponse } from "next/server";
+import {
+  type NextRequest,
+  type NextFetchEvent,
+  NextResponse,
+} from "next/server";
 import { getToken } from "next-auth/jwt";
-
-const secret = process.env.KAKAO_CLIENT_SECRET;
+const withAuthList = ["/_next/static/chunks/pages/main.js"];
+const withOutAuthList = ["/_next/static/chunks/pages/auth/Login.js"];
 
 export async function middleware(req: NextRequest, event: NextFetchEvent) {
-  console.log("미들웨어 진입");
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  // 로그인 했을 경우에만 토큰이 존재합니다.
-  const session = await getToken({ req, secret, raw: true });
-
-  console.log(session);
   const { pathname } = req.nextUrl;
 
-  if (session) {
-    return NextResponse.redirect(new URL("/main", req.url));
-  } else {
-    return console.log("로그인 안되어 있음");
+  let isWithAuth = withAuthList.includes(pathname);
+  let isWithOutAuth = withOutAuthList.includes(pathname);
+
+  if (isWithAuth && !token) {
+    return NextResponse.rewrite(new URL("/auth/Login", req.url));
+  } else if (isWithOutAuth && token) {
+    return NextResponse.rewrite(new URL("/", req.url));
   }
 }
 
 export const config = {
-  matcher: ["/auth/signup"],
+  mathcher: [...withAuthList, ...withOutAuthList],
 };

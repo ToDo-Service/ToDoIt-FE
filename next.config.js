@@ -3,12 +3,11 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-
   // async redirects() {
   //   return [
   //     {
   //       source: "/",
-  //       destination: "/",
+  //       destination: "/main",
   //       permanent: true,
   //     },
   //   ];

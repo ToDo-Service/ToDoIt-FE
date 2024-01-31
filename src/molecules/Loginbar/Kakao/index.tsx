@@ -1,6 +1,7 @@
 import KakaoLoginBtn from "@/atoms/LOGIN/KakaoLoginBtn";
 import styled from "styled-components";
-import Link from "next/link";
+import { onSocialLogin } from "@/hooks/onSocialLogin";
+import { FC } from "react";
 
 const KakaoLoginBar = styled.div`
   width: 300px;
@@ -16,17 +17,12 @@ const KakaoLoginBar = styled.div`
   margin-bottom: 14px;
 `;
 
-const Kakao = () => {
+const Kakao: FC = () => {
   return (
-    <Link
-      href={"https://laoh.site/oauth2/authorization/kakao"}
-      style={{ textDecoration: "none", color: "black" }}
-    >
-      <KakaoLoginBar>
-        <KakaoLoginBtn />
-        <span>카카오 계정으로 로그인</span>
-      </KakaoLoginBar>
-    </Link>
+    <KakaoLoginBar onClick={(e) => onSocialLogin(e, "kakao")}>
+      <KakaoLoginBtn />
+      <span>카카오 계정으로 로그인</span>
+    </KakaoLoginBar>
   );
 };
 

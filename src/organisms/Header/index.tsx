@@ -45,7 +45,7 @@ const Header = ({ Headername }: any) => {
         <HeaderTest>{Headername}</HeaderTest>
         <HeaderLogin
           onClick={() =>
-            signOut({ redirect: true, callbackUrl: "/auth/signin" })
+            signOut({ redirect: true, callbackUrl: "/auth/Login" })
           }
         >
           로그아웃

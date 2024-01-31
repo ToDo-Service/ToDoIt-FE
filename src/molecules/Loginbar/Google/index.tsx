@@ -1,6 +1,6 @@
 import GoogleLoginBtn from "@/atoms/LOGIN/GoogleLoginBtn";
 import styled from "styled-components";
-import Link from "next/link";
+import { onSocialLogin } from "@/hooks/onSocialLogin";
 
 const GoogleLoginBar = styled.div`
   width: 300px;
@@ -19,15 +19,10 @@ const GoogleLoginBar = styled.div`
 
 const Google = () => {
   return (
-    <Link
-      href={"https://laoh.site/oauth2/authorization/google"}
-      style={{ textDecoration: "none", color: "black" }}
-    >
-      <GoogleLoginBar>
-        <GoogleLoginBtn />
-        <span>구글 계정으로 로그인</span>
-      </GoogleLoginBar>
-    </Link>
+    <GoogleLoginBar onClick={(e) => onSocialLogin(e, "google")}>
+      <GoogleLoginBtn />
+      <span>구글 계정으로 로그인</span>
+    </GoogleLoginBar>
   );
 };
 
