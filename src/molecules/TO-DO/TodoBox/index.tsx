@@ -6,7 +6,8 @@ const TodoMainBox = styled.div`
   width: 376px;
   height: 125px;
   border: 0.5px solid #c8c5cb;
-  filter: drop-shadow(1px 2px 4 #c5c5c5);
+  filter: drop-shadow(3px 3px 4 #c5c5c5);
+
   padding-top: 20px;
   padding-left: 23px;
 `;

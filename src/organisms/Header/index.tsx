@@ -4,11 +4,12 @@ import { signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 
 const HeaderContainer = styled.div`
-  width: 80vw;
+  width: 100vw;
   height: 110px;
   border-bottom: solid 0.02px #c8c5cb;
   display: flex;
   align-items: center;
+  position: fixed;
 `;
 
 const HeaderTest = styled.h3`
@@ -37,7 +38,7 @@ const Header = ({ Headername }: any) => {
         <Icon.BookmarkCheck
           size={"30px"}
           style={{
-            marginLeft: "39px",
+            marginLeft: "309px",
             marginRight: "12px",
           }}
         />

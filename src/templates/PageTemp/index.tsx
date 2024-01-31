@@ -6,6 +6,8 @@ import styled from "styled-components";
 
 const TodoPageMainBox = styled.div`
   display: flex;
+  margin-left: 270px;
+  margin-top: 110px;
 `;
 
 const PageTemp = () => {
