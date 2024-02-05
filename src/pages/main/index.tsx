@@ -7,5 +7,10 @@ const MainLayout = styled.div`
 `;
 
 export default function Home() {
-  return <MainLayout></MainLayout>;
+  return (
+    <MainLayout>
+      <Sidebar />
+      <PageTemp />
+    </MainLayout>
+  );
 }
