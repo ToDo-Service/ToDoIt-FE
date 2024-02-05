@@ -9,6 +9,7 @@ const HeaderContainer = styled.div`
   border-bottom: solid 0.02px #c8c5cb;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: fixed;
 `;
 
@@ -23,26 +24,27 @@ const HeaderTest = styled.h3`
 const HeaderLogin = styled.p`
   font-family: "Pretendard";
   font-size: 16px;
-  margin-left: 741px;
 `;
-const HeaderSignUp = styled.p`
-  font-family: "Pretendard";
-  font-size: 16px;
-  margin-left: 14px;
+
+const HeaderTextIcon = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Header = ({ Headername }: any) => {
   return (
     <header>
       <HeaderContainer>
-        <Icon.BookmarkCheck
-          size={"30px"}
-          style={{
-            marginLeft: "309px",
-            marginRight: "12px",
-          }}
-        />
-        <HeaderTest>{Headername}</HeaderTest>
+        <HeaderTextIcon>
+          <Icon.BookmarkCheck
+            size={"30px"}
+            style={{
+              marginLeft: "309px",
+              marginRight: "12px",
+            }}
+          />
+          <HeaderTest>{Headername}</HeaderTest>
+        </HeaderTextIcon>
         <HeaderLogin
           onClick={() =>
             signOut({ redirect: true, callbackUrl: "/auth/Login" })
