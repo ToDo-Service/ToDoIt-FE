@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import Hashtag from "@/atoms/Hashtag";
+import { useDrag } from "react-dnd";
+import { useRecoilState } from "recoil";
+import { kanbanListState } from "@/reocoil";
+import { useRef } from "react";
 
-const TodoMainBox = styled.div`
+const TodoMainBox = styled.div<{ isDragging: boolean }>`
   border-radius: 16px;
   width: 376px;
   height: 125px;
   border: 0.5px solid #c8c5cb;
   filter: drop-shadow(3px 3px 4 #c5c5c5);
-
   padding-top: 20px;
   padding-left: 23px;
+  opacity: ${(props) => (props.isDragging ? "0.3" : "1")};
 `;
 
 const CheckBox = styled.input`
@@ -62,10 +66,51 @@ const TodoBoxDetail = styled.div`
   font-family: "Pretendard";
 `;
 
-const TodoBox = () => {
+const TodoBox = ({ item }: any) => {
+  const [list, setList] = useRecoilState(kanbanListState);
+  console.log(item);
+  // const index = list.findIndex((data) => data === item);
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const replaceIndex = (list: any, index: number, data: any) => {
+    return [...list.slice(0, index), data, ...list.slice(index + 1)];
+  };
+
+  const changeItemCategory = (selectedItem: any, title: string) => {
+    setList((prev) => {
+      return prev.map((e) => {
+        return {
+          ...e,
+          category: e.id === selectedItem.id ? title : e.categoery,
+        };
+      });
+    });
+  };
+
+  const [{ isDragging }, dragRef] = useDrag(() => ({
+    type: "card",
+    item: "item",
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+
+    end: (item: any, monitor) => {
+      const dropResult: any | null = monitor.getDropResult();
+      if (dropResult) {
+        switch (dropResult.name) {
+          case "지난 일정":
+            changeItemCategory(item, "지난 일정");
+
+          case "오늘 일정":
+            changeItemCategory(item, "오늘 일정");
+        }
+      }
+    },
+  }));
+
   return (
     <article>
-      <TodoMainBox>
+      <TodoMainBox ref={dragRef} isDragging={isDragging}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
             <TodoLabel htmlFor="check">
