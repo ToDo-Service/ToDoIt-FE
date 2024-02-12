@@ -62,6 +62,8 @@ export const ModalView = styled.div.attrs((props) => ({
 `;
 
 const TodoModal = () => {
+  const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
+  const [isOpen, setIsOpen] = useState(false);
   //   const [title, onChangeTitle] = useInput("");
   //   const [content, onChangeDetail] = useInput("");
   const [postError, setPostError] = useState("");
@@ -69,21 +71,22 @@ const TodoModal = () => {
 
   const JWT = useRecoilValue(jwtToken);
 
+  console.log(JWT);
+
   const onSubmit = useCallback((e: any) => {
     e.preventDefault();
-    //   console.log(title, content);
+
     if (1) {
       setPostError("");
       setPostSuccess(false);
       axios
         .post(
           "https://laoh.site/api/todos",
-
           {
             title: "todo23",
             content: "content1",
-            end_date: "2024.03.01",
-            project_id: 0,
+            end_date: "2024.02.12",
+            project_id: null,
             priority: "높음",
             push_status: false,
           },
@@ -94,6 +97,7 @@ const TodoModal = () => {
           }
         )
         .then((res) => {
+          setIsOpen(!isOpen);
           console.log("전송 완료");
           setPostSuccess(true);
         })
@@ -104,9 +108,6 @@ const TodoModal = () => {
         .finally(() => {});
     }
   }, []);
-
-  const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
-  const [isOpen, setIsOpen] = useState(false);
 
   const getId: number =
     kanbanList.length > 0 ? kanbanList[kanbanList.length - 1].id + 1 : 0;

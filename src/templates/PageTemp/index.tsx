@@ -1,7 +1,7 @@
 import KanbanList from "@/atoms/KanbanList";
 import Header from "@/organisms/Header";
 import TodoList from "@/organisms/TodoRecent";
-import TodoToday from "@/organisms/TodoToday";
+// import TodoToday from "@/organisms/TodoToday";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -12,6 +12,8 @@ import TodoModal from "@/molecules/TO-DO/TodoModal";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { jwtToken } from "@/reocoil";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 
 const TodoPageMainBox = styled.div`
   display: flex;
@@ -23,6 +25,12 @@ const PageTemp = () => {
   const [HeaderName, setHeaderName] = useState(["오늘의 할 일 "]);
   const { data: session } = useSession();
   const setJWT = useSetRecoilState(jwtToken);
+  const JWT = useRecoilValue(jwtToken);
+  const { data, error, isLoading } = useSWR(
+    "https://laoh.site/api/todos/today",
+    (url) => fetcher(url, JWT)
+  );
+  console.log(data);
 
   useEffect(() => {
     axios
@@ -33,7 +41,6 @@ const PageTemp = () => {
       })
       .then((res) => {
         console.log("전송 완료");
-
         setJWT(res.data.body.user.access_token);
       })
       .catch((err) => {
