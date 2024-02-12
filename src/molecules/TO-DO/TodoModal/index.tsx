@@ -1,8 +1,9 @@
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { kanbanListState } from "@/reocoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { jwtToken, kanbanListState } from "@/reocoil";
 import { useCallback, useState } from "react";
+import axios from "axios";
 
 const ModalContainer = styled.div`
   // Modal을 구현하는데 전체적으로 필요한 CSS를 구현
@@ -61,6 +62,49 @@ export const ModalView = styled.div.attrs((props) => ({
 `;
 
 const TodoModal = () => {
+  //   const [title, onChangeTitle] = useInput("");
+  //   const [content, onChangeDetail] = useInput("");
+  const [postError, setPostError] = useState("");
+  const [postSuccess, setPostSuccess] = useState(false);
+
+  const JWT = useRecoilValue(jwtToken);
+
+  const onSubmit = useCallback((e: any) => {
+    e.preventDefault();
+    //   console.log(title, content);
+    if (1) {
+      setPostError("");
+      setPostSuccess(false);
+      axios
+        .post(
+          "https://laoh.site/api/todos",
+
+          {
+            title: "todo23",
+            content: "content1",
+            end_date: "2024.03.01",
+            project_id: 0,
+            priority: "높음",
+            push_status: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JWT}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("전송 완료");
+          setPostSuccess(true);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setPostError(err.response.data);
+        })
+        .finally(() => {});
+    }
+  }, []);
+
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -78,6 +122,7 @@ const TodoModal = () => {
           category: "오늘 일정",
         },
       ]);
+      setIsOpen(!isOpen);
     },
     [getId, setKanbanList]
   );
@@ -169,14 +214,24 @@ const TodoModal = () => {
               ></div>
             </div>
             <div
+              onClick={onSubmit}
               style={{
                 width: "418px",
                 height: "37px",
                 backgroundColor: "#862DDF",
                 marginTop: "11px",
                 borderRadius: "8px",
+                fontFamily: "Pretendard",
+                fontWeight: "200",
+                color: "white",
+                fontSize: "17px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            ></div>
+            >
+              추가
+            </div>
           </ModalView>
         </ModalBackdrop>
       ) : null}

@@ -28,16 +28,12 @@ const Alarm = styled.div`
 `;
 
 const SidebarHeader = () => {
-  const [userImage, setUserImage] = useState("");
-
-  // useEffect(() => {
-  //   setUserImage(session?.user.image);
-  // }, [userImage]);
+  const { data: session } = useSession();
 
   return (
     <SidebarHeaderContainer>
-      <UserIcon Img={userImage} />
-      <UserNickName>테스트</UserNickName>
+      <UserIcon Img={session?.user?.image} />
+      <UserNickName>{session?.user?.name}</UserNickName>
       <Alarm>
         <Icon.Bell size={"20px"} />
       </Alarm>

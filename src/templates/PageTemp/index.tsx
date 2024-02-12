@@ -2,14 +2,16 @@ import KanbanList from "@/atoms/KanbanList";
 import Header from "@/organisms/Header";
 import TodoList from "@/organisms/TodoRecent";
 import TodoToday from "@/organisms/TodoToday";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { kanbanListState } from "@/reocoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import TodoModal from "@/molecules/TO-DO/TodoModal";
-import { title } from "process";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { jwtToken } from "@/reocoil";
 
 const TodoPageMainBox = styled.div`
   display: flex;
@@ -19,6 +21,26 @@ const TodoPageMainBox = styled.div`
 
 const PageTemp = () => {
   const [HeaderName, setHeaderName] = useState(["오늘의 할 일 "]);
+  const { data: session } = useSession();
+  const setJWT = useSetRecoilState(jwtToken);
+
+  useEffect(() => {
+    axios
+      .post("https://laoh.site/api/auth/social/kakao", null, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("전송 완료");
+
+        setJWT(res.data.body.user.access_token);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
+      .finally(() => {});
+  }, [session]);
 
   const titleName = [
     { id: 1, title: "지난 일정" },
@@ -34,7 +56,6 @@ const PageTemp = () => {
   return (
     <div>
       <Header Headername={HeaderName[0]} />
-
       <TodoPageMainBox>
         <DndProvider backend={HTML5Backend}>
           {titleName.map((data: any) => {
