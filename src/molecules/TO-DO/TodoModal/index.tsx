@@ -44,10 +44,7 @@ const ExitBtn = styled.img`
   margin-top: 34px;
   margin-left: 537px;
 `;
-const AddImage = styled.img`
-  margin-left: 10px;
-  margin-top: 5px;
-`;
+const AddImage = styled.img``;
 
 export const ModalView = styled.div.attrs((props) => ({
   role: "dialog",
@@ -70,8 +67,6 @@ const TodoModal = () => {
   const [postSuccess, setPostSuccess] = useState(false);
 
   const JWT = useRecoilValue(jwtToken);
-
-  console.log(JWT);
 
   const onSubmit = useCallback((e: any) => {
     e.preventDefault();

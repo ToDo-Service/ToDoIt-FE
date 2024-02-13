@@ -7,7 +7,7 @@ import { useRef } from "react";
 
 const TodoMainBox = styled.div<{ isDragging: boolean }>`
   border-radius: 16px;
-  width: 376px;
+  width: 100%;
   height: 125px;
   border: 0.5px solid #c8c5cb;
   filter: drop-shadow(3px 3px 4 #c5c5c5);
@@ -66,9 +66,9 @@ const TodoBoxDetail = styled.div`
   font-family: "Pretendard";
 `;
 
-const TodoBox = ({ item }: any) => {
+const TodoBox = ({ data }: any) => {
   const [list, setList] = useRecoilState(kanbanListState);
-  console.log(item);
+
   // const index = list.findIndex((data) => data === item);
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -114,13 +114,17 @@ const TodoBox = ({ item }: any) => {
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
             <TodoLabel htmlFor="check">
-              <CheckBox type="checkbox" id="1" name="check" />
+              {data.status == "INCOMPLETE" ? (
+                <CheckBox type="checkbox" id="1" name="check" />
+              ) : (
+                <CheckBox type="checkbox" id="1" name="check" checked />
+              )}
             </TodoLabel>
-            <TodoBoxName>운동하기</TodoBoxName>
-            <TodoBoxDate>날짜</TodoBoxDate>
+            <TodoBoxName>{data.title}</TodoBoxName>
+            <TodoBoxDate>{data.end_date}</TodoBoxDate>
           </div>
         </TodoBoxHeader>
-        <TodoBoxDetail>멋드러지게 운동하기</TodoBoxDetail>
+        <TodoBoxDetail>{data.content}</TodoBoxDetail>
         <Hashtag />
       </TodoMainBox>
     </article>
