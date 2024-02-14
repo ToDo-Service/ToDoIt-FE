@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import TodoModal from "@/molecules/TO-DO/TodoModal";
+import { useDrop } from "react-dnd";
 
 const TodoListMainBox = styled.section`
   width: 25vw;
@@ -19,11 +20,21 @@ const TodoHeader = styled.div`
   justify-content: space-between;
 `;
 
-const KanbanList = ({ title, children }: any) => {
-  console.log(title);
+const KanbanList = ({ title, children, enTitle }: any) => {
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: "card",
+    drop: () => ({ name: enTitle }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+      //drag 진행동안 canDrop true,
+      //drop할 영역 접근시 isOver : true
+    }),
+  });
+
   return (
     <>
-      <TodoListMainBox>
+      <TodoListMainBox ref={drop}>
         <TodoHeader>
           {title}
           {title != "지난 일정" ? <TodoModal /> : null}

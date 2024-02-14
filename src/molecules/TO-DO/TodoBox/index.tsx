@@ -77,32 +77,38 @@ const TodoBox = ({ data }: any) => {
   };
 
   const changeItemCategory = (selectedItem: any, title: string) => {
+    console.log(selectedItem, title);
     setList((prev) => {
       return prev.map((e) => {
         return {
           ...e,
-          category: e.id === selectedItem.id ? title : e.categoery,
+          category: e.id === selectedItem.id ? title : e.category,
         };
+        console.log(e);
       });
     });
   };
 
+  // { id: 1, title: "지난 일정", title_en: "past_todos" },
+  //   { id: 2, title: `${todayformday}`, title_en: "today_todos" },
+
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "card",
-    item: "item",
+    item: data,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-
     end: (item: any, monitor) => {
       const dropResult: any | null = monitor.getDropResult();
+      console.log(dropResult.name);
       if (dropResult) {
         switch (dropResult.name) {
-          case "지난 일정":
-            changeItemCategory(item, "지난 일정");
-
-          case "오늘 일정":
-            changeItemCategory(item, "오늘 일정");
+          case "past_todos":
+            changeItemCategory(item, "past_todos");
+            break;
+          case "today_todos":
+            changeItemCategory(item, "today_todos");
+            break;
         }
       }
     },
@@ -121,7 +127,7 @@ const TodoBox = ({ data }: any) => {
               )}
             </TodoLabel>
             <TodoBoxName>{data.title}</TodoBoxName>
-            <TodoBoxDate>{data.end_date}</TodoBoxDate>
+            <TodoBoxDate>{data.endDate}</TodoBoxDate>
           </div>
         </TodoBoxHeader>
         <TodoBoxDetail>{data.content}</TodoBoxDetail>

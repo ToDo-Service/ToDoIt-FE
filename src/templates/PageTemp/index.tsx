@@ -1,7 +1,7 @@
 import KanbanList from "@/atoms/KanbanList";
 import Header from "@/organisms/Header";
 import TodoList from "@/organisms/TodoRecent";
-// import TodoToday from "@/organisms/TodoToday";
+
 import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -25,6 +25,7 @@ const TodoPageMainBox = styled.div`
 const PageTemp = () => {
   const [HeaderName, setHeaderName] = useState(["오늘의 할 일 "]);
 
+  const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const { data: session } = useSession();
   const setJWT = useSetRecoilState(jwtToken);
   const JWT = useRecoilValue(jwtToken);
@@ -43,36 +44,64 @@ const PageTemp = () => {
   weekday[4] = "목";
   weekday[5] = "금";
   weekday[6] = "토";
+  let todayform = "";
+  let todayformday = `${month}월 ${date}일 (${weekday[day]})`;
 
-  let todayform = `${month}월 ${date}일 (${weekday[day]})`;
-
-  // month < 10
-  //   ? (todayform = `${year}-0${month}-${date}`)
-  //   : (todayform = `${year}-${month}-${date}`);
-
-  //오늘 데이터 출력
+  month < 10
+    ? (todayform = `${year}-0${month}-${date}`)
+    : (todayform = `${year}-${month}-${date}`);
 
   const { data, error, isLoading } = useSWR(
     "https://laoh.site/api/todos/today",
     (url) => fetcher(url, JWT)
   );
 
+  useEffect(() => {
+    data
+      ? Object.keys(data.body).forEach((key) => {
+          data.body[key].map((e: any) => {
+            e.end_date === todayform
+              ? setKanbanList((prev) => [
+                  ...prev,
+                  {
+                    id: e.id,
+                    title: e.title,
+                    content: e.content,
+                    priority: e.priority,
+                    endDate: e.end_date,
+                    category: "today_todos",
+                  },
+                ])
+              : setKanbanList((prev) => [
+                  ...prev,
+                  {
+                    id: e.id,
+                    title: e.title,
+                    content: e.content,
+                    priority: e.priority,
+                    endDate: e.end_date,
+                    category: "past_todos",
+                  },
+                ]);
+          });
+        })
+      : null;
+  }, [data]);
+
+  console.log(kanbanList);
+
   const titleName = [
     { id: 1, title: "지난 일정", title_en: "past_todos" },
-    { id: 2, title: `${todayform}`, title_en: "today_todos" },
+    { id: 2, title: `${todayformday}`, title_en: "today_todos" },
   ];
 
   const cardDataHandler = (cardTitle: string) => {
     const todoBoxes: any = [];
-
-    Object.keys(data.body).forEach((key) => {
-      if (key === cardTitle) {
-        data.body[key].map((e: any) => {
-          todoBoxes.push(<TodoBox key={e.id} data={e} />);
-        });
-      }
-    });
-
+    kanbanList
+      .filter((data) => data.category === cardTitle)
+      .map((item, index) =>
+        todoBoxes.push(<TodoBox key={item.id} data={item} />)
+      );
     return todoBoxes;
   };
 
@@ -102,7 +131,11 @@ const PageTemp = () => {
           {data
             ? titleName.map((data: any) => {
                 return (
-                  <KanbanList title={`${data.title}`} id={data.id}>
+                  <KanbanList
+                    title={`${data.title}`}
+                    id={data.id}
+                    enTitle={`${data.title_en}`}
+                  >
                     {cardDataHandler(data.title_en)}
                   </KanbanList>
                 );
