@@ -1,6 +1,5 @@
 import KanbanList from "@/atoms/KanbanList";
 import Header from "@/organisms/Header";
-import TodoList from "@/organisms/TodoRecent";
 
 import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { useCallback, useEffect, useState } from "react";
@@ -9,7 +8,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { kanbanListState } from "@/reocoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import TodoModal from "@/molecules/TO-DO/TodoModal";
+import TodoModal from "@/organisms/TodoModal";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { jwtToken } from "@/reocoil";
@@ -36,6 +35,10 @@ const PageTemp = () => {
   let month = today.getMonth() + 1;
   let date = today.getDate();
   let day = today.getDay();
+  let todayform = "";
+  month < 10
+    ? (todayform = `${year}-0${month}-${date}`)
+    : (todayform = `${year}-${month}-${date}`);
   var weekday = new Array(7);
   weekday[0] = "일";
   weekday[1] = "월";
@@ -44,12 +47,7 @@ const PageTemp = () => {
   weekday[4] = "목";
   weekday[5] = "금";
   weekday[6] = "토";
-  let todayform = "";
   let todayformday = `${month}월 ${date}일 (${weekday[day]})`;
-
-  month < 10
-    ? (todayform = `${year}-0${month}-${date}`)
-    : (todayform = `${year}-${month}-${date}`);
 
   const { data, error, isLoading } = useSWR(
     "https://laoh.site/api/todos/today",

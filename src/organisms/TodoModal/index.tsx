@@ -1,9 +1,23 @@
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
+import Calendar from "@/molecules/Calendar";
+import Project from "@/molecules/TO-DO/Project";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { jwtToken, kanbanListState } from "@/reocoil";
 import { useCallback, useState } from "react";
 import axios from "axios";
+import Priority from "@/molecules/TO-DO/Priority";
+
+{
+  /* <div
+style={{
+  width: "115px",
+  borderRadius: "8px",
+  backgroundColor: "#F6F6F6",
+}}
+onClick={openCalendarModalHandler}
+></div> */
+}
 
 const ModalContainer = styled.div`
   // Modal을 구현하는데 전체적으로 필요한 CSS를 구현
@@ -61,6 +75,7 @@ export const ModalView = styled.div.attrs((props) => ({
 const TodoModal = () => {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   //   const [title, onChangeTitle] = useInput("");
   //   const [content, onChangeDetail] = useInput("");
   const [postError, setPostError] = useState("");
@@ -70,7 +85,6 @@ const TodoModal = () => {
 
   const onSubmit = useCallback((e: any) => {
     e.preventDefault();
-
     if (1) {
       setPostError("");
       setPostSuccess(false);
@@ -80,7 +94,7 @@ const TodoModal = () => {
           {
             title: "todo23",
             content: "content1",
-            end_date: "2024.02.12",
+            end_date: "2024.02.16",
             project_id: null,
             priority: "높음",
             push_status: false,
@@ -126,6 +140,11 @@ const TodoModal = () => {
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
+
+  const openCalendarModalHandler = () => {
+    setIsCalendarOpen(!isCalendarOpen);
+  };
+
   return (
     <>
       <AddImage
@@ -187,27 +206,10 @@ const TodoModal = () => {
                 justifyContent: "space-between",
               }}
             >
-              <div
-                style={{
-                  width: "115px",
-                  borderRadius: "8px",
-                  backgroundColor: "#F6F6F6",
-                }}
-              ></div>
-              <div
-                style={{
-                  width: "110px",
-                  backgroundColor: "#FFBEBE",
-                  borderRadius: "8px",
-                }}
-              ></div>
-              <div
-                style={{
-                  width: "168px",
-                  backgroundColor: "#FFBD3E",
-                  borderRadius: "8px",
-                }}
-              ></div>
+              <Calendar />
+
+              <Priority />
+              <Project />
             </div>
             <div
               onClick={onSubmit}

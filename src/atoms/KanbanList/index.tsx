@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import TodoModal from "@/molecules/TO-DO/TodoModal";
+import TodoModal from "@/organisms/TodoModal";
 import { useDrop } from "react-dnd";
 
 const TodoListMainBox = styled.section`
@@ -7,6 +7,10 @@ const TodoListMainBox = styled.section`
   height: 100vh;
   margin-top: 57px;
   margin-left: 67px;
+
+  & article:not(:first-child) {
+    margin-top: 21px;
+  }
 `;
 
 const TodoHeader = styled.div`

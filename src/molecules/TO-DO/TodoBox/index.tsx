@@ -5,12 +5,16 @@ import { useRecoilState } from "recoil";
 import { kanbanListState } from "@/reocoil";
 import { useRef } from "react";
 
-const TodoMainBox = styled.div<{ isDragging: boolean }>`
+const TodoContainer = styled.article`
+  filter: drop-shadow(1px 2px 4px #c5c5c5);
+  border: 0.5px solid #c8c5cb;
   border-radius: 16px;
+  
+`;
+
+const TodoMainBox = styled.div<{ isDragging: boolean }>`
   width: 100%;
   height: 125px;
-  border: 0.5px solid #c8c5cb;
-  filter: drop-shadow(3px 3px 4 #c5c5c5);
   padding-top: 20px;
   padding-left: 23px;
   opacity: ${(props) => (props.isDragging ? "0.3" : "1")};
@@ -80,17 +84,14 @@ const TodoBox = ({ data }: any) => {
     console.log(selectedItem, title);
     setList((prev) => {
       return prev.map((e) => {
+        console.log(e);
         return {
           ...e,
           category: e.id === selectedItem.id ? title : e.category,
         };
-        console.log(e);
       });
     });
   };
-
-  // { id: 1, title: "지난 일정", title_en: "past_todos" },
-  //   { id: 2, title: `${todayformday}`, title_en: "today_todos" },
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "card",
@@ -115,7 +116,7 @@ const TodoBox = ({ data }: any) => {
   }));
 
   return (
-    <article>
+    <TodoContainer>
       <TodoMainBox ref={dragRef} isDragging={isDragging}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -133,7 +134,7 @@ const TodoBox = ({ data }: any) => {
         <TodoBoxDetail>{data.content}</TodoBoxDetail>
         <Hashtag />
       </TodoMainBox>
-    </article>
+    </TodoContainer>
   );
 };
 
