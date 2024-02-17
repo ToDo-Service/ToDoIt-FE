@@ -34,7 +34,9 @@ const ModalBackdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.2);
+
+  filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1));
   border-radius: 10px;
   top: 0;
   left: 0;
