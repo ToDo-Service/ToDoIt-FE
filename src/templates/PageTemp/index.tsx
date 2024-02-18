@@ -67,6 +67,7 @@ const PageTemp = () => {
                     content: e.content,
                     priority: e.priority,
                     endDate: e.end_date,
+                    project: e.project,
                     category: "today_todos",
                   },
                 ])
@@ -78,6 +79,7 @@ const PageTemp = () => {
                     content: e.content,
                     priority: e.priority,
                     endDate: e.end_date,
+                    project: e.project,
                     category: "past_todos",
                   },
                 ]);

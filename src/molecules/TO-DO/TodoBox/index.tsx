@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import Hashtag from "@/atoms/Hashtag";
+import HashtagPriority from "@/atoms/Hashtag/H_Priority";
+import HashtagProject from "@/atoms/Hashtag/H_Project";
 import { useDrag } from "react-dnd";
 import { useRecoilState } from "recoil";
 import { kanbanListState } from "@/reocoil";
@@ -9,7 +10,6 @@ const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
   border: 0.5px solid #c8c5cb;
   border-radius: 16px;
-  
 `;
 
 const TodoMainBox = styled.div<{ isDragging: boolean }>`
@@ -70,6 +70,15 @@ const TodoBoxDetail = styled.div`
   font-family: "Pretendard";
 `;
 
+const TodoBoxHashTagBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 16.5px;
+  width: 201px;
+  margin-left: 27px;
+  justify-content: space-between;
+`;
+
 const TodoBox = ({ data }: any) => {
   const [list, setList] = useRecoilState(kanbanListState);
 
@@ -115,6 +124,8 @@ const TodoBox = ({ data }: any) => {
     },
   }));
 
+  console.log(list);
+
   return (
     <TodoContainer>
       <TodoMainBox ref={dragRef} isDragging={isDragging}>
@@ -124,7 +135,7 @@ const TodoBox = ({ data }: any) => {
               {data.status == "INCOMPLETE" ? (
                 <CheckBox type="checkbox" id="1" name="check" />
               ) : (
-                <CheckBox type="checkbox" id="1" name="check" checked />
+                <CheckBox type="checkbox" id="1" name="check" />
               )}
             </TodoLabel>
             <TodoBoxName>{data.title}</TodoBoxName>
@@ -132,7 +143,10 @@ const TodoBox = ({ data }: any) => {
           </div>
         </TodoBoxHeader>
         <TodoBoxDetail>{data.content}</TodoBoxDetail>
-        <Hashtag />
+        <TodoBoxHashTagBox>
+          <HashtagPriority />
+          <HashtagProject project={data.project ? data.project : null} />
+        </TodoBoxHashTagBox>
       </TodoMainBox>
     </TodoContainer>
   );

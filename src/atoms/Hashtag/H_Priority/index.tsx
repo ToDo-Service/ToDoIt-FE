@@ -7,10 +7,7 @@ const Hasttag = styled.div`
   align-items: center;
   justify-content: space-evenly;
   border-radius: 8px;
-  background-color: ${(props) =>
-    props.color ? props.color : "rgba(255,190,190,0.27)"};
-  margin-left: 27px;
-  margin-top: 12px;
+  background-color: rgba(255, 190, 190, 0.27);
 
   border: 1px solid rgba(197, 197, 197, 0.5);
 `;
@@ -27,13 +24,13 @@ const Degree = styled.span`
   font-family: "Pretendard";
 `;
 
-const Hashtag = ({ color }: any) => {
+const HashtagPriority = () => {
   return (
-    <Hasttag color={color}>
+    <Hasttag>
       <RankText>우선 순위</RankText>
       <Degree>높음</Degree>
     </Hasttag>
   );
 };
 
-export default Hashtag;
+export default HashtagPriority;
