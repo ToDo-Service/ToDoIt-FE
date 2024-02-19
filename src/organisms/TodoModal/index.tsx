@@ -7,17 +7,7 @@ import { jwtToken, kanbanListState } from "@/reocoil";
 import { useCallback, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
-
-{
-  /* <div
-style={{
-  width: "115px",
-  borderRadius: "8px",
-  backgroundColor: "#F6F6F6",
-}}
-onClick={openCalendarModalHandler}
-></div> */
-}
+import { useRef } from "react";
 
 const ModalContainer = styled.div`
   // Modal을 구현하는데 전체적으로 필요한 CSS를 구현
@@ -82,6 +72,7 @@ const TodoModal = () => {
   //   const [content, onChangeDetail] = useInput("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   const JWT = useRecoilValue(jwtToken);
 
@@ -118,6 +109,14 @@ const TodoModal = () => {
         })
         .finally(() => {});
     }
+  }, []);
+
+  const handleResizeHeight = useCallback(() => {
+    if (ref === null || ref.current === null) {
+      return;
+    }
+    ref.current.style.height = "70px";
+    ref.current.style.height = ref.current.scrollHeight + "px";
   }, []);
 
   const getId: number =

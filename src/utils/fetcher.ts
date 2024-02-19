@@ -1,10 +1,13 @@
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
 
-const fetcher = (url: string, Jwt: any) => {
+const fetcher = (url: string, token: string) => {
+  console.log("jwt", token);
   return axios
     .get(url, {
       withCredentials: true,
-      headers: { Authorization: `Bearer ${Jwt}` },
+      headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => res.data);
 };

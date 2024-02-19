@@ -4,7 +4,6 @@ import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
 export function PostAcessToken(access_token: string | unknown) {
-  console.log(access_token);
   const sucess = axios
     .post("https://laoh.site/api/auth/social/kakao", null, {
       headers: {
@@ -40,6 +39,7 @@ export default NextAuth({
       if (Jtoken) {
         session.user.accessToken = Jtoken;
       }
+      console.log(Jtoken);
       return session;
     },
 

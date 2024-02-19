@@ -5,6 +5,11 @@ import { useDrag } from "react-dnd";
 import { useRecoilState } from "recoil";
 import { kanbanListState } from "@/reocoil";
 import { useRef } from "react";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
+import DeleteButton from "react-bootstrap/CloseButton";
+
+import axios from "axios";
 
 const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
@@ -81,8 +86,9 @@ const TodoBoxHashTagBox = styled.div`
 
 const TodoBox = ({ data }: any) => {
   const [list, setList] = useRecoilState(kanbanListState);
+  const JwtToken = useRecoilValue(jwtToken);
 
-  // const index = list.findIndex((data) => data === item);
+  const index = list.findIndex((item) => item === data);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const replaceIndex = (list: any, index: number, data: any) => {
@@ -93,7 +99,6 @@ const TodoBox = ({ data }: any) => {
     console.log(selectedItem, title);
     setList((prev) => {
       return prev.map((e) => {
-        console.log(e);
         return {
           ...e,
           category: e.id === selectedItem.id ? title : e.category,
@@ -124,7 +129,17 @@ const TodoBox = ({ data }: any) => {
     },
   }));
 
-  console.log(list);
+  const deleteItem = () => {
+    setList([...list.slice(0, index), ...list.slice(index + 1)]);
+
+    const DeleteId = list[index].id;
+    axios
+      .delete(`https://laoh.site/api/todos/${DeleteId}`, {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${JwtToken}` },
+      })
+      .then((res) => console.log(res));
+  };
 
   return (
     <TodoContainer>
@@ -140,6 +155,9 @@ const TodoBox = ({ data }: any) => {
             </TodoLabel>
             <TodoBoxName>{data.title}</TodoBoxName>
             <TodoBoxDate>{data.endDate}</TodoBoxDate>
+          </div>
+          <div onClick={deleteItem}>
+            <DeleteButton />
           </div>
         </TodoBoxHeader>
         <TodoBoxDetail>{data.content}</TodoBoxDetail>

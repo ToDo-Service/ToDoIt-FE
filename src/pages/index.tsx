@@ -7,5 +7,5 @@ const MainLayout = styled.div`
 `;
 
 export default function Home() {
-  return <MainLayout></MainLayout>;
+  return <MainLayout>메인페이지</MainLayout>;
 }
