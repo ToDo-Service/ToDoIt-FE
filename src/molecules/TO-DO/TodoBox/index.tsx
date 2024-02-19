@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 import DeleteButton from "react-bootstrap/CloseButton";
+import * as Icon from "react-bootstrap-icons";
 
 import axios from "axios";
 
@@ -84,6 +85,12 @@ const TodoBoxHashTagBox = styled.div`
   justify-content: space-between;
 `;
 
+const ExitBtn = styled.img`
+  width: 14px;
+  height: 14px;
+  margin-right: 21px;
+`;
+
 const TodoBox = ({ data }: any) => {
   const [list, setList] = useRecoilState(kanbanListState);
   const JwtToken = useRecoilValue(jwtToken);
@@ -156,9 +163,8 @@ const TodoBox = ({ data }: any) => {
             <TodoBoxName>{data.title}</TodoBoxName>
             <TodoBoxDate>{data.endDate}</TodoBoxDate>
           </div>
-          <div onClick={deleteItem}>
-            <DeleteButton />
-          </div>
+
+          <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>
         <TodoBoxDetail>{data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>
