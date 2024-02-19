@@ -8,6 +8,7 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
 import { useRef } from "react";
+import { useInput } from "@/hooks/useInput";
 
 const ModalContainer = styled.div`
   // Modal을 구현하는데 전체적으로 필요한 CSS를 구현
@@ -68,7 +69,7 @@ const TodoModal = () => {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [isOpen, setIsOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  //   const [title, onChangeTitle] = useInput("");
+  const [title, onChangeTitle] = useInput("");
   //   const [content, onChangeDetail] = useInput("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
@@ -115,8 +116,12 @@ const TodoModal = () => {
     if (ref === null || ref.current === null) {
       return;
     }
-    ref.current.style.height = "70px";
-    ref.current.style.height = ref.current.scrollHeight + "px";
+    ref.current.style.height = "37px";
+    if (ref.current.scrollHeight <= 60) {
+      ref.current.style.height = ref.current.scrollHeight + "px";
+    } else {
+      ref.current.style.height = "60px";
+    }
   }, []);
 
   const getId: number =
@@ -189,13 +194,24 @@ const TodoModal = () => {
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
                 >
-                  <Form.Control type="text" placeholder="제목" />
+                  <Form.Control
+                    type="text"
+                    placeholder="제목"
+                    onChange={onChangeTitle}
+                  />
                 </Form.Group>
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlTextarea1"
                 >
-                  <Form.Control type="text" placeholder="설명" />
+                  <Form.Control
+                    as="textarea"
+                    placeholder="설명"
+                    maxLength={20}
+                    ref={ref}
+                    onInput={handleResizeHeight}
+                    style={{ resize: "none" }}
+                  />
                 </Form.Group>
               </Form>
             </div>
