@@ -26,8 +26,8 @@ const MainLayouts = () => {
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 
-  if (isLoading) return <div>로딩중</div>;
-  if (error) return <div>로딩중</div>;
+  // if (isLoading) return <div>로딩중</div>;
+  // if (error) return <div>로딩중</div>;
 
   return (
     <MainLayout>

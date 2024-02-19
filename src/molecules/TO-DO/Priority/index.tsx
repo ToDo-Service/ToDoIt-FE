@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 // const CalendarWrapper = styled("div")<{ isOpen: boolean }>`
 
-const PriorityContainer = styled.div`
+const PriorityContainer = styled("div")<{ Color: string; bgColor: string }>`
   width: 110px;
-  background-color: rgba(255, 190, 190, 0.27);
+  background-color: ${(props) => props.bgColor};
   border: 0.8px solid var(--festie-gray-600, #949494);
   border-radius: 8px;
   display: flex;
@@ -19,7 +19,7 @@ const PriorityContainer = styled.div`
   }
 
   & span:nth-child(2) {
-    color: #ff8080;
+    color: ${(props) => props.Color};
     font-size: 10px;
   }
 `;
@@ -58,24 +58,65 @@ const Prioritylist = styled.div`
   }
 `;
 
+const PriorityData = [
+  {
+    id: 1,
+    text: "높음",
+    color: "#ff8080",
+    bgcolor: "rgba(255, 190, 190, 0.27)",
+  },
+  {
+    id: 2,
+    text: "보통",
+    color: "#FB9A09",
+    bgcolor: "rgba(255, 191, 133, 0.27)",
+  },
+  {
+    id: 3,
+    text: "낮음",
+    color: "#5B9970",
+    bgcolor: "rgba(190, 231, 194, 0.27)",
+  },
+];
+
 const Priority = () => {
-  const [icon, setIcon] = useState("높음");
+  const [text, setText] = useState("높음");
+  const [color, setColor] = useState("#ff8080");
+  const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
   const [priorityOpen, setPrioirtyOpen] = useState(false);
 
   const modalpriorityOpen = () => {
     setPrioirtyOpen(!priorityOpen);
   };
 
-  return (
-    <PriorityContainer onClick={modalpriorityOpen}>
-      <span>우선 순위</span>
-      <span>{icon}</span>
+  const test = (e: any) => {
+    console.log(e.target.innerHTML);
+    PriorityData.map((p) => {
+      if (p.text === e.target.innerHTML) {
+        setText(p.text);
+        setColor(p.color);
+        setBgcolor(p.bgcolor);
+      }
+    });
+  };
 
+  return (
+    <PriorityContainer
+      onClick={modalpriorityOpen}
+      Color={color}
+      bgColor={bgcolor}
+    >
+      <span>우선 순위</span>
+      <span>{text}</span>
       <PriorityWrapper isOpen={priorityOpen}>
         <Prioritylist>
-          <div>높음</div>
-          <div>보통</div>
-          <div>낮음</div>
+          {PriorityData.map((e) => {
+            return (
+              <div onClick={test} key={e.id}>
+                {e.text}
+              </div>
+            );
+          })}
         </Prioritylist>
       </PriorityWrapper>
     </PriorityContainer>

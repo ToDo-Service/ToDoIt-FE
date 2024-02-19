@@ -70,14 +70,23 @@ const TodoModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [title, onChangeTitle] = useInput("");
-  //   const [content, onChangeDetail] = useInput("");
+  const [detail, onChangeDetail] = useInput("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
+  const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  const JWT = useRecoilValue(jwtToken);
+  console.log(kanbanList);
+
+  const replaceIndex = (list: any, data: any) => {
+    return [...list, data];
+  };
 
   const onSubmit = useCallback((e: any) => {
+    // 로컬 전송
+    const newList = replaceIndex(kanbanList, {});
+
+    //서버 전송
     e.preventDefault();
     if (1) {
       setPostError("");
@@ -211,6 +220,7 @@ const TodoModal = () => {
                     ref={ref}
                     onInput={handleResizeHeight}
                     style={{ resize: "none" }}
+                    onChange={onChangeDetail}
                   />
                 </Form.Group>
               </Form>
@@ -224,7 +234,6 @@ const TodoModal = () => {
               }}
             >
               <Calendar />
-
               <Priority />
               <Project />
             </div>
