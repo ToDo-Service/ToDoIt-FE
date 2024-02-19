@@ -71,12 +71,13 @@ const TodoModal = () => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [title, onChangeTitle] = useInput("");
   const [detail, onChangeDetail] = useInput("");
+  const [prioirty, setPriority] = useState("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  console.log(kanbanList);
+  // console.log(kanbanList);
 
   const replaceIndex = (list: any, data: any) => {
     return [...list, data];
@@ -84,7 +85,6 @@ const TodoModal = () => {
 
   const onSubmit = useCallback((e: any) => {
     // 로컬 전송
-    const newList = replaceIndex(kanbanList, {});
 
     //서버 전송
     e.preventDefault();
@@ -95,11 +95,11 @@ const TodoModal = () => {
         .post(
           "https://laoh.site/api/todos",
           {
-            title: "todo23",
-            content: "content1",
+            title: title,
+            content: detail,
             end_date: "2024.02.16",
             project_id: null,
-            priority: "높음",
+            priority: prioirty,
             push_status: false,
           },
           {
@@ -234,7 +234,7 @@ const TodoModal = () => {
               }}
             >
               <Calendar />
-              <Priority />
+              <Priority setPriority={setPriority} />
               <Project />
             </div>
             <div

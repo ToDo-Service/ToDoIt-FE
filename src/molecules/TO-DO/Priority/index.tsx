@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const PriorityContainer = styled("div")<{ Color: string; bgColor: string }>`
   width: 110px;
+
   background-color: ${(props) => props.bgColor};
   border: 0.8px solid var(--festie-gray-600, #949494);
   border-radius: 8px;
@@ -79,7 +80,7 @@ const PriorityData = [
   },
 ];
 
-const Priority = () => {
+const Priority = (props: any) => {
   const [text, setText] = useState("높음");
   const [color, setColor] = useState("#ff8080");
   const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
@@ -90,7 +91,7 @@ const Priority = () => {
   };
 
   const test = (e: any) => {
-    console.log(e.target.innerHTML);
+    props.setPriority(e.target.innerHTML);
     PriorityData.map((p) => {
       if (p.text === e.target.innerHTML) {
         setText(p.text);

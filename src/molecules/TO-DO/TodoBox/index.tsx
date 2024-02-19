@@ -162,7 +162,7 @@ const TodoBox = ({ data }: any) => {
         </TodoBoxHeader>
         <TodoBoxDetail>{data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>
-          <HashtagPriority />
+          <HashtagPriority priority={data.priority} />
           <HashtagProject project={data.project ? data.project : null} />
         </TodoBoxHashTagBox>
       </TodoMainBox>
