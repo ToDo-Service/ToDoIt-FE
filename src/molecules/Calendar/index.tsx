@@ -39,7 +39,7 @@ const CalendarWrapper = styled("div")<{ $iscalopen: number }>`
   display: ${(props) => (props.$iscalopen ? "block" : "none")};
 `;
 
-const calendar = () => {
+const calendar = (props: any) => {
   dayjs.locale("ko"); // 한국어 세팅
   const [nowDate, setNowDate] = useState(dayjs().format("MM월 DD일 (ddd)"));
   const [isCalOpen, setIsCalOpen] = useState(false);
@@ -53,6 +53,7 @@ const calendar = () => {
     onchange(selectedDate);
     setIsCalOpen(false);
     setNowDate(dayjs(selectedDate).format("MM월 DD일 (ddd)"));
+    props.setDate(dayjs(selectedDate).format("YYYY.MM.DD"));
   };
 
   return (

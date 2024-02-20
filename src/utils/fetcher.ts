@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const Fetcher = (url: string, token: string) => {
-  console.log("jwt", token);
   return axios
     .get(url, {
       withCredentials: true,

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-const Hasttag = styled("div")<{ bgColor: string }>`
+const Hasttag = styled("div")<{ bgcolor: string }>`
   width: 110px;
   height: 29px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   border-radius: 8px;
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.bgcolor};
   border: 1px solid rgba(197, 197, 197, 0.5);
 `;
 
@@ -17,8 +17,8 @@ const RankText = styled.span`
   font-family: "Pretendard";
 `;
 
-const Degree = styled("span")<{ Color: string }>`
-  color: ${(props) => props.Color};
+const Degree = styled("span")<{ color: string }>`
+  color: ${(props) => props.color};
   font-size: 10px;
   font-family: "Pretendard";
 `;
@@ -47,9 +47,9 @@ const PriorityData = [
 const HashtagPriority = ({ priority }: any) => {
   return PriorityData.map((e) => {
     return e.text === priority ? (
-      <Hasttag bgColor={e.bgcolor}>
+      <Hasttag bgcolor={e.bgcolor}>
         <RankText>우선 순위</RankText>
-        <Degree Color={e.color}>{priority}</Degree>
+        <Degree color={e.color}>{priority}</Degree>
       </Hasttag>
     ) : null;
   });

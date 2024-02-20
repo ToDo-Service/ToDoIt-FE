@@ -38,35 +38,40 @@ const PageTemp = ({ data }: any) => {
   weekday[6] = "토";
   let todayformday = `${month}월 ${date}일 (${weekday[day]})`;
 
+  console.log(data);
+  console.log(kanbanList);
   useEffect(() => {
-    data
+    console.log("데이터 추가 감지");
+    data && kanbanList.length === 0
       ? Object.keys(data.body).forEach((key) => {
           data.body[key].map((e: any) => {
-            e.end_date === todayform
-              ? setKanbanList((prev) => [
-                  ...prev,
-                  {
-                    id: e.id,
-                    title: e.title,
-                    content: e.content,
-                    priority: e.priority,
-                    endDate: e.end_date,
-                    project: e.project,
-                    category: "today_todos",
-                  },
-                ])
-              : setKanbanList((prev) => [
-                  ...prev,
-                  {
-                    id: e.id,
-                    title: e.title,
-                    content: e.content,
-                    priority: e.priority,
-                    endDate: e.end_date,
-                    project: e.project,
-                    category: "past_todos",
-                  },
-                ]);
+            if (e.end_date === todayform) {
+              setKanbanList((prev) => [
+                ...prev,
+                {
+                  id: e.id,
+                  title: e.title,
+                  content: e.content,
+                  priority: e.priority,
+                  endDate: e.end_date,
+                  project: e.project,
+                  category: "today_todos",
+                },
+              ]);
+            } else {
+              setKanbanList((prev) => [
+                ...prev,
+                {
+                  id: e.id,
+                  title: e.title,
+                  content: e.content,
+                  priority: e.priority,
+                  endDate: e.end_date,
+                  project: e.project,
+                  category: "past_todos",
+                },
+              ]);
+            }
           });
         })
       : null;
@@ -96,7 +101,6 @@ const PageTemp = ({ data }: any) => {
             ? titleName.map((data: any) => {
                 return (
                   <KanbanList
-                    key={data.id}
                     title={`${data.title}`}
                     id={data.id}
                     enTitle={`${data.title_en}`}

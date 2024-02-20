@@ -9,6 +9,7 @@ import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
 import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
+import dayjs from "dayjs";
 
 const ModalContainer = styled.div`
   // Modal을 구현하는데 전체적으로 필요한 CSS를 구현
@@ -67,11 +68,12 @@ export const ModalView = styled.div.attrs((props) => ({
 
 const TodoModal = () => {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
-  const [isopen, setIsopen] = useState(false);
+  const [isaddopen, setIsaddopen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
   const [title, onChangeTitle] = useInput("");
   const [detail, onChangeDetail] = useInput("");
-  const [prioirty, setPriority] = useState("");
+  const [prioirty, setPriority] = useState("높음");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
@@ -81,60 +83,51 @@ const TodoModal = () => {
     return [...list, data];
   };
   const openModalHandler = () => {
-    setIsopen(!isopen);
+    setIsaddopen(true);
+    console.log(isaddopen);
   };
-  // console.log(title);
-  // console.log(detail);
-  // console.log(prioirty);
+  const CloseModalHandler = () => {
+    setIsaddopen(false);
+    console.log(isaddopen);
+  };
 
-  const onSubmit = useCallback((e: any) => {
-    // 로컬 전송
-    setKanbanList((prev) => [
-      ...prev,
-      {
-        id: e.id,
-        title: title,
-        content: detail,
-        priority: prioirty,
-        endDate: e.end_date,
-        project: e.project,
-        category: "today_todos",
-      },
-    ]);
-
-    //서버 전송
-    e.preventDefault();
-    if (1) {
-      setPostError("");
-      setPostSuccess(false);
-      axios
-        .post(
-          "https://laoh.site/api/todos",
-          {
-            title: title,
-            content: detail,
-            end_date: "2024.02.16",
-            project_id: null,
-            priority: prioirty,
-            push_status: false,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${JWT}`,
+  const onSubmit = useCallback(
+    (e: any) => {
+      //서버 전송
+      e.preventDefault();
+      if (1) {
+        setPostError("");
+        setPostSuccess(false);
+        axios
+          .post(
+            "https://laoh.site/api/todos",
+            {
+              title: title,
+              content: detail,
+              end_date: endDate,
+              project_id: null,
+              priority: prioirty,
+              push_status: false,
             },
-          }
-        )
-        .then((res) => {
-          openModalHandler();
-          setPostSuccess(true);
-        })
-        .catch((err) => {
-          console.log(err.response);
-          setPostError(err.response.data);
-        })
-        .finally(() => {});
-    }
-  }, []);
+            {
+              headers: {
+                Authorization: `Bearer ${JWT}`,
+              },
+            }
+          )
+          .then((res) => {
+            setPostSuccess(true);
+            CloseModalHandler();
+          })
+          .catch((err) => {
+            console.log(err.response);
+            setPostError(err.response.data);
+          })
+          .finally(() => {});
+      }
+    },
+    [title, detail, prioirty, endDate]
+  );
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
@@ -164,13 +157,13 @@ const TodoModal = () => {
         height="16px"
         onClick={openModalHandler}
       />
-      {isopen ? (
+      {isaddopen ? (
         <ModalBackdrop>
           <ModalView>
             <ExitBtn
               src="/Icon/ModalExit.png"
               alt="/"
-              onClick={openModalHandler}
+              onClick={CloseModalHandler}
             />
             <div style={{ width: "418px" }}>
               <div style={{ textAlign: "center" }}>
@@ -228,7 +221,7 @@ const TodoModal = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Calendar />
+              <Calendar setDate={setEndDate} />
               <Priority setPriority={setPriority} />
               <Project />
             </div>
