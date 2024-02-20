@@ -7,10 +7,12 @@ import { kanbanListState } from "@/reocoil";
 import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
-import DeleteButton from "react-bootstrap/CloseButton";
-import * as Icon from "react-bootstrap-icons";
-
+import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
+
+interface DargProps {
+  isdragging: any;
+}
 
 const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
@@ -18,12 +20,12 @@ const TodoContainer = styled.article`
   border-radius: 16px;
 `;
 
-const TodoMainBox = styled.div<{ isDragging: boolean }>`
+const TodoMainBox = styled.div<DargProps>`
   width: 100%;
   height: 125px;
   padding-top: 20px;
   padding-left: 23px;
-  opacity: ${(props) => (props.isDragging ? "0.3" : "1")};
+  opacity: ${(props) => (props.isdragging ? "0.3" : "1")};
 `;
 
 const CheckBox = styled.input`
@@ -120,7 +122,7 @@ const TodoBox = ({ data }: any) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    end: (item: any, monitor) => {
+    end: (item: any, monitor: DragSourceMonitor) => {
       const dropResult: any | null = monitor.getDropResult();
       console.log(dropResult.name);
       if (dropResult) {
@@ -150,7 +152,7 @@ const TodoBox = ({ data }: any) => {
 
   return (
     <TodoContainer>
-      <TodoMainBox ref={dragRef} isDragging={isDragging}>
+      <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
             <TodoLabel htmlFor="check">
@@ -163,7 +165,6 @@ const TodoBox = ({ data }: any) => {
             <TodoBoxName>{data.title}</TodoBoxName>
             <TodoBoxDate>{data.endDate}</TodoBoxDate>
           </div>
-
           <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>
         <TodoBoxDetail>{data.content}</TodoBoxDetail>

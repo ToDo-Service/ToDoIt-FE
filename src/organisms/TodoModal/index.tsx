@@ -67,7 +67,7 @@ export const ModalView = styled.div.attrs((props) => ({
 
 const TodoModal = () => {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isopen, setIsopen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [title, onChangeTitle] = useInput("");
   const [detail, onChangeDetail] = useInput("");
@@ -77,14 +77,30 @@ const TodoModal = () => {
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  // console.log(kanbanList);
-
   const replaceIndex = (list: any, data: any) => {
     return [...list, data];
   };
+  const openModalHandler = () => {
+    setIsopen(!isopen);
+  };
+  // console.log(title);
+  // console.log(detail);
+  // console.log(prioirty);
 
   const onSubmit = useCallback((e: any) => {
     // 로컬 전송
+    setKanbanList((prev) => [
+      ...prev,
+      {
+        id: e.id,
+        title: title,
+        content: detail,
+        priority: prioirty,
+        endDate: e.end_date,
+        project: e.project,
+        category: "today_todos",
+      },
+    ]);
 
     //서버 전송
     e.preventDefault();
@@ -109,8 +125,7 @@ const TodoModal = () => {
           }
         )
         .then((res) => {
-          setIsOpen(!isOpen);
-          console.log("전송 완료");
+          openModalHandler();
           setPostSuccess(true);
         })
         .catch((err) => {
@@ -136,26 +151,6 @@ const TodoModal = () => {
   const getId: number =
     kanbanList.length > 0 ? kanbanList[kanbanList.length - 1].id + 1 : 0;
 
-  const addTodo = useCallback(
-    (e: any) => {
-      setKanbanList((prev) => [
-        ...prev,
-        {
-          id: getId,
-          title: "",
-          content: "",
-          category: "오늘 일정",
-        },
-      ]);
-      setIsOpen(!isOpen);
-    },
-    [getId, setKanbanList]
-  );
-
-  const openModalHandler = () => {
-    setIsOpen(!isOpen);
-  };
-
   const openCalendarModalHandler = () => {
     setIsCalendarOpen(!isCalendarOpen);
   };
@@ -169,7 +164,7 @@ const TodoModal = () => {
         height="16px"
         onClick={openModalHandler}
       />
-      {isOpen ? (
+      {isopen ? (
         <ModalBackdrop>
           <ModalView>
             <ExitBtn

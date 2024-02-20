@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 // const CalendarWrapper = styled("div")<{ isOpen: boolean }>`
 
-const PriorityContainer = styled("div")<{ Color: string; bgColor: string }>`
+const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   width: 110px;
 
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.bgcolor};
   border: 0.8px solid var(--festie-gray-600, #949494);
   border-radius: 8px;
   display: flex;
@@ -20,13 +20,13 @@ const PriorityContainer = styled("div")<{ Color: string; bgColor: string }>`
   }
 
   & span:nth-child(2) {
-    color: ${(props) => props.Color};
+    color: ${(props) => props.color};
     font-size: 10px;
   }
 `;
 
-const PriorityWrapper = styled("div")<{ isOpen: boolean }>`
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+const PriorityWrapper = styled("div")<{ priorityisopen: boolean }>`
+  display: ${(props) => (props.priorityisopen ? "block" : "none")};
   width: 52px;
   height: 85px;
   background-color: white;
@@ -84,10 +84,10 @@ const Priority = (props: any) => {
   const [text, setText] = useState("높음");
   const [color, setColor] = useState("#ff8080");
   const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
-  const [priorityOpen, setPrioirtyOpen] = useState(false);
+  const [priorityopen, setPrioirtyOpen] = useState(false);
 
   const modalpriorityOpen = () => {
-    setPrioirtyOpen(!priorityOpen);
+    setPrioirtyOpen(!priorityopen);
   };
 
   const test = (e: any) => {
@@ -104,12 +104,12 @@ const Priority = (props: any) => {
   return (
     <PriorityContainer
       onClick={modalpriorityOpen}
-      Color={color}
-      bgColor={bgcolor}
+      color={color}
+      bgcolor={bgcolor}
     >
       <span>우선 순위</span>
       <span>{text}</span>
-      <PriorityWrapper isOpen={priorityOpen}>
+      <PriorityWrapper priorityisopen={priorityopen}>
         <Prioritylist>
           {PriorityData.map((e) => {
             return (

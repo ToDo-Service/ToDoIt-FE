@@ -6,7 +6,6 @@ import Sidebar from "@/organisms/Sidebar";
 import PageTemp from "@/organisms/PageTemp";
 import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
 
 const MainLayout = styled.div`
   display: flex;
@@ -25,6 +24,7 @@ const MainLayouts = () => {
     session != undefined ? "https://laoh.site/api/todos/today" : null,
     (url) => fetcher(url, session?.user.accessToken as string)
   );
+  console.log(data);
 
   // if (isLoading) return <div>로딩중</div>;
   // if (error) return <div>로딩중</div>;
