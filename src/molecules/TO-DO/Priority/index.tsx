@@ -25,7 +25,7 @@ const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   }
 `;
 
-const PriorityWrapper = styled("div")<{ priorityisopen: boolean }>`
+const PriorityWrapper = styled("div")<{ priorityisopen: number }>`
   display: ${(props) => (props.priorityisopen ? "block" : "none")};
   width: 52px;
   height: 85px;
@@ -109,7 +109,7 @@ const Priority = (props: any) => {
     >
       <span>우선 순위</span>
       <span>{text}</span>
-      <PriorityWrapper priorityisopen={priorityopen}>
+      <PriorityWrapper priorityisopen={priorityopen ? 1 : 0}>
         <Prioritylist>
           {PriorityData.map((e) => {
             return (

@@ -1,6 +1,5 @@
 import KanbanList from "@/atoms/KanbanList";
 import Header from "@/organisms/Header";
-
 import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -97,6 +96,7 @@ const PageTemp = ({ data }: any) => {
             ? titleName.map((data: any) => {
                 return (
                   <KanbanList
+                    key={data.id}
                     title={`${data.title}`}
                     id={data.id}
                     enTitle={`${data.title_en}`}

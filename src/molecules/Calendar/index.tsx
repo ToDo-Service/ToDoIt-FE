@@ -31,27 +31,27 @@ const DropdownButton = styled.button`
   background-size: 12px;
 `;
 
-const CalendarWrapper = styled("div")<{ isOpen: boolean }>`
+const CalendarWrapper = styled("div")<{ $iscalopen: number }>`
   z-index: 11;
   position: absolute;
   top: 100%;
   left: 0;
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+  display: ${(props) => (props.$iscalopen ? "block" : "none")};
 `;
 
 const calendar = () => {
   dayjs.locale("ko"); // 한국어 세팅
   const [nowDate, setNowDate] = useState(dayjs().format("MM월 DD일 (ddd)"));
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCalOpen, setIsCalOpen] = useState(false);
   const [value, onchange] = useState(new Date());
 
   const handleToggleCalendar = () => {
-    setIsOpen(!isOpen);
+    setIsCalOpen(!isCalOpen);
   };
 
   const handleDateChange = (selectedDate: any) => {
     onchange(selectedDate);
-    setIsOpen(false);
+    setIsCalOpen(false);
     setNowDate(dayjs(selectedDate).format("MM월 DD일 (ddd)"));
   };
 
@@ -60,7 +60,7 @@ const calendar = () => {
       <DropdownButton onClick={handleToggleCalendar}>
         오늘 <div style={{ fontSize: "10px" }}>{nowDate}</div>
       </DropdownButton>
-      <CalendarWrapper isOpen={isOpen}>
+      <CalendarWrapper $iscalopen={isCalOpen ? 1 : 0}>
         <Calendar
           onChange={handleDateChange}
           value={value}

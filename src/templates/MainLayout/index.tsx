@@ -6,6 +6,7 @@ import Sidebar from "@/organisms/Sidebar";
 import PageTemp from "@/organisms/PageTemp";
 import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
+import { useEffect } from "react";
 
 const MainLayout = styled.div`
   display: flex;
@@ -18,7 +19,11 @@ interface user {
 const MainLayouts = () => {
   const { data: session } = useSession();
   const setToken = useSetRecoilState(jwtToken);
-  setToken(session?.user.accessToken);
+  useEffect(() => {
+    if (session) {
+      setToken(session?.user.accessToken);
+    }
+  }, [session]);
 
   const { data, error, isLoading } = useSWR(
     session != undefined ? "https://laoh.site/api/todos/today" : null,
