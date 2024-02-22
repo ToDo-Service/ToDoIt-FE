@@ -24,10 +24,11 @@ const TodoHeader = styled.div`
   justify-content: space-between;
 `;
 
-const KanbanList = ({ title, children, enTitle }: any) => {
+const KanbanList = ({ title, children }: any) => {
+  // console.log(title);
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: "card",
-    drop: () => ({ name: enTitle }),
+    drop: () => ({ name: title }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -40,8 +41,8 @@ const KanbanList = ({ title, children, enTitle }: any) => {
     <>
       <TodoListMainBox ref={drop}>
         <TodoHeader>
-          {title}
-          {title != "지난 일정" ? <TodoModal /> : null}
+          {title === "past_todos" ? "지난 일정" : "오늘 일정"}
+          {title !== "past_todos" ? <TodoModal /> : null}
         </TodoHeader>
         {children}
       </TodoListMainBox>

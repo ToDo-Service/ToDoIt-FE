@@ -1,5 +1,3 @@
-import Sidebar from "@/templates/Sidebar";
-import PageTemp from "@/templates/PageTemp";
 import styled from "styled-components";
 
 const MainLayout = styled.div`

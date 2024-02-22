@@ -10,6 +10,7 @@ import Priority from "@/molecules/TO-DO/Priority";
 import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
+import { mutate } from "swr";
 
 const ModalContainer = styled.div`
   // Modal을 구현하는데 전체적으로 필요한 CSS를 구현
@@ -27,7 +28,6 @@ const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
-
   filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1));
   border-radius: 10px;
   top: 0;
@@ -69,7 +69,6 @@ export const ModalView = styled.div.attrs((props) => ({
 const TodoModal = () => {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [isaddopen, setIsaddopen] = useState(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
   const [title, onChangeTitle] = useInput("");
   const [detail, onChangeDetail] = useInput("");
@@ -79,13 +78,11 @@ const TodoModal = () => {
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  const replaceIndex = (list: any, data: any) => {
-    return [...list, data];
-  };
   const openModalHandler = () => {
     setIsaddopen(true);
     console.log(isaddopen);
   };
+
   const CloseModalHandler = () => {
     setIsaddopen(false);
     console.log(isaddopen);
@@ -94,37 +91,37 @@ const TodoModal = () => {
   const onSubmit = useCallback(
     (e: any) => {
       //서버 전송
+      mutate("https://laoh.site/api/todos/today");
       e.preventDefault();
-      if (1) {
-        setPostError("");
-        setPostSuccess(false);
-        axios
-          .post(
-            "https://laoh.site/api/todos",
-            {
-              title: title,
-              content: detail,
-              end_date: endDate,
-              project_id: null,
-              priority: prioirty,
-              push_status: false,
+      setPostError("");
+      setPostSuccess(false);
+      axios
+        .post(
+          "https://laoh.site/api/todos",
+          {
+            title: title,
+            content: detail,
+            end_date: endDate,
+            project_id: null,
+            priority: prioirty,
+            push_status: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JWT}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${JWT}`,
-              },
-            }
-          )
-          .then((res) => {
-            setPostSuccess(true);
-            CloseModalHandler();
-          })
-          .catch((err) => {
-            console.log(err.response);
-            setPostError(err.response.data);
-          })
-          .finally(() => {});
-      }
+          }
+        )
+        .then(() => {
+          setPostSuccess(true);
+          CloseModalHandler();
+          mutate("https://laoh.site/api/todos/today");
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setPostError(err.response.data);
+        })
+        .finally(() => {});
     },
     [title, detail, prioirty, endDate]
   );
@@ -140,13 +137,6 @@ const TodoModal = () => {
       ref.current.style.height = "60px";
     }
   }, []);
-
-  const getId: number =
-    kanbanList.length > 0 ? kanbanList[kanbanList.length - 1].id + 1 : 0;
-
-  const openCalendarModalHandler = () => {
-    setIsCalendarOpen(!isCalendarOpen);
-  };
 
   return (
     <>

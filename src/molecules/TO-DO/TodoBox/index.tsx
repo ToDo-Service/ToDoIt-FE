@@ -4,11 +4,13 @@ import HashtagProject from "@/atoms/Hashtag/H_Project";
 import { useDrag } from "react-dnd";
 import { useRecoilState } from "recoil";
 import { kanbanListState } from "@/reocoil";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
+import useSWR, { mutate } from "swr";
+import Fetcher from "@/utils/fetcher";
 
 interface DargProps {
   isdragging: any;
@@ -93,38 +95,68 @@ const ExitBtn = styled.img`
   margin-right: 21px;
 `;
 
-const TodoBox = ({ data }: any) => {
-  const [list, setList] = useRecoilState(kanbanListState);
+const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
+  const { data, error, isLoading } = useSWR(
+    "https://laoh.site/api/todos/today",
+    (url) => Fetcher(url, JwtToken)
+  );
 
-  const index = list.findIndex((item) => item === data);
-  const ref = useRef<HTMLTextAreaElement>(null);
-
-  const replaceIndex = (list: any, index: number, data: any) => {
-    return [...list.slice(0, index), data, ...list.slice(index + 1)];
+  const CompleteTodo = async () => {
+    await axios
+      .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
+        headers: {
+          Authorization: `Bearer ${JwtToken}`,
+          withCredentials: true,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const changeItemCategory = (selectedItem: any, title: string) => {
     console.log(selectedItem, title);
-    setList((prev) => {
-      return prev.map((e) => {
-        return {
-          ...e,
-          category: e.id === selectedItem.id ? title : e.category,
-        };
-      });
-    });
+    console.log(Data.id);
+    axios
+      .patch(
+        `https://laoh.site/api/todos/${Data.id}`,
+        {
+          title: Data.title,
+          content: Data.content,
+          end_date: Data.end_Date,
+          project_id: null,
+          priority: Data.priority,
+          push_status: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${JwtToken}`,
+            withCredentials: true,
+          },
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const deleteItem = () => {
+    axios
+      .delete(`https://laoh.site/api/todos/${Data.id}`, {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${JwtToken}` },
+      })
+      .then(() => mutate("https://laoh.site/api/todos/today"))
+      .catch((err) => console.log(err));
   };
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "card",
-    item: data,
+    item: Data,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
     end: (item: any, monitor: DragSourceMonitor) => {
       const dropResult: any | null = monitor.getDropResult();
-      console.log(dropResult.name);
       if (dropResult) {
         switch (dropResult.name) {
           case "past_todos":
@@ -138,18 +170,6 @@ const TodoBox = ({ data }: any) => {
     },
   }));
 
-  const deleteItem = () => {
-    setList([...list.slice(0, index), ...list.slice(index + 1)]);
-
-    const DeleteId = list[index].id;
-    axios
-      .delete(`https://laoh.site/api/todos/${DeleteId}`, {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${JwtToken}` },
-      })
-      .then((res) => console.log(res));
-  };
-
   return (
     <TodoContainer>
       <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
@@ -157,20 +177,30 @@ const TodoBox = ({ data }: any) => {
           <div style={{ display: "flex", alignItems: "center" }}>
             <TodoLabel htmlFor="check">
               {data.status == "INCOMPLETE" ? (
-                <CheckBox type="checkbox" id="1" name="check" />
+                <CheckBox
+                  type="checkbox"
+                  id="1"
+                  name="check"
+                  onChange={CompleteTodo}
+                />
               ) : (
-                <CheckBox type="checkbox" id="1" name="check" />
+                <CheckBox
+                  type="checkbox"
+                  id="1"
+                  name="check"
+                  onChange={CompleteTodo}
+                />
               )}
             </TodoLabel>
-            <TodoBoxName>{data.title}</TodoBoxName>
-            <TodoBoxDate>{data.endDate}</TodoBoxDate>
+            <TodoBoxName>{Data.title}</TodoBoxName>
+            <TodoBoxDate>{Data.end_Date}</TodoBoxDate>
           </div>
           <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>
-        <TodoBoxDetail>{data.content}</TodoBoxDetail>
+        <TodoBoxDetail>{Data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>
-          <HashtagPriority priority={data.priority} />
-          <HashtagProject project={data.project ? data.project : null} />
+          <HashtagPriority priority={Data.priority} />
+          <HashtagProject project={Data.project ? data.project : null} />
         </TodoBoxHashTagBox>
       </TodoMainBox>
     </TodoContainer>
