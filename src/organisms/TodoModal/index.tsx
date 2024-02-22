@@ -52,7 +52,9 @@ const ExitBtn = styled.img`
   margin-top: 34px;
   margin-left: 537px;
 `;
-const AddImage = styled.img``;
+const AddImage = styled.img`
+  margin-left: 10px;
+`;
 
 export const ModalView = styled.div.attrs((props) => ({
   role: "dialog",

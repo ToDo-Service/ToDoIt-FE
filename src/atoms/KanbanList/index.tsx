@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ProgressBar from "../ProgressBar";
 import TodoModal from "@/organisms/TodoModal";
 import { useDrop } from "react-dnd";
 
@@ -13,19 +14,19 @@ const TodoListMainBox = styled.section`
   }
 `;
 
-const TodoHeader = styled.div`
-  width: 132px;
+const TodoHeader = styled("div")<{ interval: string }>`
+  width: 291px;
   font-family: "Pretendard";
   font-weight: 700;
   font-size: 20px;
   margin-bottom: 19px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${(props) =>
+    props.interval !== "past_todos" ? "space-evenly" : "space-between"};
 `;
 
 const KanbanList = ({ title, children }: any) => {
-  // console.log(title);
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: "card",
     drop: () => ({ name: title }),
@@ -40,9 +41,12 @@ const KanbanList = ({ title, children }: any) => {
   return (
     <>
       <TodoListMainBox ref={drop}>
-        <TodoHeader>
-          {title === "past_todos" ? "지난 일정" : "오늘 일정"}
-          {title !== "past_todos" ? <TodoModal /> : null}
+        <TodoHeader interval={title}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {title === "past_todos" ? "지난 일정" : "오늘 일정"}
+            {title !== "past_todos" ? <TodoModal /> : null}
+          </div>
+          {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>
         {children}
       </TodoListMainBox>
