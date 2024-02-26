@@ -1,6 +1,7 @@
 import NextAuth from "next-auth/next";
 import KakaoProvider from "next-auth/providers/kakao";
 import GoogleProvider from "next-auth/providers/google";
+import NaverProvider from "next-auth/providers/naver";
 import axios from "axios";
 
 export function PostAcessToken(access_token: string | unknown) {
@@ -11,12 +12,9 @@ export function PostAcessToken(access_token: string | unknown) {
       },
     })
     .then((res) => {
-      // console.log(res);
       return res.data.body.user.access_token;
     })
-    .catch((err) => {
-      // console.log(err);
-    });
+    .catch((err) => {});
 
   return sucess;
 }
@@ -31,15 +29,22 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
+    NaverProvider({
+      clientId: process.env.NAVER_CLIENT_ID as string,
+      clientSecret: process.env.NAVER_CLIENT_SECRET as string,
+    }),
   ],
-
+  pages: {
+    error: "/auth/error",
+    signOut: "/auth/Login",
+  },
   callbacks: {
     session: async ({ session, token }) => {
       const Jtoken = token ? await PostAcessToken(token.accessToken) : null;
       if (Jtoken) {
         session.user.accessToken = Jtoken;
       }
-      console.log(Jtoken);
+
       return session;
     },
 
@@ -49,6 +54,15 @@ export default NextAuth({
       }
 
       return token;
+    },
+
+    redirect: async ({ url, baseUrl }) => {
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      } else if (new URL(url).origin === baseUrl) {
+        return `${baseUrl}`;
+      }
+      return baseUrl;
     },
   },
 });

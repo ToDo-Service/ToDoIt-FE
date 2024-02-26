@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { jwtToken, kanbanListState } from "@/reocoil";
+import { jwtToken } from "@/reocoil";
 import { useCallback, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
@@ -13,16 +13,16 @@ import dayjs from "dayjs";
 import { mutate } from "swr";
 
 const ModalBackdrop = styled.div`
-  z-index: 1;
   position: fixed;
-  display: flex;
+  /* position: fixed;
+  display: flex; */
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1));
+  z-index: 2;
+  /* filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1)); */
   border-radius: 10px;
   top: 0;
-  left: 0;
+  left: -400px;
   right: 0;
   bottom: 0;
 `;
@@ -31,28 +31,22 @@ const ExitBtn = styled.img`
   width: 16px;
   height: 16px;
   margin-top: 34px;
-  margin-left: 537px;
+  margin-left: 300px;
 `;
 
-const AddImage = styled.img`
-  margin-left: 10px;
-`;
-
-export const ModalView = styled.div.attrs((props) => ({
-  role: "dialog",
-}))`
+const ModalView = styled.div`
+  z-index: 2;
   display: flex;
   align-items: center;
   flex-direction: column;
   border-radius: 20px;
-  height: 406px;
-  width: 598px;
+  height: 350px;
+  width: 376px;
   background-color: #ffffff;
 `;
 
-const TodoModal = (props: any) => {
-  const [method, setMethod] = useState(props.method);
-  const [isaddopen, setIsaddopen] = useState(false);
+const RewriteModal = (props: any) => {
+  const [isaddopen, setIsaddopen] = useState(props.status);
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
   const [title, onChangeTitle] = useInput("");
   const [detail, onChangeDetail] = useInput("");
@@ -62,12 +56,8 @@ const TodoModal = (props: any) => {
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  const openModalHandler = () => {
-    setIsaddopen(true);
-  };
-
   const CloseModalHandler = () => {
-    setIsaddopen(false);
+    setIsaddopen(!isaddopen);
   };
 
   const onSubmit = useCallback(
@@ -77,7 +67,6 @@ const TodoModal = (props: any) => {
       e.preventDefault();
       setPostError("");
       setPostSuccess(false);
-
       axios
         .post(
           "https://laoh.site/api/todos",
@@ -123,17 +112,7 @@ const TodoModal = (props: any) => {
 
   return (
     <>
-      {method === "post" ? (
-        <AddImage
-          src="/Icon/Add.png"
-          alt="/"
-          width="16px"
-          height="16px"
-          onClick={openModalHandler}
-        />
-      ) : null}
-
-      {isaddopen || props.status ? (
+      {isaddopen ? (
         <ModalBackdrop>
           <ModalView>
             <ExitBtn
@@ -141,7 +120,7 @@ const TodoModal = (props: any) => {
               alt="/"
               onClick={CloseModalHandler}
             />
-            <div style={{ width: "418px" }}>
+            <div style={{ width: "300px" }}>
               <div style={{ textAlign: "center" }}>
                 <h1
                   style={{
@@ -150,17 +129,8 @@ const TodoModal = (props: any) => {
                     marginBottom: "15px",
                   }}
                 >
-                  일정추가
+                  일정수정
                 </h1>
-                <div
-                  style={{
-                    fontFamily: "Pretendard",
-                    fontSize: "14px",
-                    marginBottom: "46px",
-                  }}
-                >
-                  새로 할 일을 추가해주세요!
-                </div>
               </div>
               <Form>
                 <Form.Group
@@ -191,7 +161,7 @@ const TodoModal = (props: any) => {
             </div>
             <div
               style={{
-                width: "418px",
+                width: "320px",
                 height: "37px",
                 display: "flex",
                 justifyContent: "space-between",
@@ -204,7 +174,7 @@ const TodoModal = (props: any) => {
             <div
               onClick={onSubmit}
               style={{
-                width: "418px",
+                width: "320px",
                 height: "37px",
                 backgroundColor: "#862DDF",
                 marginTop: "11px",
@@ -227,4 +197,4 @@ const TodoModal = (props: any) => {
   );
 };
 
-export default TodoModal;
+export default RewriteModal;

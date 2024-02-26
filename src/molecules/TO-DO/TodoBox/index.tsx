@@ -2,15 +2,14 @@ import styled from "styled-components";
 import HashtagPriority from "@/atoms/Hashtag/H_Priority";
 import HashtagProject from "@/atoms/Hashtag/H_Project";
 import { useDrag } from "react-dnd";
-import { useRecoilState } from "recoil";
-import { kanbanListState } from "@/reocoil";
-import { useRef, useState } from "react";
+import RewriteModalComponent from "@/organisms/RewriteModal";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
 import useSWR, { mutate } from "swr";
 import Fetcher from "@/utils/fetcher";
+import { useState } from "react";
 
 interface DargProps {
   isdragging: any;
@@ -20,6 +19,7 @@ const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
   border: 0.5px solid #c8c5cb;
   border-radius: 16px;
+  width: 376px;
 `;
 
 const TodoMainBox = styled.div<DargProps>`
@@ -35,7 +35,7 @@ const CheckBox = styled.input`
   appearance: none;
   width: 18px;
   height: 18px;
-  border: 1.5px solid gainsboro;
+  border: 1px solid black;
   border-radius: 50%;
 
   &:checked {
@@ -101,10 +101,11 @@ const TodoBox = ({ Data, category }: any) => {
     "https://laoh.site/api/todos/today",
     (url) => Fetcher(url, JwtToken)
   );
+  const [rewriteModal, setRewriteModal] = useState(false);
 
   const CompleteTodo = async () => {
     await axios
-      .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
+      .patch(`https://laoh.site/api/todos/status/${Data.id}`, Data.id, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
           withCredentials: true,
@@ -115,8 +116,6 @@ const TodoBox = ({ Data, category }: any) => {
   };
 
   const changeItemCategory = (selectedItem: any, title: string) => {
-    console.log(selectedItem, title);
-    console.log(Data.id);
     axios
       .patch(
         `https://laoh.site/api/todos/${Data.id}`,
@@ -170,8 +169,12 @@ const TodoBox = ({ Data, category }: any) => {
     },
   }));
 
+  const RewriteModal = () => {
+    setRewriteModal(!rewriteModal);
+  };
+
   return (
-    <TodoContainer>
+    <TodoContainer onClick={RewriteModal}>
       <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -193,7 +196,7 @@ const TodoBox = ({ Data, category }: any) => {
               )}
             </TodoLabel>
             <TodoBoxName>{Data.title}</TodoBoxName>
-            <TodoBoxDate>{Data.end_Date}</TodoBoxDate>
+            <TodoBoxDate>{Data.end_date}</TodoBoxDate>
           </div>
           <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>
@@ -203,6 +206,7 @@ const TodoBox = ({ Data, category }: any) => {
           <HashtagProject project={Data.project ? data.project : null} />
         </TodoBoxHashTagBox>
       </TodoMainBox>
+      {rewriteModal ? <RewriteModalComponent status={rewriteModal} /> : null}
     </TodoContainer>
   );
 };

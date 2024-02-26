@@ -5,6 +5,6 @@ export const onSocialLogin = (event: any, provider: string) => {
   event.preventDefault();
   signIn(provider, {
     redirect: true,
-    callbackUrl: "/",
+    callbackUrl: "/main",
   });
 };

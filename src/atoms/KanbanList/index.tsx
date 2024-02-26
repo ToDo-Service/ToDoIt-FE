@@ -8,7 +8,7 @@ const TodoListMainBox = styled.section`
   height: 100vh;
   margin-top: 57px;
   margin-left: 67px;
-
+  z-index: 1;
   & article:not(:first-child) {
     margin-top: 21px;
   }
@@ -44,7 +44,7 @@ const KanbanList = ({ title, children }: any) => {
         <TodoHeader interval={title}>
           <div style={{ display: "flex", alignItems: "center" }}>
             {title === "past_todos" ? "지난 일정" : "오늘 일정"}
-            {title !== "past_todos" ? <TodoModal /> : null}
+            {title !== "past_todos" ? <TodoModal method="post" /> : null}
           </div>
           {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>

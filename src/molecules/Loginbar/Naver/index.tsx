@@ -1,6 +1,6 @@
 import NaverLoginBtn from "@/atoms/LOGIN/NaverLogin";
 import styled from "styled-components";
-import Link from "next/link";
+import { onSocialLogin } from "@/hooks/onSocialLogin";
 
 const NaverLoginBar = styled.div`
   width: 300px;
@@ -18,15 +18,10 @@ const NaverLoginBar = styled.div`
 
 const Naver = () => {
   return (
-    <Link
-      href={"https://laoh.site/oauth2/authorization/kakao"}
-      style={{ textDecoration: "none", color: "black" }}
-    >
-      <NaverLoginBar>
-        <NaverLoginBtn />
-        <span>네이버 계정으로 로그인</span>
-      </NaverLoginBar>
-    </Link>
+    <NaverLoginBar onClick={(e) => onSocialLogin(e, "naver")}>
+      <NaverLoginBtn />
+      <span>네이버 계정으로 로그인</span>
+    </NaverLoginBar>
   );
 };
 

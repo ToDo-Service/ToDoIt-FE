@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
     return NextResponse.redirect(new URL(`/main`, req.url));
   }
 
-  if (token === undefined && req.nextUrl.pathname.includes("/main")) {
+  if (!token && req.nextUrl.pathname.includes("/main")) {
     return NextResponse.redirect(new URL(`/auth/Login`, req.url));
   }
 
