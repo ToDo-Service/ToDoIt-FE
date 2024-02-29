@@ -98,6 +98,7 @@ const ExitBtn = styled.img`
 
 const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
+
   const { data, error, isLoading } = useSWR(
     "https://laoh.site/api/todos/today",
     (url) => Fetcher(url, JwtToken)
@@ -106,11 +107,11 @@ const TodoBox = ({ Data, category }: any) => {
   const CompleteTodo = async () => {
     console.log(JwtToken);
     await axios
-      .patch(`https://laoh.site/api/todos/status/${Data.id}`, {
+      .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
-          withCredentials: true,
         },
+        withCredentials: true,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
@@ -120,6 +121,7 @@ const TodoBox = ({ Data, category }: any) => {
     axios
       .patch(
         `https://laoh.site/api/todos/${Data.id}`,
+
         {
           title: Data.title,
           content: Data.content,
@@ -131,8 +133,8 @@ const TodoBox = ({ Data, category }: any) => {
         {
           headers: {
             Authorization: `Bearer ${JwtToken}`,
-            withCredentials: true,
           },
+          withCredentials: true,
         }
       )
       .then((res) => console.log(res))

@@ -16,13 +16,9 @@ const MainLayouts = () => {
   const { data: session, status } = useSession();
   const setToken = useSetRecoilState(jwtToken);
 
-  useEffect(() => {
-    if (status == "authenticated") {
-      setToken(session?.user.accessToken);
-    }
-  }, [session]);
-
-  console.log(session?.user.accessToken);
+  if (status === "authenticated") {
+    setToken(session?.user.accessToken);
+  }
 
   const { data, error, isLoading } = useSWR(
     status == "authenticated" ? "https://laoh.site/api/todos/today" : null,

@@ -27,44 +27,47 @@ export default NextAuth({
     signIn: "/main",
   },
   callbacks: {
-    signIn: async ({ user, account, credentials }: any) => {
+    signIn: async ({ user, account, profile, credentials }: any) => {
       try {
-        const response = await axios.post(
-          "https://laoh.site/api/auth/social/kakao",
-          null,
-          {
-            headers: {
-              Authorization: `Bearer ${account.access_token}`,
-            },
-          }
-        );
+        if (account) {
+          console.log(`https://laoh.site/api/auth/social/${account.provider}`);
+          const response = await axios.post(
+            `https://laoh.site/api/auth/social/${account.provider}`,
+            null,
+            {
+              headers: {
+                Authorization: `Bearer ${account.access_token}`,
+              },
+            }
+          );
 
-        const userData = response.data;
+          const userData = response.data;
 
-        privateToken = userData.body.user.access_token;
+          privateToken = userData.body.user.access_token;
 
-        return userData;
+          return userData;
+        }
       } catch (err) {
         throw new Error("로그인 실패");
       }
+      return user;
+    },
+    jwt: async ({ token, account }) => {
+      if (account) {
+        token.accessToken = privateToken;
+      }
+
+      return token;
     },
     session: async ({ session, token }) => {
       if (token) {
-        session.user.accessToken = privateToken;
+        session.user.accessToken = token.accessToken;
         session.user.name = token.name;
         session.user.image = token.picture;
         session.user.email = token.email;
       }
-      return session;
-    },
 
-    redirect: async ({ url, baseUrl }) => {
-      if (url.startsWith("/")) {
-        return `${baseUrl}${url}`;
-      } else if (new URL(url).origin === baseUrl) {
-        return `${baseUrl}`;
-      }
-      return baseUrl;
+      return session;
     },
   },
 });
