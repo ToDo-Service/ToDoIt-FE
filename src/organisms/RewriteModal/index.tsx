@@ -60,16 +60,15 @@ const RewriteModal = (props: any) => {
     setIsaddopen(!isaddopen);
   };
 
-  const onSubmit = useCallback(
+  const onRewrite = useCallback(
     (e: any) => {
       //서버 전송
-      mutate("https://laoh.site/api/todos/today");
       e.preventDefault();
       setPostError("");
       setPostSuccess(false);
       axios
-        .post(
-          "https://laoh.site/api/todos",
+        .patch(
+          `https://laoh.site/api/todos/status/${props.id}`,
           {
             title: title,
             content: detail,
@@ -172,7 +171,7 @@ const RewriteModal = (props: any) => {
               <Project />
             </div>
             <div
-              onClick={onSubmit}
+              onClick={onRewrite}
               style={{
                 width: "320px",
                 height: "37px",
@@ -188,7 +187,7 @@ const RewriteModal = (props: any) => {
                 alignItems: "center",
               }}
             >
-              추가
+              수정
             </div>
           </ModalView>
         </ModalBackdrop>

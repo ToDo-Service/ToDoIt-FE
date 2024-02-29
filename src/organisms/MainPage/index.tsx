@@ -4,7 +4,7 @@ import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { kanbanListState } from "@/reocoil";
+// import { kanbanListState } from "@/reocoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import useSWR from "swr";

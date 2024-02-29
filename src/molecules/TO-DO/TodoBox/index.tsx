@@ -32,15 +32,16 @@ const TodoMainBox = styled.div<DargProps>`
 
 const CheckBox = styled.input`
   appearance: none;
-  appearance: none;
   width: 18px;
   height: 18px;
-  border: 1px solid black;
+  border: 0.7px solid black;
   border-radius: 50%;
 
   &:checked {
     border-color: transparent;
     background-image: url("/Icon/Checkcircle_fill.png");
+    width: 18px;
+    height: 18px;
     background-size: 100% 100%;
     background-position: 50%;
     background-repeat: no-repeat;
@@ -102,10 +103,10 @@ const TodoBox = ({ Data, category }: any) => {
     (url) => Fetcher(url, JwtToken)
   );
   const [rewriteModal, setRewriteModal] = useState(false);
-
   const CompleteTodo = async () => {
+    console.log(JwtToken);
     await axios
-      .patch(`https://laoh.site/api/todos/status/${Data.id}`, Data.id, {
+      .patch(`https://laoh.site/api/todos/status/${Data.id}`, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
           withCredentials: true,
@@ -174,7 +175,7 @@ const TodoBox = ({ Data, category }: any) => {
   };
 
   return (
-    <TodoContainer onClick={RewriteModal}>
+    <TodoContainer>
       <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -200,13 +201,15 @@ const TodoBox = ({ Data, category }: any) => {
           </div>
           <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>
-        <TodoBoxDetail>{Data.content}</TodoBoxDetail>
+        <TodoBoxDetail onClick={RewriteModal}>{Data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>
           <HashtagPriority priority={Data.priority} />
           <HashtagProject project={Data.project ? data.project : null} />
         </TodoBoxHashTagBox>
       </TodoMainBox>
-      {rewriteModal ? <RewriteModalComponent status={rewriteModal} /> : null}
+      {rewriteModal ? (
+        <RewriteModalComponent status={rewriteModal} id={Data.id} />
+      ) : null}
     </TodoContainer>
   );
 };

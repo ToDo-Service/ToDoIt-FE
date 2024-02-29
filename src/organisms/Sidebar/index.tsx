@@ -5,6 +5,10 @@ import FollowAnaylytics from "@/molecules/ANAYLYTICS/FollowAnaylytics";
 import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
+import Fetcher from "@/utils/fetcher";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
 
 const S_Background = styled.nav`
   height: 100vh;
@@ -40,7 +44,7 @@ const S_Background = styled.nav`
 `;
 
 const Sidebar = () => {
-  
+  const jwt = useRecoilValue(jwtToken);
 
   return (
     <S_Background>

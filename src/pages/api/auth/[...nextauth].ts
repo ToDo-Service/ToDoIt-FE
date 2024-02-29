@@ -4,20 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import NaverProvider from "next-auth/providers/naver";
 import axios from "axios";
 
-export function PostAcessToken(access_token: string | unknown) {
-  const sucess = axios
-    .post("https://laoh.site/api/auth/social/kakao", null, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    })
-    .then((res) => {
-      return res.data.body.user.access_token;
-    })
-    .catch((err) => {});
-
-  return sucess;
-}
+let privateToken: string = "";
 
 export default NextAuth({
   providers: [
@@ -37,23 +24,38 @@ export default NextAuth({
   pages: {
     error: "/auth/error",
     signOut: "/auth/Login",
+    signIn: "/main",
   },
   callbacks: {
-    session: async ({ session, token }) => {
-      const Jtoken = token ? await PostAcessToken(token.accessToken) : null;
-      if (Jtoken) {
-        session.user.accessToken = Jtoken;
-      }
+    signIn: async ({ user, account, credentials }: any) => {
+      try {
+        const response = await axios.post(
+          "https://laoh.site/api/auth/social/kakao",
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${account.access_token}`,
+            },
+          }
+        );
 
-      return session;
+        const userData = response.data;
+
+        privateToken = userData.body.user.access_token;
+
+        return userData;
+      } catch (err) {
+        throw new Error("로그인 실패");
+      }
     },
-
-    jwt: async ({ token, account, user }) => {
-      if (account) {
-        token.accessToken = account.access_token;
+    session: async ({ session, token }) => {
+      if (token) {
+        session.user.accessToken = privateToken;
+        session.user.name = token.name;
+        session.user.image = token.picture;
+        session.user.email = token.email;
       }
-
-      return token;
+      return session;
     },
 
     redirect: async ({ url, baseUrl }) => {

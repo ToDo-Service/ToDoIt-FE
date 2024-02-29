@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { jwtToken } from "@/reocoil";
 import Sidebar from "@/organisms/Sidebar";
 import MainPage from "@/organisms/MainPage";
@@ -13,16 +13,19 @@ const MainLayout = styled.div`
 `;
 
 const MainLayouts = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const setToken = useSetRecoilState(jwtToken);
+
   useEffect(() => {
-    if (session) {
+    if (status == "authenticated") {
       setToken(session?.user.accessToken);
     }
   }, [session]);
 
+  console.log(session?.user.accessToken);
+
   const { data, error, isLoading } = useSWR(
-    session != undefined ? "https://laoh.site/api/todos/today" : null,
+    status == "authenticated" ? "https://laoh.site/api/todos/today" : null,
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 

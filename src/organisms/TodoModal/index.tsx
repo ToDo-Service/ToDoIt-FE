@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { jwtToken, kanbanListState } from "@/reocoil";
+import { jwtToken } from "@/reocoil";
 import { useCallback, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
@@ -61,6 +61,8 @@ const TodoModal = (props: any) => {
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
+
+  console.log(JWT);
 
   const openModalHandler = () => {
     setIsaddopen(true);
