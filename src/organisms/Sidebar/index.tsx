@@ -5,8 +5,7 @@ import FollowAnaylytics from "@/molecules/ANAYLYTICS/FollowAnaylytics";
 import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
 import { useSession } from "next-auth/react";
-import useSWR from "swr";
-import Fetcher from "@/utils/fetcher";
+
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 

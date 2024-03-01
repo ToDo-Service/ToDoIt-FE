@@ -49,7 +49,9 @@ const ProgressBarComponent = () => {
   return (
     <ProgressBar>
       <Progress width={100 - (availableItem * 100) / maxItem}>
-        {100 - (availableItem * 100) / maxItem}%
+        {100 - (availableItem * 100) / maxItem === 0
+          ? 100 - (availableItem * 100) / maxItem
+          : `${100 - (availableItem * 100) / maxItem}%`}
       </Progress>
     </ProgressBar>
   );
