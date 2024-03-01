@@ -43,7 +43,7 @@ const PageTemp = ({ data }: any) => {
 
   const cardDataHandlertest = (cardTitle: string) => {
     const todoBoxes: any = [];
-    console.log(cardTitle);
+
     data
       ? Object.keys(data.body).forEach((key) => {
           key === cardTitle

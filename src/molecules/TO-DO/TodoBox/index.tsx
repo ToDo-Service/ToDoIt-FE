@@ -9,7 +9,8 @@ import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
 import useSWR, { mutate } from "swr";
 import Fetcher from "@/utils/fetcher";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import dayjs from "dayjs";
 
 interface DargProps {
   isdragging: any;
@@ -31,6 +32,7 @@ const TodoMainBox = styled.div<DargProps>`
 `;
 
 const CheckBox = styled.input`
+  transition: 0.5s ease-in-out;
   appearance: none;
   width: 18px;
   height: 18px;
@@ -104,8 +106,8 @@ const TodoBox = ({ Data, category }: any) => {
     (url) => Fetcher(url, JwtToken)
   );
   const [rewriteModal, setRewriteModal] = useState(false);
+
   const CompleteTodo = async () => {
-    console.log(JwtToken);
     await axios
       .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
         headers: {
@@ -113,32 +115,57 @@ const TodoBox = ({ Data, category }: any) => {
         },
         withCredentials: true,
       })
-      .then((res) => console.log(res))
+      .then((res) => mutate("https://laoh.site/api/todos/today"))
       .catch((err) => console.log(err));
   };
 
-  const changeItemCategory = (selectedItem: any, title: string) => {
-    axios
-      .patch(
-        `https://laoh.site/api/todos/${Data.id}`,
+  console.log(Data);
 
-        {
-          title: Data.title,
-          content: Data.content,
-          end_date: Data.end_Date,
-          project_id: null,
-          priority: Data.priority,
-          push_status: false,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${JwtToken}`,
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const changeItemCategory = (selectedItem: any, title: string) => {
+    console.log(title);
+    title === "past_todos"
+      ? axios
+          .patch(
+            `https://laoh.site/api/todos/${Data.id}`,
+            {
+              title: Data.title,
+              content: Data.content,
+              end_date: dayjs(Data.end_date)
+                .subtract(1, "day")
+                .format("YYYY.MM.DD"),
+              project_id: null,
+              priority: Data.priority,
+              push_status: false,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${JwtToken}`,
+              },
+              withCredentials: true,
+            }
+          )
+          .then((res) => mutate("https://laoh.site/api/todos/today"))
+          .catch((err) => console.log(err))
+      : axios
+          .patch(
+            `https://laoh.site/api/todos/${Data.id}`,
+            {
+              title: Data.title,
+              content: Data.content,
+              end_date: dayjs().format("YYYY.MM.DD"),
+              project_id: null,
+              priority: Data.priority,
+              push_status: false,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${JwtToken}`,
+              },
+              withCredentials: true,
+            }
+          )
+          .then((res) => mutate("https://laoh.site/api/todos/today"))
+          .catch((err) => console.log(err));
   };
 
   const deleteItem = () => {
@@ -182,28 +209,29 @@ const TodoBox = ({ Data, category }: any) => {
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
             <TodoLabel htmlFor="check">
-              {data.status == "INCOMPLETE" ? (
-                <CheckBox
-                  type="checkbox"
-                  id="1"
-                  name="check"
-                  onChange={CompleteTodo}
-                />
-              ) : (
-                <CheckBox
-                  type="checkbox"
-                  id="1"
-                  name="check"
-                  onChange={CompleteTodo}
-                />
-              )}
+              {Data ? (
+                Data.status === "INCOMPLETE" ? (
+                  <CheckBox
+                    type="checkbox"
+                    name="check"
+                    onClick={CompleteTodo}
+                  />
+                ) : (
+                  <CheckBox
+                    type="checkbox"
+                    name="check"
+                    checked
+                    onClick={CompleteTodo}
+                  />
+                )
+              ) : null}
             </TodoLabel>
             <TodoBoxName>{Data.title}</TodoBoxName>
-            <TodoBoxDate>{Data.end_date}</TodoBoxDate>
+            <TodoBoxDate onClick={RewriteModal}>{Data.end_date}</TodoBoxDate>
           </div>
           <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>
-        <TodoBoxDetail onClick={RewriteModal}>{Data.content}</TodoBoxDetail>
+        <TodoBoxDetail>{Data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>
           <HashtagPriority priority={Data.priority} />
           <HashtagProject project={Data.project ? data.project : null} />

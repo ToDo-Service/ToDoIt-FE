@@ -19,9 +19,9 @@ const Progress = styled("div")<{ width: number }>`
   display: flex;
   align-items: center;
   width: ${(props) => props.width}%;
+  transition: 0.5s ease-in-out;
   justify-content: center;
   height: 23px;
-
   text-align: center;
   color: white;
   font-family: "Pretendard";
@@ -39,19 +39,15 @@ const ProgressBarComponent = () => {
   let availableItem = data.body.today_todos.length;
   const maxItem = data.body.today_todos.length;
 
-  console.log(data.body.today_todos);
   data.body.today_todos.map((e: any) => {
     e.status === "INCOMPLETE" ? null : (availableItem -= 1);
   });
-
-  console.log(100 - (availableItem * 100) / maxItem);
+  const ProgressPercent = Math.round(100 - (availableItem * 100) / maxItem);
 
   return (
     <ProgressBar>
       <Progress width={100 - (availableItem * 100) / maxItem}>
-        {100 - (availableItem * 100) / maxItem === 0
-          ? 100 - (availableItem * 100) / maxItem
-          : `${100 - (availableItem * 100) / maxItem}%`}
+        {ProgressPercent === 0 ? null : `${ProgressPercent}%`}
       </Progress>
     </ProgressBar>
   );
