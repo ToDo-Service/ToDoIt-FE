@@ -53,7 +53,7 @@ const RewriteModal = (props: any) => {
   const [prioirty, setPriority] = useState("높음");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
-  const JWT = useRecoilValue(jwtToken);
+  const JwtToken = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const CloseModalHandler = () => {
@@ -68,7 +68,7 @@ const RewriteModal = (props: any) => {
       setPostSuccess(false);
       axios
         .patch(
-          `https://laoh.site/api/todos/status/${props.id}`,
+          `https://laoh.site/api/todos/${props.id}`,
           {
             title: title,
             content: detail,
@@ -79,8 +79,9 @@ const RewriteModal = (props: any) => {
           },
           {
             headers: {
-              Authorization: `Bearer ${JWT}`,
+              Authorization: `Bearer ${JwtToken}`,
             },
+            withCredentials: true,
           }
         )
         .then(() => {

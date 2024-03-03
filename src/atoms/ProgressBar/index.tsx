@@ -36,18 +36,22 @@ const ProgressBarComponent = () => {
     "https://laoh.site/api/todos/today",
     (url) => Fetcher(url, JwtToken)
   );
+
   let availableItem = data.body.today_todos.length;
   const maxItem = data.body.today_todos.length;
 
   data.body.today_todos.map((e: any) => {
     e.status === "INCOMPLETE" ? null : (availableItem -= 1);
   });
-  const ProgressPercent = Math.round(100 - (availableItem * 100) / maxItem);
+  let ProgressPercent = Math.round(100 - (availableItem * 100) / maxItem);
+  if (isNaN(ProgressPercent)) {
+    ProgressPercent = 0;
+  }
 
   return (
     <ProgressBar>
       <Progress width={100 - (availableItem * 100) / maxItem}>
-        {ProgressPercent === 0 ? null : `${ProgressPercent}%`}
+        {ProgressPercent == 0 ? null : `${ProgressPercent}%`}
       </Progress>
     </ProgressBar>
   );

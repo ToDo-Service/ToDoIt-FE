@@ -100,12 +100,12 @@ const ExitBtn = styled.img`
 
 const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
+  const [rewriteModal, setRewriteModal] = useState(false);
 
   const { data, error, isLoading } = useSWR(
     "https://laoh.site/api/todos/today",
     (url) => Fetcher(url, JwtToken)
   );
-  const [rewriteModal, setRewriteModal] = useState(false);
 
   const CompleteTodo = async () => {
     await axios
@@ -119,53 +119,27 @@ const TodoBox = ({ Data, category }: any) => {
       .catch((err) => console.log(err));
   };
 
-  console.log(Data);
-
   const changeItemCategory = (selectedItem: any, title: string) => {
-    console.log(title);
-    title === "past_todos"
-      ? axios
-          .patch(
-            `https://laoh.site/api/todos/${Data.id}`,
-            {
-              title: Data.title,
-              content: Data.content,
-              end_date: dayjs(Data.end_date)
-                .subtract(1, "day")
-                .format("YYYY.MM.DD"),
-              project_id: null,
-              priority: Data.priority,
-              push_status: false,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${JwtToken}`,
-              },
-              withCredentials: true,
-            }
-          )
-          .then((res) => mutate("https://laoh.site/api/todos/today"))
-          .catch((err) => console.log(err))
-      : axios
-          .patch(
-            `https://laoh.site/api/todos/${Data.id}`,
-            {
-              title: Data.title,
-              content: Data.content,
-              end_date: dayjs().format("YYYY.MM.DD"),
-              project_id: null,
-              priority: Data.priority,
-              push_status: false,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${JwtToken}`,
-              },
-              withCredentials: true,
-            }
-          )
-          .then((res) => mutate("https://laoh.site/api/todos/today"))
-          .catch((err) => console.log(err));
+    axios
+      .patch(
+        `https://laoh.site/api/todos/${Data.id}`,
+        {
+          title: Data.title,
+          content: Data.content,
+          end_date: dayjs().subtract(1, "day").format("YYYY.MM.DD"),
+          project_id: null,
+          priority: Data.priority,
+          push_status: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${JwtToken}`,
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => mutate("https://laoh.site/api/todos/today"))
+      .catch((err) => console.log(err));
   };
 
   const deleteItem = () => {
@@ -188,9 +162,6 @@ const TodoBox = ({ Data, category }: any) => {
       const dropResult: any | null = monitor.getDropResult();
       if (dropResult) {
         switch (dropResult.name) {
-          case "past_todos":
-            changeItemCategory(item, "past_todos");
-            break;
           case "today_todos":
             changeItemCategory(item, "today_todos");
             break;
@@ -201,6 +172,7 @@ const TodoBox = ({ Data, category }: any) => {
 
   const RewriteModal = () => {
     setRewriteModal(!rewriteModal);
+    console.log(rewriteModal);
   };
 
   return (
@@ -227,7 +199,7 @@ const TodoBox = ({ Data, category }: any) => {
               ) : null}
             </TodoLabel>
             <TodoBoxName>{Data.title}</TodoBoxName>
-            <TodoBoxDate onClick={RewriteModal}>{Data.end_date}</TodoBoxDate>
+            <TodoBoxDate>{Data.end_date}</TodoBoxDate>
           </div>
           <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
         </TodoBoxHeader>

@@ -4,13 +4,23 @@ import TodoModal from "@/organisms/TodoModal";
 import { useDrop } from "react-dnd";
 
 const TodoListMainBox = styled.section`
-  width: 25vw;
+  width: 30vw;
   height: 100vh;
   margin-top: 57px;
   margin-left: 67px;
   z-index: 1;
+
   & article:not(:first-child) {
     margin-top: 21px;
+  }
+  overflow-y: scroll;
+
+  & {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -21,6 +31,8 @@ const TodoHeader = styled("div")<{ interval: string }>`
   font-size: 20px;
   margin-bottom: 19px;
   display: flex;
+  position: sticky;
+  top: 0px;
   align-items: center;
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-evenly" : "space-between"};
