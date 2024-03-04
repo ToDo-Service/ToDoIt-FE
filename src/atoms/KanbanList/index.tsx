@@ -33,7 +33,7 @@ const TodoHeader = styled("div")<{ interval: string }>`
   top: 0px;
   align-items: center;
   justify-content: ${(props) =>
-    props.interval !== "past_todos" ? "space-evenly" : "space-between"};
+    props.interval !== "past_todos" ? "space-between" : "space-between"};
 `;
 
 const KanbanList = ({ title, children }: any) => {

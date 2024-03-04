@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import * as Icon from "react-bootstrap-icons";
 import { signOut } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
 
 const HeaderContainer = styled.div`
   width: 100vw;
@@ -21,9 +20,10 @@ const HeaderTest = styled.h3`
   margin-left: 12px;
 `;
 
-const HeaderLogin = styled.p`
+const HeaderLogin = styled.img`
   font-family: "Pretendard";
-  font-size: 16px;
+  width: 130px;
+  margin-right: 30px;
 `;
 
 const HeaderTextIcon = styled.div`
@@ -49,9 +49,9 @@ const Header = ({ Headername }: any) => {
           onClick={() =>
             signOut({ redirect: true, callbackUrl: "/auth/Login" })
           }
-        >
-          로그아웃
-        </HeaderLogin>
+          src="Icon/Todoit/TodoitLogo.png"
+          alt="TodotIt 로고"
+        ></HeaderLogin>
       </HeaderContainer>
     </header>
   );

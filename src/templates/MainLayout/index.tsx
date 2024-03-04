@@ -6,7 +6,7 @@ import Sidebar from "@/organisms/Sidebar";
 import MainPage from "@/organisms/MainPage";
 import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
-import { useEffect } from "react";
+import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const MainLayout = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const MainLayouts = () => {
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading) return <LoadingSpinner />;
   // if (error) return <div>로딩중</div>;
 
   return (
