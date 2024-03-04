@@ -15,10 +15,10 @@ const HeaderContainer = styled.div`
 const HeaderTest = styled.h3`
   font-family: "Pretendard";
   font-size: 24px;
-  font-weight: 700;
+
   margin-top: 7px;
   margin-left: 12px;
-  color: #b3b3bd;
+  font-weight: 600;
 `;
 
 const HeaderLogin = styled.img`
