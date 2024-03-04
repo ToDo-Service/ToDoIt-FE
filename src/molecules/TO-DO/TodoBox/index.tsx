@@ -126,7 +126,7 @@ const TodoBox = ({ Data, category }: any) => {
         {
           title: Data.title,
           content: Data.content,
-          end_date: dayjs().subtract(1, "day").format("YYYY.MM.DD"),
+          end_date: dayjs().format("YYYY.MM.DD"),
           project_id: null,
           priority: Data.priority,
           push_status: false,
@@ -160,6 +160,7 @@ const TodoBox = ({ Data, category }: any) => {
     }),
     end: (item: any, monitor: DragSourceMonitor) => {
       const dropResult: any | null = monitor.getDropResult();
+      console.log(dropResult.name);
       if (dropResult) {
         switch (dropResult.name) {
           case "today_todos":
