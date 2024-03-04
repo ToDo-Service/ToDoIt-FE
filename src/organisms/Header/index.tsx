@@ -18,10 +18,10 @@ const HeaderTest = styled.h3`
   font-weight: 700;
   margin-top: 7px;
   margin-left: 12px;
+  color: #b3b3bd;
 `;
 
 const HeaderLogin = styled.img`
-  font-family: "Pretendard";
   width: 130px;
   margin-right: 30px;
 `;

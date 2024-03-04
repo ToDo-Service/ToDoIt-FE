@@ -34,6 +34,13 @@ const TodoHeader = styled("div")<{ interval: string }>`
   align-items: center;
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-between" : "space-between"};
+
+  & p {
+    display: flex;
+    align-items: center;
+    font-family: "Pretendard";
+    color: #b3b3bd;
+  }
 `;
 
 const KanbanList = ({ title, children }: any) => {
@@ -52,15 +59,7 @@ const KanbanList = ({ title, children }: any) => {
     <>
       <TodoListMainBox ref={drop}>
         <TodoHeader interval={title}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              fontFamily: "Pretendard",
-            }}
-          >
-            {title === "past_todos" ? "지난 일정" : "오늘 일정"}
-          </div>
+          <p>{title === "past_todos" ? "지난 일정" : "오늘 일정"}</p>
           {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>
 
