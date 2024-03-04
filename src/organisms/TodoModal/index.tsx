@@ -34,8 +34,18 @@ const ExitBtn = styled.img`
   margin-left: 537px;
 `;
 
-const AddImage = styled.img`
-  margin-left: 10px;
+const AddImage = styled.div`
+  width: 376px;
+  height: 55px;
+  background-color: rgba(12, 0, 24, 0.1);
+  border-radius: 12px;
+  margin-top: 15px;
+  display: flex;
+  padding-left: 24px;
+  align-items: center;
+  font-family: "Pretendard";
+  font-size: 15px;
+  color: rgba(37, 37, 48, 0.6);
 `;
 
 export const ModalView = styled.div.attrs((props) => ({
@@ -126,13 +136,9 @@ const TodoModal = (props: any) => {
   return (
     <>
       {method === "post" ? (
-        <AddImage
-          src="/Icon/Add.png"
-          alt="/"
-          width="16px"
-          height="16px"
-          onClick={openModalHandler}
-        />
+        <AddImage onClick={openModalHandler}>
+          <span>+ 할 일을 추가해주세요</span>
+        </AddImage>
       ) : null}
 
       {isaddopen || props.status ? (
