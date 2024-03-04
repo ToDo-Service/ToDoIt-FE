@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const LoadingSpinner = () => {
   return (
-    <Spinner>
-      <div className="spinner"></div>
-    </Spinner>
+    <>
+      <Spinner>
+        <div className="spinner"></div>
+      </Spinner>
+    </>
   );
 };
 
@@ -40,8 +42,8 @@ const Spinner = styled.div`
     margin-left: -32px;
     border-radius: 50%;
     border: 6px solid transparent;
-    border-top-color: #df9e75;
-    border-bottom-color: #a9653b;
+    border-top-color: #f1ebf9;
+    border-bottom-color: #f1ebf9;
     animation: spinner 0.8s ease infinite;
   }
 `;

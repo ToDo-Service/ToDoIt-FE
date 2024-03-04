@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { jwtToken } from "@/reocoil";
 import Sidebar from "@/organisms/Sidebar";
 import MainPage from "@/organisms/MainPage";
@@ -9,6 +9,8 @@ import useSWR from "swr";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const MainLayout = styled.div`
+  width: 100vw;
+  height: 100vh;
   display: flex;
 `;
 
@@ -26,6 +28,7 @@ const MainLayouts = () => {
   );
 
   if (isLoading) return <LoadingSpinner />;
+
   // if (error) return <div>로딩중</div>;
 
   return (

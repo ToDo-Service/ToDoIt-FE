@@ -35,7 +35,7 @@ const ExitBtn = styled.img`
 `;
 
 const AddImage = styled.div`
-  width: 376px;
+  width: 320px;
   height: 55px;
   background-color: rgba(12, 0, 24, 0.1);
   border-radius: 12px;

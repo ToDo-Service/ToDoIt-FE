@@ -4,13 +4,10 @@ import NextSchedule from "@/molecules/TO-DO/NextSchedule";
 import FollowAnaylytics from "@/molecules/ANAYLYTICS/FollowAnaylytics";
 import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
-import { useSession } from "next-auth/react";
-import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
 
 const S_Background = styled.nav`
   height: 100vh;
-  width: 270px;
+  width: 230px;
   background-color: #f7f8f9;
   border-radius: 6px;
   filter: drop-shadow(2px 4px rgba(12, 0, 24, 0.1));
@@ -36,14 +33,12 @@ const S_Background = styled.nav`
     margin-left: 14%;
     margin-top: 20%;
     color: #b3b3bd;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
   }
 `;
 
 const Sidebar = () => {
-  const jwt = useRecoilValue(jwtToken);
-
   return (
     <S_Background>
       <SidebarHeader />

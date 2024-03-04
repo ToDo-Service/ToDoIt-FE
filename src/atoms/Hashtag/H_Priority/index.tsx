@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Hasttag = styled("div")<{ bgcolor: string }>`
-  width: 110px;
-  height: 29px;
+  width: 100px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;

@@ -20,7 +20,7 @@ const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
   border: 0.5px solid #c8c5cb;
   border-radius: 16px;
-  width: 376px;
+  width: 320px;
 `;
 
 const TodoMainBox = styled.div<DargProps>`
@@ -77,6 +77,10 @@ const TodoBoxDate = styled.span`
 `;
 
 const TodoBoxDetail = styled.div`
+  width: 201px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-left: 27px;
   color: rgba(0, 0, 0, 0.5);
   font-size: 16px;
@@ -89,7 +93,7 @@ const TodoBoxHashTagBox = styled.div`
   margin-top: 16.5px;
   width: 201px;
   margin-left: 27px;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `;
 
 const ExitBtn = styled.img`

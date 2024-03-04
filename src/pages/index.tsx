@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const MainLayout = styled.div`
   display: flex;

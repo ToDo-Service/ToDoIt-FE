@@ -19,12 +19,8 @@ const UserNickName = styled.div`
   font-family: "Pretendard";
   margin-left: 10%;
   color: black;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
-`;
-
-const Alarm = styled.div`
-  margin-left: 74px;
 `;
 
 const SidebarHeader = () => {
@@ -34,9 +30,8 @@ const SidebarHeader = () => {
     <SidebarHeaderContainer>
       <UserIcon Img={session?.user?.image} />
       <UserNickName>{session?.user?.name}</UserNickName>
-      <Alarm>
-        <Icon.Bell size={"20px"} />
-      </Alarm>
+
+      <Icon.Bell size={"17px"} style={{ marginLeft: "55px" }} />
     </SidebarHeaderContainer>
   );
 };

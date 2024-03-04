@@ -17,7 +17,7 @@ const TodoPageMainBox = styled.div`
 `;
 
 const PageTemp = ({ data }: any) => {
-  const [HeaderName, setHeaderName] = useState(["오늘의 할 일 "]);
+  const [HeaderName, setHeaderName] = useState(["오늘 할 일 "]);
 
   //현재 날짜
   let today = new Date();

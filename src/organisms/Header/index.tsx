@@ -14,7 +14,7 @@ const HeaderContainer = styled.div`
 
 const HeaderTest = styled.h3`
   font-family: "Pretendard";
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
   margin-top: 7px;
   margin-left: 12px;
@@ -29,6 +29,8 @@ const HeaderLogin = styled.img`
 const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-left: 264px;
 `;
 
 const Header = ({ Headername }: any) => {
@@ -36,13 +38,7 @@ const Header = ({ Headername }: any) => {
     <header>
       <HeaderContainer>
         <HeaderTextIcon>
-          <Icon.BookmarkCheck
-            size={"30px"}
-            style={{
-              marginLeft: "309px",
-              marginRight: "12px",
-            }}
-          />
+          <Icon.BookmarkCheck size={"30px"} />
           <HeaderTest>{Headername}</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin

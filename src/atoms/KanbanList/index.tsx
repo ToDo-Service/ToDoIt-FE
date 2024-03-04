@@ -7,7 +7,7 @@ const TodoListMainBox = styled.section`
   width: 30vw;
   height: 100vh;
   margin-top: 57px;
-  margin-left: 67px;
+  margin-left: 45px;
   z-index: 1;
   overflow-y: scroll;
   & article:not(:first-child) {

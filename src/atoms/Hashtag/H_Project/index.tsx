@@ -3,8 +3,8 @@ import { FC } from "react";
 import styled from "styled-components";
 
 const Hasttag = styled.div`
-  width: 83px;
-  height: 29px;
+  width: 75px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
