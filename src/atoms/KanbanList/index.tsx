@@ -52,7 +52,13 @@ const KanbanList = ({ title, children }: any) => {
     <>
       <TodoListMainBox ref={drop}>
         <TodoHeader interval={title}>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontFamily: "Pretendard",
+            }}
+          >
             {title === "past_todos" ? "지난 일정" : "오늘 일정"}
           </div>
           {title !== "past_todos" ? <ProgressBar /> : null}
