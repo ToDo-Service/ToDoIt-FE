@@ -18,7 +18,7 @@ const HeaderTest = styled.h3`
 
   margin-top: 7px;
   margin-left: 12px;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const HeaderLogin = styled.div`

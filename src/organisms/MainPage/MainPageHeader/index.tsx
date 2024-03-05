@@ -31,7 +31,7 @@ const MainPageHeader = () => {
       <MainPageLogo src="/Icon/Todoit/TodoitLogo.png" />
       <MainPageNav>
         <MainPageNavUl>
-          <MainPageNavli>로그인</MainPageNavli>
+          <MainPageNavli></MainPageNavli>
         </MainPageNavUl>
       </MainPageNav>
     </MainPageHeaderMainbox>

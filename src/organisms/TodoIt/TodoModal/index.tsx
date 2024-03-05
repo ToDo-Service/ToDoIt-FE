@@ -91,7 +91,7 @@ const TodoModal = (props: any) => {
       e.preventDefault();
       setPostError("");
       setPostSuccess(false);
-
+      console.log(prioirty);
       axios
         .post(
           "https://laoh.site/api/todos",

@@ -30,14 +30,11 @@ export default NextAuth({
     signIn: async ({ user, account, profile, credentials }: any) => {
       try {
         if (account) {
-          console.log(`https://laoh.site/api/auth/social/${account.provider}`);
           const response = await axios.post(
             `https://laoh.site/api/auth/social/${account.provider}`,
             null,
             {
-              headers: {
-                Authorization: `Bearer ${account.access_token}`,
-              },
+              headers: { Authorization: `Bearer ${account.access_token}` },
             }
           );
 

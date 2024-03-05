@@ -55,6 +55,8 @@ const KanbanList = ({ title, children }: any) => {
     }),
   });
 
+  // console.log(canDrop, isOver);
+
   return (
     <>
       <TodoListMainBox ref={drop}>

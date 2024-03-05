@@ -62,13 +62,13 @@ const Prioritylist = styled.div`
 const PriorityData = [
   {
     id: 1,
-    text: "높음 🔥",
+    text: "높음",
     color: "#ff8080",
     bgcolor: "rgba(255, 190, 190, 0.27)",
   },
   {
     id: 2,
-    text: "보통 🔥",
+    text: "보통",
     color: "#FB9A09",
     bgcolor: "rgba(255, 191, 133, 0.27)",
   },
@@ -81,7 +81,7 @@ const PriorityData = [
 ];
 
 const Priority = (props: any) => {
-  const [text, setText] = useState("높음 🔥");
+  const [text, setText] = useState("높음");
   const [color, setColor] = useState("#ff8080");
   const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
   const [priorityopen, setPrioirtyOpen] = useState(false);
