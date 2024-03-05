@@ -7,6 +7,7 @@ import { RecoilRoot } from "recoil";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import Head from "next/head";
 
 const WrapStyled = styled.div`
   position: relative;
@@ -39,23 +40,30 @@ export default function App({
   const router = useRouter();
 
   return (
-    <RecoilRoot>
-      <SessionProvider session={session}>
-        <WrapStyled>
-          <AnimatePresence>
-            <motion.div
-              key={router.route}
-              initial={animate.initial}
-              //@ts-ignore
-              animate={animate.animate}
-              //@ts-ignore
-              exit={animate.exit}
-            >
-              <Component {...pageProps} />
-            </motion.div>
-          </AnimatePresence>
-        </WrapStyled>
-      </SessionProvider>
-    </RecoilRoot>
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="icon" href="Icon/Todoit/TodoitLogofavion.png" />
+        <title>TodoIt</title>
+      </Head>
+      <RecoilRoot>
+        <SessionProvider session={session}>
+          <WrapStyled>
+            <AnimatePresence>
+              <motion.div
+                key={router.route}
+                initial={animate.initial}
+                //@ts-ignore
+                animate={animate.animate}
+                //@ts-ignore
+                exit={animate.exit}
+              >
+                <Component {...pageProps} />
+              </motion.div>
+            </AnimatePresence>
+          </WrapStyled>
+        </SessionProvider>
+      </RecoilRoot>
+    </>
   );
 }

@@ -4,7 +4,7 @@ export const LoadingSpinner = () => {
   return (
     <>
       <Spinner>
-        <div className="spinner"></div>
+        <div className="spinner" />
       </Spinner>
     </>
   );
