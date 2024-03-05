@@ -21,6 +21,8 @@ const ModalBackdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
   filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1));
   border-radius: 10px;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   left: 0;
   right: 0;
