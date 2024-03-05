@@ -1,5 +1,5 @@
 import KanbanList from "@/atoms/KanbanList";
-import Header from "@/organisms/Header";
+import Header from "@/organisms/TodoIt/TodoItHeader";
 import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";

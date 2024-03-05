@@ -21,7 +21,7 @@ const HeaderTest = styled.h3`
   font-weight: 600;
 `;
 
-const HeaderLogin = styled.img`
+const HeaderLogin = styled.div`
   width: 130px;
   margin-right: 30px;
 `;
@@ -42,12 +42,12 @@ const Header = ({ Headername }: any) => {
           <HeaderTest>{Headername}</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin
-          onClick={() =>
-            signOut({ redirect: true, callbackUrl: "/auth/Login" })
-          }
-          src="Icon/Todoit/TodoitLogo.png"
-          alt="TodotIt 로고"
-        ></HeaderLogin>
+          onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+          // src="Icon/Todoit/TodoitLogo.png"
+          // alt="TodotIt 로고"
+        >
+          로그아웃
+        </HeaderLogin>
       </HeaderContainer>
     </header>
   );

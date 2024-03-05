@@ -11,7 +11,6 @@ const CalendarContainer = styled.div`
   .react-calendar {
     width: 243px;
     height: 256px;
-
     background: white;
     border: 1px solid rgba(12, 0, 24, 0.1);
     font-family: Arial, Helvetica, sans-serif;
@@ -26,7 +25,6 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar--doubleView .react-calendar__viewContainer > * {
-    /* width: 50%; */
     margin: 0.5em;
     height: 181px;
   }
@@ -59,7 +57,6 @@ const CalendarContainer = styled.div`
     font-size: 12px;
   }
   .react-calendar__navigation button {
-    /* min-width: 44px; */
     background: none;
   }
 
@@ -71,8 +68,7 @@ const CalendarContainer = styled.div`
   .react-calendar__navigation button:enabled:focus {
     background-color: #e6e6e6;
   }
-  /* class="react-calendar__month-view" */
-  /* react-calendar__month-view__weekdays */
+
   .react-calendar__navigation__label__labelText--from {
     font-size: 12px;
     color: #252530;
@@ -119,7 +115,6 @@ const CalendarContainer = styled.div`
     justify-content: center;
     font: inherit;
     font-size: 0.75em;
-
     font-weight: bold;
   }
 
@@ -147,7 +142,6 @@ const CalendarContainer = styled.div`
     justify-content: center;
     background: none;
     text-align: center;
-
     font: inherit;
     font-size: 10px;
   }

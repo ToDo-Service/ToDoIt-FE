@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ProgressBar from "../ProgressBar";
-import TodoModal from "@/organisms/TodoModal";
+import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
 
 const TodoListMainBox = styled.section`
@@ -62,7 +62,6 @@ const KanbanList = ({ title, children }: any) => {
           <p>{title === "past_todos" ? "지난 일정" : "오늘 일정"}</p>
           {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>
-
         {children}
         {title !== "past_todos" ? <TodoModal method="post" /> : null}
       </TodoListMainBox>

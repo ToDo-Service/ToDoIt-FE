@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useSetRecoilState } from "recoil";
 import { jwtToken } from "@/reocoil";
 import Sidebar from "@/organisms/Sidebar";
-import MainPage from "@/organisms/MainPage";
+import MainPage from "@/organisms/TodoIt/TodoItMainPage";
 import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
@@ -28,8 +28,6 @@ const MainLayouts = () => {
   );
 
   if (isLoading) return <LoadingSpinner />;
-
-  // if (error) return <div>로딩중</div>;
 
   return (
     <MainLayout>

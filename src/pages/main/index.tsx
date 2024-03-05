@@ -1,5 +1,5 @@
-import MainLayout from "@/templates/MainLayout";
+import ToDoItLayout from "@/templates/ToDoItLayout";
 
 export default function Home() {
-  return <MainLayout />;
+  return <ToDoItLayout />;
 }

@@ -79,6 +79,7 @@ const TodoBoxDate = styled.span`
 const TodoBoxDetail = styled.div`
   width: 201px;
   overflow: hidden;
+  //css 글 자수 초과
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-left: 27px;
