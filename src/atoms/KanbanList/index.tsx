@@ -23,14 +23,20 @@ const TodoListMainBox = styled.section`
 `;
 
 const TodoHeader = styled("div")<{ interval: string }>`
-  width: 291px;
+  z-index: 2;
+  width: 325px;
+
+  background-color: white;
+  opacity: 1;
   font-family: "Pretendard";
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 19px;
   display: flex;
   position: sticky;
-  top: 0px;
+  top: 0;
+  /* top: 140px; */
+
   /* align-items: center; */
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-between" : "space-between"};
