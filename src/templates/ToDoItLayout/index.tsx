@@ -10,7 +10,9 @@ import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const MainLayout = styled.div`
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
+  overflow: hidden;
+
   display: flex;
 `;
 

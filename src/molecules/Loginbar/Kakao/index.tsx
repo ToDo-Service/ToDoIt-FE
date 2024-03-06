@@ -3,18 +3,23 @@ import styled from "styled-components";
 import { onSocialLogin } from "@/hooks/onSocialLogin";
 import { FC } from "react";
 
-const KakaoLoginBar = styled.div`
+const KakaoLoginBar = styled.button`
   width: 300px;
   height: 45px;
   background-color: #fee500;
   border-radius: 6px;
   display: flex;
   align-items: center;
+  border: none;
   padding-left: 14px;
   & span {
     margin-left: 30px;
   }
   margin-bottom: 14px;
+
+  &:hover {
+    background-color: #dcc602;
+  }
 `;
 
 const Kakao: FC = () => {

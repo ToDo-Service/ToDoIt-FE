@@ -31,7 +31,7 @@ const TodoHeader = styled("div")<{ interval: string }>`
   display: flex;
   position: sticky;
   top: 0px;
-  align-items: center;
+  /* align-items: center; */
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-between" : "space-between"};
 

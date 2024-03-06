@@ -11,6 +11,7 @@ import Head from "next/head";
 
 const WrapStyled = styled.div`
   position: relative;
+
   max-width: 978px;
   padding: 0 0 30px 0;
 `;

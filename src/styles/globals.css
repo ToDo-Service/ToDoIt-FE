@@ -3,4 +3,9 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-style: "Pretendard";
+  overflow: hidden;
 }
+
+/* body > div {
+  overflow: hidden;
+} */

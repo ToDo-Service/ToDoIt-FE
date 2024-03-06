@@ -2,11 +2,12 @@ import GoogleLoginBtn from "@/atoms/LOGIN/GoogleLoginBtn";
 import styled from "styled-components";
 import { onSocialLogin } from "@/hooks/onSocialLogin";
 
-const GoogleLoginBar = styled.div`
+const GoogleLoginBar = styled.button`
   width: 300px;
   height: 45px;
   background-color: #ffffff;
   border-radius: 6px;
+  border: none;
   filter: drop-shadow(1px 2px rgba(12, 0, 24, 0.1));
   display: flex;
   align-items: center;
@@ -15,6 +16,10 @@ const GoogleLoginBar = styled.div`
     margin-left: 30px;
   }
   margin-bottom: 14px;
+
+  &:hover {
+    background-color: #e4e4e4;
+  }
 `;
 
 const Google = () => {

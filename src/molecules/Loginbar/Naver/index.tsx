@@ -2,7 +2,7 @@ import NaverLoginBtn from "@/atoms/LOGIN/NaverLogin";
 import styled from "styled-components";
 import { onSocialLogin } from "@/hooks/onSocialLogin";
 
-const NaverLoginBar = styled.div`
+const NaverLoginBar = styled.button`
   width: 300px;
   height: 45px;
   background-color: #06c755;
@@ -10,9 +10,14 @@ const NaverLoginBar = styled.div`
   display: flex;
   align-items: center;
   color: white;
+  border: none;
   padding-left: 14px;
   & span {
     margin-left: 30px;
+  }
+
+  &:hover {
+    background-color: #039a42;
   }
 `;
 
