@@ -3,7 +3,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-style: "Pretendard";
-  overflow: hidden;
+  /* position: fixed; */
+  /* overflow: scroll; */
 }
 
 /* body > div {

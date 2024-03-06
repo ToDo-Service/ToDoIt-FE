@@ -48,6 +48,11 @@ const AddImage = styled.div`
   font-family: "Pretendard";
   font-size: 15px;
   color: rgba(37, 37, 48, 0.6);
+
+  &:hover {
+    background-color: rgba(12, 0, 24, 0.38);
+    transition: 0.5s ease-in-out;
+  }
 `;
 
 export const ModalView = styled.div.attrs((props) => ({

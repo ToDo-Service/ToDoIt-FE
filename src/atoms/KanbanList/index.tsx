@@ -5,7 +5,7 @@ import { useDrop } from "react-dnd";
 
 const TodoListMainBox = styled.section`
   width: 30vw;
-  height: 100vh;
+  height: 80vh;
   margin-top: 57px;
   margin-left: 45px;
   z-index: 1;
@@ -25,7 +25,6 @@ const TodoListMainBox = styled.section`
 const TodoHeader = styled("div")<{ interval: string }>`
   z-index: 2;
   width: 325px;
-
   background-color: white;
   opacity: 1;
   font-family: "Pretendard";
@@ -60,8 +59,6 @@ const KanbanList = ({ title, children }: any) => {
       //drop할 영역 접근시 isOver : true
     }),
   });
-
-  // console.log(canDrop, isOver);
 
   return (
     <>

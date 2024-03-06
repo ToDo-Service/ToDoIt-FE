@@ -143,7 +143,7 @@ const TodoBox = ({ Data, category }: any) => {
           withCredentials: true,
         }
       )
-      .then((res) => mutate("https://laoh.site/api/todos/today"))
+      .then(() => mutate("https://laoh.site/api/todos/today"))
       .catch((err) => console.log(err));
   };
 
