@@ -4,7 +4,7 @@ import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
 import { useRef } from "react";
@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import { mutate } from "swr";
 
 const ModalBackdrop = styled.div`
-  z-index: 1;
+  z-index: 3;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -66,15 +66,13 @@ const TodoModal = (props: any) => {
   const [method, setMethod] = useState(props.method);
   const [isaddopen, setIsaddopen] = useState(false);
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
-  const [title, onChangeTitle] = useInput("");
-  const [detail, onChangeDetail] = useInput("");
+  const [title, onChangeTitle, setTitle] = useInput("");
+  const [detail, onChangeDetail, setDetail] = useInput("");
   const [prioirty, setPriority] = useState("높음");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
-
-  console.log(JWT);
 
   const openModalHandler = () => {
     setIsaddopen(true);
@@ -87,11 +85,8 @@ const TodoModal = (props: any) => {
   const onSubmit = useCallback(
     (e: any) => {
       //서버 전송
-      mutate("https://laoh.site/api/todos/today");
       e.preventDefault();
       setPostError("");
-      setPostSuccess(false);
-      console.log(prioirty);
       axios
         .post(
           "https://laoh.site/api/todos",
@@ -110,18 +105,25 @@ const TodoModal = (props: any) => {
           }
         )
         .then(() => {
-          setPostSuccess(true);
+          setPostSuccess(!postSuccess);
           CloseModalHandler();
           mutate("https://laoh.site/api/todos/today");
         })
         .catch((err) => {
           console.log(err.response);
-          setPostError(err.response.data);
+          setPostError(err.response);
         })
         .finally(() => {});
     },
     [title, detail, prioirty, endDate]
   );
+
+  useEffect(() => {
+    setTitle("");
+    setDetail("");
+    setEndDate(dayjs().format("YYYY.MM.DD"));
+    setPriority("높음");
+  }, [postSuccess]);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
@@ -180,6 +182,7 @@ const TodoModal = (props: any) => {
                   <Form.Control
                     type="text"
                     placeholder="제목"
+                    value={title}
                     onChange={onChangeTitle}
                   />
                 </Form.Group>
@@ -192,6 +195,7 @@ const TodoModal = (props: any) => {
                     placeholder="설명"
                     maxLength={20}
                     ref={ref}
+                    value={detail}
                     onInput={handleResizeHeight}
                     style={{ resize: "none" }}
                     onChange={onChangeDetail}
