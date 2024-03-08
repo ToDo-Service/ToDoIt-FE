@@ -33,7 +33,6 @@ const MainLayouts = () => {
 
   return (
     <MainLayout>
-      <Sidebar />
       <MainPage data={data} />
     </MainLayout>
   );

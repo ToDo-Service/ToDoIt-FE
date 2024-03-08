@@ -4,6 +4,9 @@ import NextSchedule from "@/molecules/TO-DO/NextSchedule";
 import FollowAnaylytics from "@/molecules/ANAYLYTICS/FollowAnaylytics";
 import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { useState } from "react";
 
 const S_Background = styled.nav`
   height: 100vh;
@@ -23,10 +26,15 @@ const S_Background = styled.nav`
     height: 5vh;
     line-height: 5vh;
     border-radius: 6px;
+    cursor: pointer;
   }
   & ul li:hover {
     background-color: #f1ebf9;
     transition: 0.5s ease-in-out;
+  }
+
+  & ul li.active {
+    background-color: #f1ebf9;
   }
 
   & h3 {
@@ -34,23 +42,58 @@ const S_Background = styled.nav`
     margin-top: 20%;
     color: #b3b3bd;
     font-size: 18px;
+    width: fit-content;
+    border-radius: 6px;
+
     font-weight: 400;
+  }
+  & h3:last-child:hover {
+    color: #dfc9fb;
+    transition: 0.5s ease-in-out;
+  }
+  & h3.active {
+    color: #dfc9fb;
+    transition: 0.5s ease-in-out;
   }
 `;
 
 const Sidebar = () => {
+  const [active, setActive] = useState("");
+
+  console.log(active);
+
   return (
     <S_Background>
       <SidebarHeader />
       <h3>TO-DO</h3>
+
       <ul>
-        <li>
-          <TodaySchedule />
-        </li>
-        <li>
-          <NextSchedule />
-        </li>
+        <Link
+          href={{ pathname: `/main/today` }}
+          style={{ textDecoration: "none", color: "black" }}
+          passHref
+        >
+          <li
+            className={active === "today" ? "active" : ""}
+            onClick={() => setActive("today")}
+          >
+            <TodaySchedule />
+          </li>
+        </Link>
+        <Link
+          href={{ pathname: `/main/nextplan` }}
+          style={{ textDecoration: "none", color: "black" }}
+          passHref
+        >
+          <li
+            className={active === "nextplan" ? "active" : ""}
+            onClick={() => setActive("nextplan")}
+          >
+            <NextSchedule />
+          </li>
+        </Link>
       </ul>
+
       <h3>ANAYLYTICS</h3>
       <ul>
         <li>
@@ -60,7 +103,18 @@ const Sidebar = () => {
           <FollowAnaylytics />
         </li>
       </ul>
-      <h3>PROJECT</h3>
+      <Link
+        href={{ pathname: `/main/project` }}
+        style={{ textDecoration: "none", color: "black" }}
+        passHref
+      >
+        <h3
+          className={active === "project" ? "active" : ""}
+          onClick={() => setActive("project")}
+        >
+          PROJECT
+        </h3>
+      </Link>
     </S_Background>
   );
 };
