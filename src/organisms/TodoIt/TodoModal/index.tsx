@@ -36,7 +36,7 @@ const ExitBtn = styled.img`
   margin-left: 537px;
 `;
 
-const AddImage = styled.div`
+const AddTodo = styled.div`
   width: 320px;
   height: 55px;
   background-color: rgba(12, 0, 24, 0.1);
@@ -145,9 +145,9 @@ const TodoModal = (props: any) => {
   return (
     <>
       {method === "post" ? (
-        <AddImage onClick={openModalHandler}>
+        <AddTodo onClick={openModalHandler}>
           <span>+ 할 일을 추가해주세요</span>
-        </AddImage>
+        </AddTodo>
       ) : null}
 
       {isaddopen || props.status ? (

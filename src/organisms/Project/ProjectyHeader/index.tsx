@@ -15,6 +15,7 @@ const HeaderContainer = styled.div`
 const HeaderTest = styled.h3`
   font-family: "Pretendard";
   font-size: 24px;
+
   margin-top: 7px;
   margin-left: 12px;
   font-weight: 500;
@@ -29,16 +30,15 @@ const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 281px;
+  margin-left: 81px;
 `;
 
-const Header = ({ Headername }: any) => {
+const Header = () => {
   return (
     <header>
       <HeaderContainer>
         <HeaderTextIcon>
-          <Icon.BookmarkCheck size={"30px"} />
-          <HeaderTest>{Headername}</HeaderTest>
+          <HeaderTest>프로젝트</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin
           onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
