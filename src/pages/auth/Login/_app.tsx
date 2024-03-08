@@ -1,7 +1,10 @@
-import MainPageLayout from "@/templates/MainPageLayout";
+import { AppProps } from "next/app";
 import Head from "next/head";
 
-export default function Home() {
+export default function App({
+  Component,
+  pageProps: { ...pageProps },
+}: AppProps) {
   return (
     <>
       <Head>
@@ -9,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="Icon/Todoit/TodoitLogofavion.png" />
         <title>TodoIt</title>
       </Head>
-      <MainPageLayout />
+      <Component {...pageProps} />
     </>
   );
 }

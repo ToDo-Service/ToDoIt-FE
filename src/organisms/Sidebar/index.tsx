@@ -58,9 +58,10 @@ const S_Background = styled.nav`
 `;
 
 const Sidebar = () => {
-  const [active, setActive] = useState("");
-
-  console.log(active);
+  const router = useRouter();
+  const [active, setActive] = useState(
+    router.asPath === "/main/today" ? "today" : ""
+  );
 
   return (
     <S_Background>
