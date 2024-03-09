@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import Projectbox from "@/molecules/PROJECT/Projectbox";
 import ProjectInputbox from "@/molecules/PROJECT/ProjectInput";
-import useSWR from "swr";
+import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
+import ProjectModal from "@/organisms/Project/ProjectModal";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const AddProject = styled.div`
   width: 791px;
@@ -40,6 +42,12 @@ const ProjectUserName = styled.div`
 
 const ProjectMainPage = () => {
   const session = useSession();
+  const [modal, setModal] = useState(false);
+
+  const openModal = () => {
+    console.log(modal);
+    setModal(!modal);
+  };
 
   return (
     <ProjectPageMainBox>
@@ -48,6 +56,8 @@ const ProjectMainPage = () => {
         <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
         <Projectbox />
       </ProjectList>
+      <ProjectAdd onclick={openModal} />
+      {modal ? <ProjectModal onclose={openModal} /> : undefined}
     </ProjectPageMainBox>
   );
 };

@@ -29,7 +29,7 @@ const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 281px;
+  margin-left: 264px;
 `;
 
 const Header = ({ Headername }: any) => {
