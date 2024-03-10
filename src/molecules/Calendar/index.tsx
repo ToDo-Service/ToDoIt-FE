@@ -199,7 +199,7 @@ const DropdownButton = styled.button`
   justify-content: space-between;
   width: 115px;
   height: 37px;
-  border: 0.8px solid var(--festie-gray-600, #949494);
+  border: 0.8px solid rgba(12, 0, 24, 0.1);
   border-radius: 10px;
   padding: 0px 10px;
   color: #8f8f8f;

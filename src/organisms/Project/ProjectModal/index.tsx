@@ -1,12 +1,11 @@
-import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
-import Project from "@/molecules/TO-DO/Project";
+
 import { useRecoilState, useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import Priority from "@/molecules/TO-DO/Priority";
+import ColorSelect from "@/molecules/PROJECT/ProjectModal/Color";
 import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
@@ -41,6 +40,27 @@ const ProjectInputboxMainbox = styled.input`
 
   &::placeholder {
     color: #8f8f8f;
+  }
+`;
+const ProjectCateogry = styled.div`
+  width: 269px;
+  height: 37px;
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 15.8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(12, 0, 24, 0.1);
+  margin-top: 11px;
+
+  & div {
+    color: #8f8f8f;
+  }
+
+  & img {
+    width: 9.25px;
+    height: 5.25px;
   }
 `;
 
@@ -84,14 +104,11 @@ const ProejectModal = (props: any) => {
       setPostError("");
       axios
         .post(
-          "https://laoh.site/api/todos",
+          "https://laoh.site/api/project",
           {
             title: title,
-            content: detail,
-            end_date: endDate,
-            project_id: null,
-            priority: prioirty,
-            push_status: false,
+            color: "",
+            description: "",
           },
           {
             headers: {
@@ -160,20 +177,26 @@ const ProejectModal = (props: any) => {
             </div>
           </div>
           <ProjectInputboxMainbox placeholder="이름" />
+          <ProjectCateogry>
+            <div>카테고리</div>
+            <img src="/Icon/Project/Stroke.png" alt="/" />
+          </ProjectCateogry>
           <div
             style={{
-              width: "418px",
+              width: "269px",
+              marginTop: "11px",
               height: "37px",
               display: "flex",
               justifyContent: "space-between",
             }}
           >
             <Calendar setDate={setEndDate} />
+            <ColorSelect />
           </div>
           <div
             onClick={onSubmit}
             style={{
-              width: "418px",
+              width: "269px",
               height: "37px",
               backgroundColor: "#862DDF",
               marginTop: "11px",
