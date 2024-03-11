@@ -153,7 +153,11 @@ const ProejectModal = (props: any) => {
     <>
       <ModalBackdrop>
         <ModalView>
-          <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={props.onclose} />
+          <ExitBtn
+            src="/Icon/Modal/ModalExit.png"
+            alt="/"
+            onClick={props.onclose}
+          />
           <div style={{ width: "418px" }}>
             <div style={{ textAlign: "center" }}>
               <h1

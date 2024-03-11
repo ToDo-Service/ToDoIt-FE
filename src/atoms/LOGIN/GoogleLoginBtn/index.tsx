@@ -4,7 +4,7 @@ const GoogleLoginBtn = () => {
   return (
     <>
       <img
-        src="/Icon/Google.png"
+        src="/Icon/Login/Google.png"
         alt="구글로그인버튼"
         width={"18px"}
         height={"18px"}

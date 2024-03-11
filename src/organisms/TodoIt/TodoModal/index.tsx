@@ -154,7 +154,7 @@ const TodoModal = (props: any) => {
         <ModalBackdrop>
           <ModalView>
             <ExitBtn
-              src="/Icon/ModalExit.png"
+              src="/Icon/Modal/ModalExit.png"
               alt="/"
               onClick={CloseModalHandler}
             />
