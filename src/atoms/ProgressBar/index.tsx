@@ -37,8 +37,10 @@ const ProgressBarComponent = () => {
     (url) => Fetcher(url, JwtToken)
   );
 
-  let availableItem = data.body.today_todos.length;
-  const maxItem = data.body.today_todos.length;
+  let availableItem: number = data.body.today_todos.length;
+  const maxItem: number = data.body.today_todos.length;
+
+  console.log(availableItem);
 
   data.body.today_todos.map((e: any) => {
     e.status === "INCOMPLETE" ? null : (availableItem -= 1);
@@ -48,13 +50,17 @@ const ProgressBarComponent = () => {
     ProgressPercent = 0;
   }
 
-  return (
-    <ProgressBar>
-      <Progress width={100 - (availableItem * 100) / maxItem}>
-        {ProgressPercent === 0 ? undefined : `${ProgressPercent}%`}
-      </Progress>
-    </ProgressBar>
-  );
+  if (maxItem === 0) {
+    return undefined;
+  } else {
+    return (
+      <ProgressBar>
+        <Progress width={100 - (availableItem * 100) / maxItem}>
+          {ProgressPercent === 0 ? undefined : `${ProgressPercent}%`}
+        </Progress>
+      </ProgressBar>
+    );
+  }
 };
 
 export default ProgressBarComponent;

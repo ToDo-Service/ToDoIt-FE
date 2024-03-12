@@ -5,11 +5,12 @@ export const useToast = (message: string, isSucess: boolean) => {
 
   const ToastMessage = Swal.mixin({
     toast: true,
-    position: "center-end",
+    position: "bottom-start",
     showCancelButton: false,
     showConfirmButton: false,
+    background: "#f1ebf9",
     timer: 1000,
-    timerProgressBar: true,
+    timerProgressBar: false,
     didOpen: (toast) => {
       toast.addEventListener("mouseenter", Swal.stopTimer);
       toast.addEventListener("mouseleave", Swal.resumeTimer);
