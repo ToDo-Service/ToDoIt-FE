@@ -10,7 +10,9 @@ import axios from "axios";
 import useSWR, { mutate } from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRef, useState } from "react";
+import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { useToast } from "@/hooks/useToast";
 
 interface DargProps {
   isdragging: any;
@@ -107,6 +109,18 @@ const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
   const [rewriteModal, setRewriteModal] = useState(false);
 
+  const ToastMessage = Swal.mixin({
+    toast: true,
+    position: "center-end",
+    showCancelButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
   const { data, error, isLoading } = useSWR(
     "https://laoh.site/api/todos/today",
     (url) => Fetcher(url, JwtToken)
@@ -120,8 +134,14 @@ const TodoBox = ({ Data, category }: any) => {
         },
         withCredentials: true,
       })
-      .then((res) => mutate("https://laoh.site/api/todos/today"))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        useToast("할 일 완료", true);
+        mutate("https://laoh.site/api/todos/today");
+      })
+      .catch((err) => {
+        console.log(err);
+        useToast("실패", false);
+      });
   };
 
   const changeItemCategory = (selectedItem: any, title: string) => {
@@ -143,8 +163,14 @@ const TodoBox = ({ Data, category }: any) => {
           withCredentials: true,
         }
       )
-      .then(() => mutate("https://laoh.site/api/todos/today"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        mutate("https://laoh.site/api/todos/today");
+        useToast("카테고리 변경 완료", true);
+      })
+      .catch((err) => {
+        console.log(err);
+        useToast("실패", false);
+      });
   };
 
   const deleteItem = () => {
@@ -153,8 +179,11 @@ const TodoBox = ({ Data, category }: any) => {
         withCredentials: true,
         headers: { Authorization: `Bearer ${JwtToken}` },
       })
-      .then(() => mutate("https://laoh.site/api/todos/today"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        mutate("https://laoh.site/api/todos/today");
+        useToast("할 일 삭제 완료", true);
+      })
+      .catch((err) => useToast("실패", false));
   };
 
   const [{ isDragging }, dragRef] = useDrag(() => ({

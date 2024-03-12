@@ -51,7 +51,7 @@ const ProgressBarComponent = () => {
   return (
     <ProgressBar>
       <Progress width={100 - (availableItem * 100) / maxItem}>
-        {ProgressPercent == 0 ? null : `${ProgressPercent}%`}
+        {ProgressPercent === 0 ? undefined : `${ProgressPercent}%`}
       </Progress>
     </ProgressBar>
   );
