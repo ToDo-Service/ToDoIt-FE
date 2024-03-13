@@ -43,6 +43,7 @@ const ProjectInputboxMainbox = styled.input`
   }
 `;
 const ProjectCateogry = styled.div`
+  cursor: pointer;
   width: 269px;
   height: 37px;
   border-radius: 8px;
@@ -89,10 +90,16 @@ const ProejectModal = (props: any) => {
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
   const [color, setColor] = useState<string>("");
   const [title, onChangeTitle, setTitle] = useInput("");
+  const [category, setCategory] = useState<string>("카테고리");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
+  const [endDatePopUp, setEndDatePopUp] = useState(false);
+
   const JWT = useRecoilValue(jwtToken);
-  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const onToggleEndDate = () => {
+    setEndDatePopUp(endDatePopUp);
+  };
 
   const onSubmit = useCallback(
     (e: any) => {
@@ -103,11 +110,11 @@ const ProejectModal = (props: any) => {
         .post(
           "https://laoh.site/api/project",
           {
-            title: "project1",
+            title: title,
             color: color,
             description: "안녕하시요",
-            end_date: "2024.02.26",
-            category: "코딩",
+            end_date: endDate,
+            category: category,
           },
           {
             headers: {
@@ -130,7 +137,7 @@ const ProejectModal = (props: any) => {
 
   useEffect(() => {
     setTitle("");
-
+    setColor("");
     setEndDate(dayjs().format("YYYY.MM.DD"));
   }, [postSuccess]);
 
@@ -165,9 +172,9 @@ const ProejectModal = (props: any) => {
               </div>
             </div>
           </div>
-          <ProjectInputboxMainbox placeholder="이름" />
+          <ProjectInputboxMainbox placeholder="이름" onChange={onChangeTitle} />
           <ProjectCateogry>
-            <div>카테고리</div>
+            <div>{category}</div>
             <img src="/Icon/Project/Stroke.png" alt="/" />
           </ProjectCateogry>
           <div
@@ -180,7 +187,7 @@ const ProejectModal = (props: any) => {
               position: "relative",
             }}
           >
-            <Calendar setDate={setEndDate} />
+            <Calendar setDate={setEndDate} width="128px" name="종료일" />
             <ColorSelect onChangeColor={setColor} />
           </div>
           <div

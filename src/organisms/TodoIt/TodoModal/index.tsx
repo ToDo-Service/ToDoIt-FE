@@ -216,7 +216,7 @@ const TodoModal = (props: any) => {
                 justifyContent: "space-between",
               }}
             >
-              <Calendar setDate={setEndDate} />
+              <Calendar setDate={setEndDate} width="115px" name="오늘" />
               <Priority setPriority={setPriority} />
               <Project />
             </div>

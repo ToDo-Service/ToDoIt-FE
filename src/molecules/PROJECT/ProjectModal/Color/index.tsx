@@ -5,7 +5,7 @@ const ProjectColorMainbox = styled("div")<{ bgcolor: string }>`
   width: 125px;
   height: 37px;
   border-radius: 8px;
-
+  cursor: pointer;
   background-color: ${(props) => props.bgcolor};
   position: relative;
   display: flex;
@@ -66,9 +66,9 @@ const ColorToggleUl = styled.ul`
 `;
 
 const ColorToggleLi = styled.li`
+  cursor: pointer;
   width: max-content;
   height: 12px;
-
   line-height: 0;
 
   & span {
@@ -142,6 +142,7 @@ const ProjectColor = ({ onChangeColor }: any) => {
     setText(SelectedColor?.text as string);
     setImg(SelectedColor?.img as string);
     onChangeColor(SelectedColor?.color as string);
+    onToogle();
   };
 
   return (

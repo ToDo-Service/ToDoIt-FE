@@ -84,6 +84,7 @@ const Sidebar = () => {
     "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
   );
+  console.log(data);
 
   return (
     <S_Background>
@@ -139,13 +140,17 @@ const Sidebar = () => {
         </h3>
       </Link>
       <ul>
-        {data.body.map((item: ProejectT) => {
-          return (
-            <ProjectListli key={item.id} color={item.color}>
-              {item.description}
-            </ProjectListli>
-          );
-        })}
+        {!data ? (
+          <div>로딩중</div>
+        ) : (
+          data.body.map((item: ProejectT) => {
+            return (
+              <ProjectListli key={item.id} color={item.color}>
+                {item.description}
+              </ProjectListli>
+            );
+          })
+        )}
       </ul>
     </S_Background>
   );

@@ -5,6 +5,10 @@ import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import ProjectModal from "@/organisms/Project/ProjectModal";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
 
 const AddProject = styled.div`
   width: 791px;
@@ -32,20 +36,37 @@ const ProjectPageMainBox = styled.div`
 `;
 const ProjectList = styled.div`
   margin-top: 69px;
+
+  & div:not(:first-child) {
+    margin-top: 12px;
+  }
 `;
 
-const ProjectUserName = styled.div`
+const ProjectUserName = styled.p`
   font-family: "Pretendard";
   font-size: 20px;
   margin-bottom: 24px;
 `;
 
+interface ProejectT {
+  id: number;
+  category: string;
+  color: string;
+  description: string;
+  end_date: string;
+}
+
 const ProjectMainPage = () => {
   const session = useSession();
   const [modal, setModal] = useState(false);
+  const jwt = useRecoilValue(jwtToken);
+
+  const { data, error, isLoading } = useSWR(
+    "https://laoh.site/api/project",
+    (url) => fetcher(url, jwt)
+  );
 
   const openModal = () => {
-    console.log(modal);
     setModal(!modal);
   };
 
@@ -54,7 +75,11 @@ const ProjectMainPage = () => {
       <ProjectInputbox />
       <ProjectList>
         <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
-        <Projectbox />
+        {data.body.map((e: ProejectT) => {
+          return (
+            <Projectbox description={e.description} title="" color={e.color} />
+          );
+        })}
       </ProjectList>
       <ProjectAdd onclick={openModal} />
       {modal ? <ProjectModal onclose={openModal} /> : undefined}
