@@ -69,6 +69,7 @@ const ExitBtn = styled.img`
   height: 16px;
   margin-top: 34px;
   margin-left: 370px;
+  cursor: pointer;
 `;
 
 export const ModalView = styled.div.attrs((props) => ({
@@ -85,17 +86,13 @@ export const ModalView = styled.div.attrs((props) => ({
 `;
 
 const ProejectModal = (props: any) => {
-  const [isaddopen, setIsaddopen] = useState(false);
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
+  const [color, setColor] = useState<string>("");
   const [title, onChangeTitle, setTitle] = useInput("");
-  const [detail, onChangeDetail, setDetail] = useInput("");
-  const [prioirty, setPriority] = useState("높음");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
-
-  console.log(props);
 
   const onSubmit = useCallback(
     (e: any) => {
@@ -106,9 +103,11 @@ const ProejectModal = (props: any) => {
         .post(
           "https://laoh.site/api/project",
           {
-            title: title,
-            color: "",
-            description: "",
+            title: "project1",
+            color: color,
+            description: "안녕하시요",
+            end_date: "2024.02.26",
+            category: "코딩",
           },
           {
             headers: {
@@ -118,8 +117,7 @@ const ProejectModal = (props: any) => {
         )
         .then(() => {
           setPostSuccess(!postSuccess);
-
-          mutate("https://laoh.site/api/todos/today");
+          mutate("https://laoh.site/api/project");
         })
         .catch((err) => {
           console.log(err.response);
@@ -127,27 +125,14 @@ const ProejectModal = (props: any) => {
         })
         .finally(() => {});
     },
-    [title, detail, prioirty, endDate]
+    [title, color, endDate]
   );
 
   useEffect(() => {
     setTitle("");
-    setDetail("");
-    setEndDate(dayjs().format("YYYY.MM.DD"));
-    setPriority("높음");
-  }, [postSuccess]);
 
-  const handleResizeHeight = useCallback(() => {
-    if (ref === null || ref.current === null) {
-      return;
-    }
-    ref.current.style.height = "37px";
-    if (ref.current.scrollHeight <= 60) {
-      ref.current.style.height = ref.current.scrollHeight + "px";
-    } else {
-      ref.current.style.height = "60px";
-    }
-  }, []);
+    setEndDate(dayjs().format("YYYY.MM.DD"));
+  }, [postSuccess]);
 
   return (
     <>
@@ -192,10 +177,11 @@ const ProejectModal = (props: any) => {
               height: "37px",
               display: "flex",
               justifyContent: "space-between",
+              position: "relative",
             }}
           >
             <Calendar setDate={setEndDate} />
-            <ColorSelect />
+            <ColorSelect onChangeColor={setColor} />
           </div>
           <div
             onClick={onSubmit}

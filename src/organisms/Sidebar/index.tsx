@@ -7,6 +7,10 @@ import SidebarHeader from "@/organisms/SidebarHeader";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState } from "react";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
 
 const S_Background = styled.nav`
   height: 100vh;
@@ -57,10 +61,28 @@ const S_Background = styled.nav`
   }
 `;
 
+const ProjectListli = styled("li")<{ color: string }>`
+  color: ${(props) => `${props.color}`};
+`;
+
+interface ProejectT {
+  id: number;
+  category: string;
+  color: string;
+  description: string;
+  end_date: string;
+}
+
 const Sidebar = () => {
   const router = useRouter();
   const [active, setActive] = useState(
     router.asPath === "/main/today" ? "today" : ""
+  );
+  const jwt = useRecoilValue(jwtToken);
+
+  const { data, error, isLoading } = useSWR(
+    "https://laoh.site/api/project",
+    (url) => fetcher(url, jwt)
   );
 
   return (
@@ -116,6 +138,15 @@ const Sidebar = () => {
           PROJECT
         </h3>
       </Link>
+      <ul>
+        {data.body.map((item: ProejectT) => {
+          return (
+            <ProjectListli key={item.id} color={item.color}>
+              {item.description}
+            </ProjectListli>
+          );
+        })}
+      </ul>
     </S_Background>
   );
 };
