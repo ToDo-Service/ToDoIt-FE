@@ -7,7 +7,7 @@ import { RecoilRoot } from "recoil";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Head from "next/head";
+
 
 const WrapStyled = styled.div`
   position: relative;

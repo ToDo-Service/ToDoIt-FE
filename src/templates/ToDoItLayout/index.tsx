@@ -29,6 +29,8 @@ const MainLayouts = () => {
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 
+  console.log(data);
+
   if (isLoading) return <LoadingSpinner />;
 
   return (

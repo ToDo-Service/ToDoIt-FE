@@ -71,6 +71,7 @@ interface ProejectT {
   color: string;
   description: string;
   end_date: string;
+  title: string;
 }
 
 const Sidebar = () => {
@@ -84,13 +85,11 @@ const Sidebar = () => {
     "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
   );
-  console.log(data);
 
   return (
     <S_Background>
       <SidebarHeader />
       <h3>TO-DO</h3>
-
       <ul>
         <Link
           href={{ pathname: `/main/today` }}
@@ -146,7 +145,7 @@ const Sidebar = () => {
           data.body.map((item: ProejectT) => {
             return (
               <ProjectListli key={item.id} color={item.color}>
-                {item.description}
+                {item.title}
               </ProjectListli>
             );
           })

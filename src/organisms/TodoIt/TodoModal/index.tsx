@@ -83,10 +83,14 @@ const TodoModal = (props: any) => {
     setIsaddopen(true);
   };
 
+
+
   const CloseModalHandler = () => {
     setIsaddopen(false);
   };
 
+
+  
   const onSubmit = useCallback(
     (e: any) => {
       //서버 전송

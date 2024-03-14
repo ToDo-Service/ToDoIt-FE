@@ -54,6 +54,7 @@ interface ProejectT {
   color: string;
   description: string;
   end_date: string;
+  title: string;
 }
 
 const ProjectMainPage = () => {
@@ -77,7 +78,11 @@ const ProjectMainPage = () => {
         <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
         {data.body.map((e: ProejectT) => {
           return (
-            <Projectbox description={e.description} title="" color={e.color} />
+            <Projectbox
+              description={e.description}
+              title={e.title}
+              color={e.color}
+            />
           );
         })}
       </ProjectList>

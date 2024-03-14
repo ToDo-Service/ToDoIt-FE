@@ -50,7 +50,7 @@ const Projectbox = ({ title, description, color }: ProjectData) => {
 
   return (
     <ProjectboxMainbox color={color} bgColor={SelectedColor?.backgroundColor}>
-      <span>{description}</span>
+      <span>{title}</span>
     </ProjectboxMainbox>
   );
 };

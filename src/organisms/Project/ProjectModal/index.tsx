@@ -10,6 +10,7 @@ import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
+import Category from "@/molecules/PROJECT/ProjectModal/Category";
 
 const ModalBackdrop = styled.div`
   z-index: 3;
@@ -43,6 +44,7 @@ const ProjectInputboxMainbox = styled.input`
   }
 `;
 const ProjectCateogry = styled.div`
+  position: relative;
   cursor: pointer;
   width: 269px;
   height: 37px;
@@ -88,18 +90,14 @@ export const ModalView = styled.div.attrs((props) => ({
 
 const ProejectModal = (props: any) => {
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
-  const [color, setColor] = useState<string>("");
+  const [color, setColor] = useState<string>("#EA98AE");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [category, setCategory] = useState<string>("카테고리");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
-  const [endDatePopUp, setEndDatePopUp] = useState(false);
+  const [categoryPopup, setCategoryPopup] = useState(false);
 
   const JWT = useRecoilValue(jwtToken);
-
-  const onToggleEndDate = () => {
-    setEndDatePopUp(endDatePopUp);
-  };
 
   const onSubmit = useCallback(
     (e: any) => {
@@ -112,7 +110,7 @@ const ProejectModal = (props: any) => {
           {
             title: title,
             color: color,
-            description: "안녕하시요",
+            description: "일단 보류",
             end_date: endDate,
             category: category,
           },
@@ -125,6 +123,7 @@ const ProejectModal = (props: any) => {
         .then(() => {
           setPostSuccess(!postSuccess);
           mutate("https://laoh.site/api/project");
+          props.onclose();
         })
         .catch((err) => {
           console.log(err.response);
@@ -137,9 +136,14 @@ const ProejectModal = (props: any) => {
 
   useEffect(() => {
     setTitle("");
-    setColor("");
+    setCategory("카테고리");
+    setColor("#EA98AE");
     setEndDate(dayjs().format("YYYY.MM.DD"));
   }, [postSuccess]);
+
+  const PopupCategory = () => {
+    setCategoryPopup(!categoryPopup);
+  };
 
   return (
     <>
@@ -173,9 +177,10 @@ const ProejectModal = (props: any) => {
             </div>
           </div>
           <ProjectInputboxMainbox placeholder="이름" onChange={onChangeTitle} />
-          <ProjectCateogry>
+          <ProjectCateogry onClick={PopupCategory}>
             <div>{category}</div>
             <img src="/Icon/Project/Stroke.png" alt="/" />
+            {categoryPopup ? <Category setCategory={setCategory} /> : undefined}
           </ProjectCateogry>
           <div
             style={{

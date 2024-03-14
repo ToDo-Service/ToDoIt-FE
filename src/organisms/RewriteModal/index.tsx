@@ -112,87 +112,85 @@ const RewriteModal = (props: any) => {
 
   return (
     <>
-      {isaddopen ? (
-        <ModalBackdrop>
-          <ModalView>
-            <ExitBtn
-              src="/Icon/ModalExit.png"
-              alt="/"
-              onClick={CloseModalHandler}
-            />
-            <div style={{ width: "300px" }}>
-              <div style={{ textAlign: "center" }}>
-                <h1
-                  style={{
-                    fontFamily: "Pretendard",
-                    fontSize: "32px",
-                    marginBottom: "15px",
-                  }}
-                >
-                  일정수정
-                </h1>
-              </div>
-              <Form>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="제목"
-                    onChange={onChangeTitle}
-                  />
-                </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
-                  <Form.Control
-                    as="textarea"
-                    placeholder="설명"
-                    maxLength={20}
-                    ref={ref}
-                    onInput={handleResizeHeight}
-                    style={{ resize: "none" }}
-                    onChange={onChangeDetail}
-                  />
-                </Form.Group>
-              </Form>
+      <ModalBackdrop>
+        <ModalView>
+          <ExitBtn
+            src="/Icon/ModalExit.png"
+            alt="/"
+            onClick={CloseModalHandler}
+          />
+          <div style={{ width: "300px" }}>
+            <div style={{ textAlign: "center" }}>
+              <h1
+                style={{
+                  fontFamily: "Pretendard",
+                  fontSize: "32px",
+                  marginBottom: "15px",
+                }}
+              >
+                일정수정
+              </h1>
             </div>
-            <div
-              style={{
-                width: "320px",
-                height: "37px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Calendar setDate={setEndDate} />
-              <Priority setPriority={setPriority} />
-              <Project />
-            </div>
-            <div
-              onClick={onRewrite}
-              style={{
-                width: "320px",
-                height: "37px",
-                backgroundColor: "#862DDF",
-                marginTop: "11px",
-                borderRadius: "8px",
-                fontFamily: "Pretendard",
-                fontWeight: "200",
-                color: "white",
-                fontSize: "17px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              수정
-            </div>
-          </ModalView>
-        </ModalBackdrop>
-      ) : null}
+            <Form>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder="제목"
+                  onChange={onChangeTitle}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Control
+                  as="textarea"
+                  placeholder="설명"
+                  maxLength={20}
+                  ref={ref}
+                  onInput={handleResizeHeight}
+                  style={{ resize: "none" }}
+                  onChange={onChangeDetail}
+                />
+              </Form.Group>
+            </Form>
+          </div>
+          <div
+            style={{
+              width: "320px",
+              height: "37px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Calendar setDate={setEndDate} />
+            <Priority setPriority={setPriority} />
+            <Project />
+          </div>
+          <div
+            onClick={onRewrite}
+            style={{
+              width: "320px",
+              height: "37px",
+              backgroundColor: "#862DDF",
+              marginTop: "11px",
+              borderRadius: "8px",
+              fontFamily: "Pretendard",
+              fontWeight: "200",
+              color: "white",
+              fontSize: "17px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            수정
+          </div>
+        </ModalView>
+      </ModalBackdrop>
     </>
   );
 };

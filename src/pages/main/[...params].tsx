@@ -7,6 +7,7 @@ import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
+  
 
   return (
     <>
@@ -16,7 +17,6 @@ export default function Home() {
         <title>TodoIt</title>
       </Head>
       <Sidebar />
-
       {router.asPath === "/main/today" ? <ToDoItLayout /> : undefined}
       {router.asPath === "/main/project" ? <ProjectPageLayout /> : undefined}
     </>

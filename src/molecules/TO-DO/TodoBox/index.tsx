@@ -182,7 +182,7 @@ const TodoBox = ({ Data, category }: any) => {
   };
 
   return (
-    <TodoContainer>
+    <TodoContainer onClick={RewriteModal}>
       <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
