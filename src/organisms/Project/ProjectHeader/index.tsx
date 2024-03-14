@@ -10,12 +10,12 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: fixed;
+  padding-left: 220px;
 `;
 
 const HeaderTest = styled.h3`
   font-family: "Pretendard";
   font-size: 24px;
-
   margin-top: 7px;
   margin-left: 12px;
   font-weight: 500;
@@ -23,7 +23,6 @@ const HeaderTest = styled.h3`
 
 const HeaderLogin = styled.div`
   width: 130px;
-  margin-right: 30px;
 `;
 
 const HeaderTextIcon = styled.div`
