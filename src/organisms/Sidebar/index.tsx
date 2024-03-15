@@ -76,6 +76,19 @@ const ProjectListli = styled("li")<{ color: string }>`
   }
 `;
 
+const ProjectListUl = styled.ul`
+  overflow-y: scroll;
+  height: 350px;
+  position: relative;
+  & {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 interface ProejectT {
   id: number;
   category: string;
@@ -150,7 +163,7 @@ const Sidebar = () => {
           PROJECT
         </h3>
       </Link>
-      <ul>
+      <ProjectListUl>
         {!data ? (
           <LoadingSpinner />
         ) : (
@@ -169,7 +182,7 @@ const Sidebar = () => {
             );
           })
         )}
-      </ul>
+      </ProjectListUl>
     </S_Background>
   );
 };

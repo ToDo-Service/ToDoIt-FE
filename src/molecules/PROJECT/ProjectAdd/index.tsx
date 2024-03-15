@@ -5,12 +5,14 @@ const ProjectboxAddMainbox = styled.div`
   height: 55px;
   border-radius: 12px;
   padding-left: 25px;
-  margin-top: 12px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: start;
   border: 1px solid rgba(12, 0, 24, 0.1);
   background-color: rgba(12, 0, 24, 0.04);
+  cursor: pointer;
+
   & span {
     color: rgba(37, 37, 48, 0.6);
     font-size: 15px;

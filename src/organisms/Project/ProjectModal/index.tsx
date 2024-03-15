@@ -104,6 +104,10 @@ const ProejectModal = (props: any) => {
       //서버 전송
       e.preventDefault();
       setPostError("");
+      if (title === "") {
+        e.preventDefault();
+        alert("제목을 입력하세요");
+      }
       axios
         .post(
           "https://laoh.site/api/project",
@@ -216,7 +220,6 @@ const ProejectModal = (props: any) => {
           </div>
         </ModalView>
       </ModalBackdrop>
-      )
     </>
   );
 };

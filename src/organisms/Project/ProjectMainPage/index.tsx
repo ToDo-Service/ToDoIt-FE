@@ -11,33 +11,18 @@ import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 
-const AddProject = styled.div`
-  width: 791px;
-  height: 55px;
-  background-color: rgba(12, 0, 24, 0.1);
-  /* border-radius: 12px; */
-  margin-top: 15px;
-  display: flex;
-  padding-left: 31px;
-  align-items: center;
-  font-family: "Pretendard";
-  font-size: 15px;
-  color: rgba(37, 37, 48, 0.6);
-
-  &:hover {
-    background-color: rgba(12, 0, 24, 0.38);
-    transition: 0.5s ease-in-out;
-  }
-`;
 const ProjectPageMainBox = styled.div`
   display: flex;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   padding-left: 80px;
   padding-top: 170px;
 `;
 const ProjectList = styled.div`
-  margin-top: 69px;
-
+  overflow-y: scroll;
+  margin-top: 24px;
+  border-radius: 12px;
   & div:not(:first-child) {
     margin-top: 12px;
   }
@@ -46,7 +31,8 @@ const ProjectList = styled.div`
 const ProjectUserName = styled.p`
   font-family: "Pretendard";
   font-size: 20px;
-  margin-bottom: 24px;
+
+  margin-top: 69px;
 `;
 
 interface ProejectT {
@@ -80,18 +66,20 @@ const ProjectMainPage = () => {
     [filterProejct]
   );
 
-  const FindProject = data.body.filter((e: ProejectT) => {
-    return e.title
-      .replace(" ", "")
-      .toLowerCase()
-      .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
-  });
+  const FindProject = data
+    ? data.body.filter((e: ProejectT) => {
+        return e.title
+          .replace(" ", "")
+          .toLowerCase()
+          .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
+      })
+    : undefined;
 
   return (
     <ProjectPageMainBox>
       <ProjectInputbox SearchProject={SearchProject} />
+      <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
       <ProjectList>
-        <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
         {FindProject
           ? FindProject.map((e: ProejectT) => {
               return (
@@ -103,7 +91,8 @@ const ProjectMainPage = () => {
                 />
               );
             })
-          : data.body.map((e: ProejectT) => {
+          : data
+          ? data.body.map((e: ProejectT) => {
               return (
                 <Projectbox
                   description={e.description}
@@ -112,9 +101,11 @@ const ProjectMainPage = () => {
                   id={e.id}
                 />
               );
-            })}
+            })
+          : undefined}
+        <ProjectAdd onclick={openModal} />
       </ProjectList>
-      <ProjectAdd onclick={openModal} />
+
       {modal ? <ProjectModal onclose={openModal} /> : undefined}
     </ProjectPageMainBox>
   );

@@ -178,7 +178,6 @@ const TodoBox = ({ Data, category }: any) => {
 
   const RewriteModal = () => {
     setRewriteModal(!rewriteModal);
-    console.log(rewriteModal);
   };
 
   return (

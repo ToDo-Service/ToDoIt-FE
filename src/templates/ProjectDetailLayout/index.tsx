@@ -7,13 +7,14 @@ const ProjectPageLayoutBox = styled.div`
   height: 100%;
   position: fixed;
   padding-left: 230px;
+  overflow: hidden;
 `;
 
 const ProjectPageLayout = () => {
   return (
     <>
       <ProjectHeader />
-      <ProjectPageLayoutBox>{/* <div>테스트</div> */}</ProjectPageLayoutBox>
+      <ProjectPageLayoutBox />
     </>
   );
 };
