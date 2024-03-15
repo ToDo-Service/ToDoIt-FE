@@ -1,12 +1,13 @@
-import ToDoItLayout from "@/templates/ToDoItLayout";
-import ProjectPageLayout from "@/templates/ProjectPageLayout";
 import Sidebar from "@/organisms/Sidebar";
 import { useRouter } from "next/router";
+import ProjectDetailLayout from "@/templates/ProjectDetailLayout";
 
 import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
+
+  console.log(router);
 
   return (
     <>
@@ -15,9 +16,8 @@ export default function Home() {
         <link rel="icon" href="Icon/Todoit/TodoitLogofavion.png" />
         <title>TodoIt</title>
       </Head>
-      }
-      {router.asPath === "/main/today" ? <ToDoItLayout /> : undefined}
-      {router.asPath === "/main/project" ? <ProjectPageLayout /> : undefined}
+
+      <ProjectDetailLayout />
     </>
   );
 }

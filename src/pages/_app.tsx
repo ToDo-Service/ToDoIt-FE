@@ -7,7 +7,7 @@ import { RecoilRoot } from "recoil";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-
+import Layout from "./layout";
 
 const WrapStyled = styled.div`
   position: relative;
@@ -54,7 +54,9 @@ export default function App({
                 //@ts-ignore
                 exit={animate.exit}
               >
-                <Component {...pageProps} />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
               </motion.div>
             </AnimatePresence>
           </WrapStyled>

@@ -6,6 +6,7 @@ import ProjectModal from "@/organisms/Project/ProjectModal";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import useSWR from "swr";
+
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
@@ -76,15 +77,18 @@ const ProjectMainPage = () => {
       <ProjectInputbox />
       <ProjectList>
         <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
-        {data.body.map((e: ProejectT) => {
-          return (
-            <Projectbox
-              description={e.description}
-              title={e.title}
-              color={e.color}
-            />
-          );
-        })}
+        {data
+          ? data.body.map((e: ProejectT) => {
+              return (
+                <Projectbox
+                  description={e.description}
+                  title={e.title}
+                  color={e.color}
+                  id={e.id}
+                />
+              );
+            })
+          : undefined}
       </ProjectList>
       <ProjectAdd onclick={openModal} />
       {modal ? <ProjectModal onclose={openModal} /> : undefined}

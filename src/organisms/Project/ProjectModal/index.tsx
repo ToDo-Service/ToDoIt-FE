@@ -122,7 +122,7 @@ const ProejectModal = (props: any) => {
         )
         .then(() => {
           setPostSuccess(!postSuccess);
-          mutate("https://laoh.site/api/project");w
+          mutate("https://laoh.site/api/project");
           props.onclose();
         })
         .catch((err) => {

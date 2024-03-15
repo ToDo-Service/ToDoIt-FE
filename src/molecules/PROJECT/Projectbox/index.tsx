@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 
 const ProjectboxMainbox = styled.div<{
   color: string;
@@ -20,6 +21,7 @@ interface ProjectData {
   title: string;
   description: string;
   color: string;
+  id: number;
 }
 
 const ColorData = [
@@ -45,12 +47,20 @@ const ColorData = [
   },
 ];
 
-const Projectbox = ({ title, description, color }: ProjectData) => {
+const Projectbox = ({ title, description, color, id }: ProjectData) => {
   const SelectedColor = ColorData.find((item) => item.color === color);
 
   return (
     <ProjectboxMainbox color={color} bgColor={SelectedColor?.backgroundColor}>
-      <span>{title}</span>
+      <Link
+        href={`/main/project/${id}`}
+        style={{
+          textDecoration: "none",
+          color: "black",
+        }}
+      >
+        <span>{title}</span>
+      </Link>
     </ProjectboxMainbox>
   );
 };
