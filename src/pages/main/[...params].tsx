@@ -15,7 +15,6 @@ export default function Home() {
         <link rel="icon" href="Icon/Todoit/TodoitLogofavion.png" />
         <title>TodoIt</title>
       </Head>
-      }
       {router.asPath === "/main/today" ? <ToDoItLayout /> : undefined}
       {router.asPath === "/main/project" ? <ProjectPageLayout /> : undefined}
     </>

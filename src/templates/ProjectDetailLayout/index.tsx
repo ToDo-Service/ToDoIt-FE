@@ -3,8 +3,8 @@ import ProjectMainPage from "@/organisms/Project/ProjectMainPage";
 import styled from "styled-components";
 
 const ProjectPageLayoutBox = styled.div`
-  width: 50vw;
-  height: 50vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   padding-left: 230px;
 `;
@@ -13,9 +13,7 @@ const ProjectPageLayout = () => {
   return (
     <>
       <ProjectHeader />
-      <ProjectPageLayoutBox>
-        <div>테스트</div>
-      </ProjectPageLayoutBox>
+      <ProjectPageLayoutBox>{/* <div>테스트</div> */}</ProjectPageLayoutBox>
     </>
   );
 };

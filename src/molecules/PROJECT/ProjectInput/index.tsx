@@ -11,8 +11,17 @@ const ProjectInputboxMainbox = styled.input`
   border: 1px solid rgba(12, 0, 24, 0.1);
 `;
 
-const Projectbox = () => {
-  return <ProjectInputboxMainbox placeholder="이름으로 검색하세요" />;
+interface Props {
+  SearchProject: (e: any) => void;
+}
+
+const Projectbox = ({ SearchProject }: Props) => {
+  return (
+    <ProjectInputboxMainbox
+      placeholder="이름으로 검색하세요"
+      onChange={SearchProject}
+    />
+  );
 };
 
 export default Projectbox;

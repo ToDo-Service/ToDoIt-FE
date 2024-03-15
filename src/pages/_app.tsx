@@ -8,6 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Layout from "./layout";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 
 const WrapStyled = styled.div`
   position: relative;

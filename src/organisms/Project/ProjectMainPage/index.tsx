@@ -4,7 +4,7 @@ import ProjectInputbox from "@/molecules/PROJECT/ProjectInput";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import ProjectModal from "@/organisms/Project/ProjectModal";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useSWR from "swr";
 
 import fetcher from "@/utils/fetcher";
@@ -61,6 +61,7 @@ interface ProejectT {
 const ProjectMainPage = () => {
   const session = useSession();
   const [modal, setModal] = useState(false);
+  const [filterProejct, setFilterProject] = useState<string>("");
   const jwt = useRecoilValue(jwtToken);
 
   const { data, error, isLoading } = useSWR(
@@ -72,13 +73,27 @@ const ProjectMainPage = () => {
     setModal(!modal);
   };
 
+  const SearchProject = useCallback(
+    (e: any) => {
+      setFilterProject(e.target.value);
+    },
+    [filterProejct]
+  );
+
+  const FindProject = data.body.filter((e: ProejectT) => {
+    return e.title
+      .replace(" ", "")
+      .toLowerCase()
+      .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
+  });
+
   return (
     <ProjectPageMainBox>
-      <ProjectInputbox />
+      <ProjectInputbox SearchProject={SearchProject} />
       <ProjectList>
         <ProjectUserName>{session.data?.user.name}'s 프로젝트</ProjectUserName>
-        {data
-          ? data.body.map((e: ProejectT) => {
+        {FindProject
+          ? FindProject.map((e: ProejectT) => {
               return (
                 <Projectbox
                   description={e.description}
@@ -88,7 +103,16 @@ const ProjectMainPage = () => {
                 />
               );
             })
-          : undefined}
+          : data.body.map((e: ProejectT) => {
+              return (
+                <Projectbox
+                  description={e.description}
+                  title={e.title}
+                  color={e.color}
+                  id={e.id}
+                />
+              );
+            })}
       </ProjectList>
       <ProjectAdd onclick={openModal} />
       {modal ? <ProjectModal onclose={openModal} /> : undefined}

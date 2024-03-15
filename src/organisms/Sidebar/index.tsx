@@ -11,6 +11,8 @@ import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
+import { GetServerSideProps } from "next";
+import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const S_Background = styled.nav`
   height: 100vh;
@@ -62,7 +64,16 @@ const S_Background = styled.nav`
 `;
 
 const ProjectListli = styled("li")<{ color: string }>`
-  color: ${(props) => `${props.color}`};
+  display: flex;
+  align-items: center;
+  height: 10%;
+  max-width: 50%;
+  padding: 4px;
+
+  & a {
+    text-decoration: none;
+    color: ${(props) => (props.color ? `${props.color}` : "black")};
+  }
 `;
 
 interface ProejectT {
@@ -79,6 +90,7 @@ const Sidebar = () => {
   const [active, setActive] = useState(
     router.asPath === "/main/today" ? "today" : ""
   );
+
   const jwt = useRecoilValue(jwtToken);
 
   const { data, error, isLoading } = useSWR(
@@ -140,12 +152,19 @@ const Sidebar = () => {
       </Link>
       <ul>
         {!data ? (
-          <div>로딩중</div>
+          <LoadingSpinner />
         ) : (
           data.body.map((item: ProejectT) => {
             return (
               <ProjectListli key={item.id} color={item.color}>
-                {item.title}
+                <Link
+                  href={`/main/project/${item.id}`}
+                  className={
+                    router.asPath === `/main/project/${item.id}` ? "active" : ""
+                  }
+                >
+                  {item.title}
+                </Link>
               </ProjectListli>
             );
           })
