@@ -11,6 +11,25 @@ import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
+import { motion, AnimatePresence } from "framer-motion";
+
+const animate = {
+  initial: {
+    transform: `translateY(50px)`,
+    opacity: 0,
+    transition: `transform 0.33s ease`,
+  },
+  animate: {
+    transform: `translateY(0px)`,
+    opacity: 1,
+    transition: `transform 0.33s ease`,
+  },
+  exit: {
+    transform: `translateY(50px)`,
+    opacity: 0,
+    transition: `transform 0.33s ease`,
+  },
+};
 
 const ModalBackdrop = styled.div`
   z-index: 3;
@@ -37,6 +56,7 @@ const ExitBtn = styled.img`
 `;
 
 const AddTodo = styled.div`
+  cursor: pointer;
   width: 320px;
   height: 55px;
   background-color: rgba(12, 0, 24, 0.1);
@@ -83,14 +103,10 @@ const TodoModal = (props: any) => {
     setIsaddopen(true);
   };
 
-
-
   const CloseModalHandler = () => {
     setIsaddopen(false);
   };
 
-
-  
   const onSubmit = useCallback(
     (e: any) => {
       //서버 전송
@@ -147,11 +163,19 @@ const TodoModal = (props: any) => {
   }, []);
 
   return (
-    <>
+    <AnimatePresence>
       {method === "post" ? (
-        <AddTodo onClick={openModalHandler}>
-          <span>+ 할 일을 추가해주세요</span>
-        </AddTodo>
+        <motion.div
+          initial={animate.initial}
+          //@ts-ignore
+          animate={animate.animate}
+          //@ts-ignore
+          exit={animate.exit}
+        >
+          <AddImage onClick={openModalHandler}>
+            <span>+ 할 일을 추가해주세요</span>
+          </AddImage>
+        </motion.div>
       ) : null}
 
       {isaddopen || props.status ? (
@@ -246,7 +270,7 @@ const TodoModal = (props: any) => {
           </ModalView>
         </ModalBackdrop>
       ) : null}
-    </>
+    </AnimatePresence>
   );
 };
 

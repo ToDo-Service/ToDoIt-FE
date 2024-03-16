@@ -2,6 +2,25 @@ import styled from "styled-components";
 import ProgressBar from "../ProgressBar";
 import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
+import { motion, AnimatePresence } from "framer-motion";
+
+const animate = {
+  initial: {
+    transform: `translateY(50px)`,
+    opacity: 0,
+    transition: `transform 0.33s ease`,
+  },
+  animate: {
+    transform: `translateY(0px)`,
+    opacity: 1,
+    transition: `transform 0.33s ease`,
+  },
+  exit: {
+    transform: `translateY(50px)`,
+    opacity: 0,
+    transition: `transform 0.33s ease`,
+  },
+};
 
 const TodoListMainBox = styled.section`
   width: 30vw;
@@ -67,7 +86,17 @@ const KanbanList = ({ title, children }: any) => {
           <p>{title === "past_todos" ? "지난 일정" : "오늘 일정"}</p>
           {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>
-        {children}
+        <AnimatePresence>
+          <motion.div
+            initial={animate.initial}
+            //@ts-ignore
+            animate={animate.animate}
+            //@ts-ignore
+            exit={animate.exit}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
         {title !== "past_todos" ? <TodoModal method="post" /> : null}
       </TodoListMainBox>
     </>

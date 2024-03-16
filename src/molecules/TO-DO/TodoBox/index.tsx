@@ -11,6 +11,7 @@ import useSWR, { mutate } from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
+import { useToast } from "@/hooks/useToast";
 
 interface DargProps {
   isdragging: any;
@@ -32,6 +33,7 @@ const TodoMainBox = styled.div<DargProps>`
 `;
 
 const CheckBox = styled.input`
+  cursor: pointer;
   transition: 0.5s ease-in-out;
   appearance: none;
   width: 18px;
@@ -101,6 +103,7 @@ const ExitBtn = styled.img`
   width: 14px;
   height: 14px;
   margin-right: 21px;
+  cursor: pointer;
 `;
 
 const TodoBox = ({ Data, category }: any) => {
@@ -120,8 +123,14 @@ const TodoBox = ({ Data, category }: any) => {
         },
         withCredentials: true,
       })
-      .then((res) => mutate("https://laoh.site/api/todos/today"))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        useToast(`${Data.title} 완료 하셨군요`, true);
+        mutate("https://laoh.site/api/todos/today");
+      })
+      .catch((err) => {
+        console.log(err);
+        useToast("실패", false);
+      });
   };
 
   const changeItemCategory = (selectedItem: any, title: string) => {
@@ -143,8 +152,14 @@ const TodoBox = ({ Data, category }: any) => {
           withCredentials: true,
         }
       )
-      .then(() => mutate("https://laoh.site/api/todos/today"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        useToast(`일정 추가`, true);
+        mutate("https://laoh.site/api/todos/today");
+      })
+      .catch((err) => {
+        console.log(err);
+        useToast("실패", false);
+      });
   };
 
   const deleteItem = () => {
@@ -153,8 +168,11 @@ const TodoBox = ({ Data, category }: any) => {
         withCredentials: true,
         headers: { Authorization: `Bearer ${JwtToken}` },
       })
-      .then(() => mutate("https://laoh.site/api/todos/today"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        mutate("https://laoh.site/api/todos/today");
+        useToast(`${Data.title} 삭제 하겠습니다`, true);
+      })
+      .catch((err) => useToast("실패", false));
   };
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
@@ -165,7 +183,6 @@ const TodoBox = ({ Data, category }: any) => {
     }),
     end: (item: any, monitor: DragSourceMonitor) => {
       const dropResult: any | null = monitor.getDropResult();
-      console.log(dropResult.name);
       if (dropResult) {
         switch (dropResult.name) {
           case "today_todos":
