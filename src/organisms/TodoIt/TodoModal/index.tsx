@@ -55,7 +55,7 @@ const ExitBtn = styled.img`
   margin-left: 537px;
 `;
 
-const AddImage = styled.div`
+const AddTodo = styled.div`
   cursor: pointer;
   width: 320px;
   height: 55px;
@@ -182,7 +182,7 @@ const TodoModal = (props: any) => {
         <ModalBackdrop>
           <ModalView>
             <ExitBtn
-              src="/Icon/ModalExit.png"
+              src="/Icon/Modal/ModalExit.png"
               alt="/"
               onClick={CloseModalHandler}
             />
@@ -244,7 +244,7 @@ const TodoModal = (props: any) => {
                 justifyContent: "space-between",
               }}
             >
-              <Calendar setDate={setEndDate} />
+              <Calendar setDate={setEndDate} width="115px" name="오늘" />
               <Priority setPriority={setPriority} />
               <Project />
             </div>

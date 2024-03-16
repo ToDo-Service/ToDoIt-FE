@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   if (token && req.nextUrl.pathname.includes("/auth/Login")) {
-    return NextResponse.redirect(new URL(`/main`, req.url));
+    return NextResponse.redirect(new URL(`/main/today`, req.url));
   }
 
   if (!token && req.nextUrl.pathname.includes("/main")) {

@@ -7,7 +7,11 @@ import { RecoilRoot } from "recoil";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Head from "next/head";
+import Layout from "./layout";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 
 const WrapStyled = styled.div`
   position: relative;
@@ -42,11 +46,6 @@ export default function App({
 
   return (
     <>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href="Icon/Todoit/TodoitLogofavion.png" />
-        <title>TodoIt</title>
-      </Head>
       <RecoilRoot>
         <SessionProvider session={session}>
           <WrapStyled>
@@ -59,7 +58,9 @@ export default function App({
                 //@ts-ignore
                 exit={animate.exit}
               >
-                <Component {...pageProps} />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
               </motion.div>
             </AnimatePresence>
           </WrapStyled>

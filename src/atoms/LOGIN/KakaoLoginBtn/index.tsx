@@ -4,7 +4,7 @@ const KakaoLoginBtn = () => {
   return (
     <>
       <img
-        src="/Icon/Kakao.png"
+        src="/Icon/Login/Kakao.png"
         alt="카카오톡로그인"
         width={"18px"}
         height={"18px"}

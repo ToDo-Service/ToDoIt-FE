@@ -4,7 +4,7 @@ const NaverLoginBtn = () => {
   return (
     <>
       <img
-        src="/Icon/Naver.png"
+        src="/Icon/Login/Naver.png"
         alt="네이버 로그인"
         width={"18px"}
         height={"18px"}

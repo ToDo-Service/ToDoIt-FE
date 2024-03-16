@@ -27,13 +27,12 @@ const MainLayouts = () => {
   const { data, error, isLoading } = useSWR(
     status == "authenticated" ? "https://laoh.site/api/todos/today" : null,
     (url) => fetcher(url, session?.user.accessToken as string)
-  );
+  );  
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
     <MainLayout>
-      <Sidebar />
       <MainPage data={data} />
     </MainLayout>
   );

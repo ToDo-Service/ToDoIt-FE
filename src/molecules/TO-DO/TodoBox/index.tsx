@@ -43,7 +43,7 @@ const CheckBox = styled.input`
 
   &:checked {
     border-color: transparent;
-    background-image: url("/Icon/Checkcircle_fill.png");
+    background-image: url("/Icon/Todoit/Checkcircle_fill.png");
     width: 18px;
     height: 18px;
     background-size: 100% 100%;
@@ -195,11 +195,10 @@ const TodoBox = ({ Data, category }: any) => {
 
   const RewriteModal = () => {
     setRewriteModal(!rewriteModal);
-    console.log(rewriteModal);
   };
 
   return (
-    <TodoContainer>
+    <TodoContainer onClick={RewriteModal}>
       <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
         <TodoBoxHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -224,7 +223,11 @@ const TodoBox = ({ Data, category }: any) => {
             <TodoBoxName>{Data.title}</TodoBoxName>
             <TodoBoxDate>{Data.end_date}</TodoBoxDate>
           </div>
-          <ExitBtn src="/Icon/ModalExit.png" alt="/" onClick={deleteItem} />
+          <ExitBtn
+            src="/Icon/Modal/ModalExit.png"
+            alt="/"
+            onClick={deleteItem}
+          />
         </TodoBoxHeader>
         <TodoBoxDetail>{Data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>

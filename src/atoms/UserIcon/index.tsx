@@ -10,7 +10,5 @@ const U_Icon = styled.img`
 `;
 
 export const UserIcon = ({ Img }: any) => {
-  console.log(Img);
-
   return <U_Icon src={`${Img}`} alt="유저 아이콘" />;
 };

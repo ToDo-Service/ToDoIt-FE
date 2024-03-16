@@ -29,9 +29,8 @@ const SidebarHeader = () => {
   return (
     <SidebarHeaderContainer>
       <UserIcon Img={session?.user?.image} />
-      <UserNickName>{session?.user?.name}</UserNickName>
 
-      <Icon.Bell size={"17px"} style={{ marginLeft: "55px" }} />
+      <UserNickName>{session?.user?.name}</UserNickName>
     </SidebarHeaderContainer>
   );
 };

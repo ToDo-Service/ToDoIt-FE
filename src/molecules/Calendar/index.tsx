@@ -193,13 +193,13 @@ const CalendarContainer = styled.div`
   }
 `;
 
-const DropdownButton = styled.button`
+const DropdownButton = styled.button<{ width: string }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 115px;
+  width: ${(props) => `${props.width}`};
   height: 37px;
-  border: 0.8px solid var(--festie-gray-600, #949494);
+  border: 0.8px solid rgba(12, 0, 24, 0.1);
   border-radius: 10px;
   padding: 0px 10px;
   color: #8f8f8f;
@@ -242,8 +242,8 @@ const calendar = (props: any) => {
 
   return (
     <CalendarContainer>
-      <DropdownButton onClick={handleToggleCalendar}>
-        오늘 <div style={{ fontSize: "10px" }}>{nowDate}</div>
+      <DropdownButton onClick={handleToggleCalendar} width={props.width}>
+        {props.name} <div style={{ fontSize: "10px" }}>{nowDate}</div>
       </DropdownButton>
       <CalendarWrapper $iscalopen={isCalOpen ? 1 : 0}>
         <Calendar

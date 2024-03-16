@@ -10,6 +10,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: fixed;
+  padding-left: 220px;
 `;
 
 const HeaderTest = styled.h3`
@@ -22,23 +23,21 @@ const HeaderTest = styled.h3`
 
 const HeaderLogin = styled.div`
   width: 130px;
-  margin-right: 30px;
 `;
 
 const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 264px;
+  margin-left: 81px;
 `;
 
-const Header = ({ Headername }: any) => {
+const Header = () => {
   return (
     <header>
       <HeaderContainer>
         <HeaderTextIcon>
-          <Icon.BookmarkCheck size={"30px"} />
-          <HeaderTest>{Headername}</HeaderTest>
+          <HeaderTest>프로젝트</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin
           onClick={() => signOut({ redirect: true, callbackUrl: "/" })}

@@ -24,7 +24,7 @@ export default NextAuth({
   pages: {
     error: "/auth/error",
     signOut: "/auth/Login",
-    signIn: "/main",
+    signIn: "/main/today",
   },
   callbacks: {
     signIn: async ({ user, account, profile, credentials }: any) => {
@@ -56,6 +56,7 @@ export default NextAuth({
 
       return token;
     },
+    
     session: async ({ session, token }) => {
       if (token) {
         session.user.accessToken = token.accessToken;
