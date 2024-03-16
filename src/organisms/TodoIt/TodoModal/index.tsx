@@ -172,9 +172,9 @@ const TodoModal = (props: any) => {
           //@ts-ignore
           exit={animate.exit}
         >
-          <AddImage onClick={openModalHandler}>
+          <AddTodo onClick={openModalHandler}>
             <span>+ 할 일을 추가해주세요</span>
-          </AddImage>
+          </AddTodo>
         </motion.div>
       ) : null}
 
