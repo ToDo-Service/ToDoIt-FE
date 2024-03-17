@@ -29,7 +29,6 @@ const SidebarHeader = () => {
   return (
     <SidebarHeaderContainer>
       <UserIcon Img={session?.user?.image} />
-
       <UserNickName>{session?.user?.name}</UserNickName>
     </SidebarHeaderContainer>
   );

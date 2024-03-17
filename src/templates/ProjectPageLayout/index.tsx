@@ -6,14 +6,14 @@ const ProjectPageLayoutBox = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  padding-left: 230px;
+  /* margin-left: 230px; */
 `;
 
 const ProjectPageLayout = () => {
   return (
     <>
-      <ProjectHeader />
       <ProjectPageLayoutBox>
+        <ProjectHeader />
         <ProjectMainPage />
       </ProjectPageLayoutBox>
     </>

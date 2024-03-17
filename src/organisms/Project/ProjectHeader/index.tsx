@@ -3,6 +3,7 @@ import * as Icon from "react-bootstrap-icons";
 import { signOut } from "next-auth/react";
 
 const HeaderContainer = styled.div`
+  padding-left: 230px;
   width: 100vw;
   height: 110px;
   border-bottom: solid 0.02px #c8c5cb;
@@ -10,7 +11,6 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: fixed;
-  padding-left: 220px;
 `;
 
 const HeaderTest = styled.h3`

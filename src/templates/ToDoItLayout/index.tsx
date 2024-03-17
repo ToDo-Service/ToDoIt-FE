@@ -2,15 +2,12 @@ import styled from "styled-components";
 import { signOut, useSession } from "next-auth/react";
 import { useSetRecoilState } from "recoil";
 import { jwtToken } from "@/reocoil";
-import Sidebar from "@/organisms/Sidebar";
 import MainPage from "@/organisms/TodoIt/TodoItMainPage";
 import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
-import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const MainLayout = styled.div`
   width: 100vw;
-  /* height: 100vh; */
   overflow: hidden;
 
   display: flex;
@@ -25,13 +22,9 @@ const MainLayouts = () => {
   }
 
   const { data, error, isLoading } = useSWR(
-    status == "authenticated" ? "https://laoh.site/api/todos/today" : null,
+    status === "authenticated" ? "https://laoh.site/api/todos/today" : null,
     (url) => fetcher(url, session?.user.accessToken as string)
   );
-
-  if (data?.result.result_code === 401) {
-    signOut({ redirect: true, callbackUrl: "/auth/Login" });
-  }
 
   return (
     <MainLayout>

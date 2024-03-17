@@ -12,6 +12,7 @@ const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   align-items: center;
   justify-content: space-evenly;
   font-family: "Pretendard";
+  position: relative;
 
   & span:first-child {
     color: #8f8f8f;
@@ -31,8 +32,8 @@ const PriorityWrapper = styled("div")<{ priorityisopen: number }>`
   background-color: white;
   z-index: 11;
   position: absolute;
-  top: 62.3%;
-  left: 48.7%;
+  top: 130%;
+  left: 55%;
   border-radius: 8px;
   border: 0.8px solid var(--festie-gray-600, #949494);
 `;

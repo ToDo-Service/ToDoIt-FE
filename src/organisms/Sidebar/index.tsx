@@ -22,6 +22,7 @@ const S_Background = styled.nav`
   filter: drop-shadow(2px 4px rgba(12, 0, 24, 0.1));
   font-family: "Pretendard";
   position: fixed;
+  z-index: 1;
 
   & ul {
     list-style: none;
@@ -107,7 +108,7 @@ const Sidebar = () => {
   const jwt = useRecoilValue(jwtToken);
 
   const { data, error, isLoading } = useSWR(
-    "https://laoh.site/api/project",
+    jwt.token !== "" ? "https://laoh.site/api/project" : undefined,
     (url) => fetcher(url, jwt)
   );
 

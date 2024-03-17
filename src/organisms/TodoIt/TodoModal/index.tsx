@@ -94,6 +94,7 @@ const TodoModal = (props: any) => {
   const [title, onChangeTitle, setTitle] = useInput("");
   const [detail, onChangeDetail, setDetail] = useInput("");
   const [prioirty, setPriority] = useState("높음");
+  const [project, setProject] = useState("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
@@ -119,7 +120,7 @@ const TodoModal = (props: any) => {
             title: title,
             content: detail,
             end_date: endDate,
-            project_id: null,
+            project_id: project,
             priority: prioirty,
             push_status: false,
           },
@@ -246,7 +247,7 @@ const TodoModal = (props: any) => {
             >
               <Calendar setDate={setEndDate} width="115px" name="오늘" />
               <Priority setPriority={setPriority} />
-              <Project />
+              <Project onChange={setProject} />
             </div>
             <div
               onClick={onSubmit}

@@ -110,11 +110,6 @@ const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
   const [rewriteModal, setRewriteModal] = useState(false);
 
-  const { data, error, isLoading } = useSWR(
-    "https://laoh.site/api/todos/today",
-    (url) => Fetcher(url, JwtToken)
-  );
-
   const CompleteTodo = async () => {
     await axios
       .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
@@ -197,6 +192,8 @@ const TodoBox = ({ Data, category }: any) => {
     setRewriteModal(!rewriteModal);
   };
 
+  console.log(Data);
+
   return (
     <TodoContainer onClick={RewriteModal}>
       <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
@@ -232,7 +229,7 @@ const TodoBox = ({ Data, category }: any) => {
         <TodoBoxDetail>{Data.content}</TodoBoxDetail>
         <TodoBoxHashTagBox>
           <HashtagPriority priority={Data.priority} />
-          <HashtagProject project={Data.project ? data.project : null} />
+          <HashtagProject project={Data.project ? Data.project : null} />
         </TodoBoxHashTagBox>
       </TodoMainBox>
       {rewriteModal ? (
