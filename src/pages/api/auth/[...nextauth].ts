@@ -34,14 +34,12 @@ export default NextAuth({
             `https://laoh.site/api/auth/social/${account.provider}`,
             null,
             {
-              headers: { Authorization: `Bearer ${account.access_token}` },
+              // prettier-ignore
+              headers:{Authorization:`Bearer ${account.access_token}`},
             }
           );
-
           const userData = response.data;
-
           privateToken = userData.body.user.access_token;
-
           return userData;
         }
       } catch (err) {
@@ -49,14 +47,16 @@ export default NextAuth({
       }
       return user;
     },
+    // 웹 토큰이 실행 혹은 업데이트될때마다 콜백이 실행
+    // 반환된 값은 암호화되어 쿠키에 저장
     jwt: async ({ token, account }) => {
       if (account) {
         token.accessToken = privateToken;
       }
-
       return token;
     },
-    
+
+    //useSession을 통해 ClientSide엣서 사용 가능
     session: async ({ session, token }) => {
       if (token) {
         session.user.accessToken = token.accessToken;

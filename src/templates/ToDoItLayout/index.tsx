@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useSetRecoilState } from "recoil";
 import { jwtToken } from "@/reocoil";
 import Sidebar from "@/organisms/Sidebar";
@@ -27,9 +27,11 @@ const MainLayouts = () => {
   const { data, error, isLoading } = useSWR(
     status == "authenticated" ? "https://laoh.site/api/todos/today" : null,
     (url) => fetcher(url, session?.user.accessToken as string)
-  );  
+  );
 
-  if (isLoading) return <LoadingSpinner />;
+  if (data?.result.result_code === 401) {
+    signOut({ redirect: true, callbackUrl: "/auth/Login" });
+  }
 
   return (
     <MainLayout>
