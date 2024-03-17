@@ -105,8 +105,9 @@ const ProejectModal = (props: any) => {
       e.preventDefault();
       setPostError("");
       if (title === "") {
-        e.preventDefault();
         alert("제목을 입력하세요");
+        e.preventDefault();
+        return;
       }
       axios
         .post(

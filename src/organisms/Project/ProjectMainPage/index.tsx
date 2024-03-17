@@ -13,9 +13,10 @@ import { jwtToken } from "@/reocoil";
 
 const ProjectPageMainBox = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
+  overflow: hidden;
   padding-left: 80px;
   padding-top: 170px;
 `;
