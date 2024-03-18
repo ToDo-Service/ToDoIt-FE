@@ -3,8 +3,8 @@ import * as Icon from "react-bootstrap-icons";
 import { signOut } from "next-auth/react";
 
 const HeaderContainer = styled.div`
-  padding-left: 230px;
-  width: 100vw;
+  /* padding-left: 230px; */
+  width: calc(100vw - 230px);
   height: 110px;
   border-bottom: solid 0.02px #c8c5cb;
   display: flex;

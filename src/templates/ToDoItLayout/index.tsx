@@ -8,9 +8,8 @@ import useSWR from "swr";
 
 const MainLayout = styled.div`
   width: 100vw;
-  overflow: hidden;
-
-  display: flex;
+  height: 100vh;
+  position: fixed;
 `;
 
 const MainLayouts = () => {
@@ -26,11 +25,7 @@ const MainLayouts = () => {
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 
-  return (
-    <MainLayout>
-      <MainPage data={data} />
-    </MainLayout>
-  );
+  return <MainLayout>{<MainPage data={data} />}</MainLayout>;
 };
 
 export default MainLayouts;

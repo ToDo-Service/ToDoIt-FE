@@ -1,97 +1,138 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
+import uuid from "react-uuid";
+import { format, addMonths, startOfWeek, addDays } from "date-fns";
+import { endOfWeek, isSameDay, isSameMonth } from "date-fns";
+import { startOfMonth, endOfMonth } from "date-fns";
+import styled from "styled-components";
 
-const NextPlanCalendar = () => {
-  const [calender, setCalender] = useState<string>("");
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+const ScheduleCalendar = styled.div`
+  width: 35%;
+  height: 94%;
+`;
 
-  // 윤달 체크하기
-  const checkLeapYear = (year: number) => {
-    if (year % 400 === 0) return true;
-    else if (year % 100 === 0) return false;
-    else if (year % 4 === 0) return true;
-    else return false;
-  };
-
-  // 각 달의 01일 위치 정해주기
-  const getFirstDayOfWeek = (year: number, month: number) => {
-    let zero = "";
-    if (month < 10) zero = "0";
-    return new Date(year + "-" + zero + month + "-" + "01").getDay();
-  };
-
-  const changeYearMonth = (year: number, month: number) => {
-    let monthDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-    //윤달이면 29일
-    if (month === 2) if (checkLeapYear(year)) monthDay[1] = 29;
-
-    //01일 위치
-    let firstDay = getFirstDayOfWeek(year, month);
-
-    //이전 달 날짜
-    let lasyDay = monthDay[month - 1];
-    let arrCalender = [];
-
-    // 01일이 생성되기 전 비어있는 내용
-    for (let i = 0; i < firstDay; i++) {
-      arrCalender.push("");
-    }
-
-    //날짜 넣어주기
-
-    for (let i = 1; i <= monthDay[month - 1]; i++) {
-      arrCalender.push(String(i));
-    }
-
-    //마지막 날짜까지 넣고 비어있는 내용
-    let remainDay = 7 - (arrCalender.length % 7);
-
-    if (remainDay < 7) {
-      for (let i = 0; i < remainDay; i++) {
-        arrCalender.push("");
-      }
-    }
-
-    renderCalender(arrCalender);
-  };
-  //캘린더 렌더링
-
-  const renderCalender = (calender: string[]) => {
-    let contents = [];
-    for (let i = 0; i < calender.length; i++) {
-      if (i === 0) contents.push("<tr>");
-      else if (i % 7 === 0) {
-        contents.push("</tr>");
-        contents.push("<tr>");
-      }
-      contents.push(
-        <td>
-          <div className="table_hover">
-            <span>{calender[i]}</span>
-            {/* {calender[]} */}
-          </div>
-        </td>
-      );
-    }
-
-    contents.push("</tr>");
-    setCalender(contents.join(""));
-  };
-
+const RenderHeader = ({ currentMonth }: any) => {
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      <div>
-        <div>월</div>
-        <div>
-          요일
-          {calender.length > 0 && (
-            <div dangerouslySetInnerHTML={{ __html: calender }}></div>
-          )}
-        </div>
-      </div>
+    <div className="header row">
+      {currentMonth.toLocaleString("en-US", { month: "long" })}
     </div>
   );
 };
 
-export default NextPlanCalendar;
+const RenderDays = () => {
+  const days: any[] = [];
+  const date = ["Sun", "Mon", "Thu", "Wed", "Thrs", "Fri", "Sat"];
+  for (let i = 0; i < 7; i++) {
+    days.push(
+      <div className="col" key={i}>
+        {date[i]}
+      </div>
+    );
+  }
+  return <div className="days row">{days}</div>;
+};
+
+const RenderCells = ({ currentMonth, selectedDate }: any) => {
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(monthStart);
+  const startDate = startOfWeek(monthStart);
+  const endDate = endOfWeek(monthEnd);
+
+  const rows: any[] = [];
+  let days: any[] = [];
+  let day = startDate;
+  let formattedDate = "";
+
+  while (day <= endDate) {
+    for (let i = 0; i < 7; i++) {
+      formattedDate = format(day, "d");
+      days.push(
+        <div
+          className={`col cell ${
+            !isSameMonth(day, monthStart)
+              ? "disabled"
+              : isSameDay(day, selectedDate)
+              ? "selected"
+              : "not-valid"
+          }`}
+          key={uuid()}
+        >
+          <span
+            className={
+              format(currentMonth, "M") !== format(day, "M")
+                ? "text not-valid"
+                : isSameMonth(day, monthStart) && isSameDay(day, selectedDate)
+                ? "text today"
+                : ""
+            }
+          >
+            {formattedDate}
+          </span>
+        </div>
+      );
+      day = addDays(day, 1);
+    }
+    rows.push(
+      <div className="row" key={uuid()}>
+        {days}
+      </div>
+    );
+    days = [];
+  }
+  return <div className="body">{rows}</div>;
+};
+
+const Calender = () => {
+  const currentDate = new Date();
+  const selectedDate = new Date();
+
+  let currentMonth = new Date(format(currentDate, "yyyy"));
+  let months: any[] = [];
+
+  const monthRef = useRef<HTMLDivElement>(null);
+
+  for (let i = 0; i < 12; i++) {
+    months.push(
+      <div
+        className="calendar__item"
+        key={uuid()}
+        ref={
+          format(currentMonth, "MM") === format(selectedDate, "MM")
+            ? monthRef
+            : null
+        }
+      >
+        <RenderHeader currentMonth={currentMonth} />
+        <RenderCells currentMonth={currentMonth} selectedDate={selectedDate} />
+      </div>
+    );
+    currentMonth = addMonths(currentMonth, 1);
+  }
+
+  useEffect(() => {
+    if (monthRef.current !== null) {
+      monthRef.current.scrollIntoView({ behavior: "auto" });
+    }
+  }, []);
+
+  function scrollCurrentMonth() {
+    if (monthRef.current !== null) {
+      monthRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  return (
+    <ScheduleCalendar>
+      <div className="text-today">
+        <p className="text-current" onClick={scrollCurrentMonth}>
+          {currentDate.toLocaleString("en-US", { month: "long" })}
+          {format(currentDate, " dd")}
+        </p>
+        <p className="text-year">{format(currentDate, " yyyy")}</p>
+      </div>
+      <RenderDays />
+      <div className="calendar-list">{months}</div>
+    </ScheduleCalendar>
+  );
+};
+
+export default Calender;

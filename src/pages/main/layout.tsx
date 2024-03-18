@@ -24,10 +24,9 @@ export default function MainLayout({
   console.log(router.asPath);
 
   return (
-    <section>
-      {router.asPath === "/" || router.asPath === "/auth/Login" ? undefined : (
-        <Sidebar />
-      )}
+    <section style={{ display: "flex" }}>
+      <Sidebar />
+
       {HeaderData.map((item: any) => {
         return item.path === router.asPath ? (
           <Header icon={item.Icon} title={item.title} />

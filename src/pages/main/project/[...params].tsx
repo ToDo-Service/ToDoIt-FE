@@ -1,12 +1,10 @@
-import Sidebar from "@/organisms/Sidebar";
-import { useRouter } from "next/router";
 import ProjectDetailLayout from "@/templates/ProjectDetailLayout";
-import Head from "next/head";
+import Layout from "../layout";
 
 export default function Home() {
   return (
-    <>
+    <Layout>
       <ProjectDetailLayout />
-    </>
+    </Layout>
   );
 }

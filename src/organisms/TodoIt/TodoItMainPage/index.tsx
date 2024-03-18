@@ -16,8 +16,6 @@ interface PriorityList {
 }
 
 const PageTemp = ({ data }: any) => {
-  const [HeaderName, setHeaderName] = useState(["오늘 할 일 "]);
-
   //현재 날짜
   let today = new Date();
   let year = today.getFullYear();
