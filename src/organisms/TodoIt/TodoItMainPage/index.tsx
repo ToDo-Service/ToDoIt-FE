@@ -1,14 +1,9 @@
 import KanbanList from "@/atoms/KanbanList";
-import Header from "@/organisms/TodoIt/TodoItHeader";
 import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-// import { kanbanListState } from "@/reocoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import useSWR from "swr";
-import Fetcher from "@/utils/fetcher";
 
 const TodoPageMainBox = styled.div`
   display: flex;
@@ -75,7 +70,6 @@ const PageTemp = ({ data }: any) => {
 
   return (
     <div>
-      <Header Headername={HeaderName[0]} />
       <TodoPageMainBox>
         <DndProvider backend={HTML5Backend}>
           {data

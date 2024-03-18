@@ -1,6 +1,6 @@
 import ToDoItLayout from "@/templates/ToDoItLayout";
 import ProjectPageLayout from "@/templates/ProjectPageLayout";
-import Sidebar from "@/organisms/Sidebar";
+
 import { useRouter } from "next/router";
 
 import Head from "next/head";

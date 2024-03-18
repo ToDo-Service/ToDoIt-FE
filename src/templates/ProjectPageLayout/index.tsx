@@ -1,4 +1,4 @@
-import ProjectHeader from "@/organisms/Project/ProjectHeader";
+import ProjectHeader from "@/organisms/Header";
 import ProjectMainPage from "@/organisms/Project/ProjectMainPage";
 import styled from "styled-components";
 

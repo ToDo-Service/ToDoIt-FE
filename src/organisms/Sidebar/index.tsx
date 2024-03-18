@@ -115,7 +115,12 @@ const Sidebar = () => {
   return (
     <S_Background>
       <SidebarHeader />
-      <h3>TO-DO</h3>
+      <h3
+        className={active === "today" || active === "nextplan" ? "active" : ""}
+        onClick={() => setActive("project")}
+      >
+        TO-DO
+      </h3>
       <ul>
         <Link
           href={{ pathname: `/main/today` }}
