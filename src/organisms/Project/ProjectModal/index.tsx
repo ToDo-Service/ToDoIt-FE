@@ -13,7 +13,7 @@ import { mutate } from "swr";
 import Category from "@/molecules/PROJECT/ProjectModal/Category";
 
 const ModalBackdrop = styled.div`
-  z-index: 3;
+  z-index: 4;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -80,7 +80,6 @@ export const ModalView = styled.div.attrs((props) => ({
 }))`
   display: flex;
   align-items: center;
-
   flex-direction: column;
   border-radius: 20px;
   height: 406px;

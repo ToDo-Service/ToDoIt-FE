@@ -2,8 +2,8 @@ import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { jwtToken, Modal, UpdateData } from "@/reocoil";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
@@ -99,6 +99,11 @@ const TodoModal = (props: any) => {
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
   const ref = useRef<HTMLTextAreaElement>(null);
+  const modal = useRecoilValue(Modal);
+  const setModal = useSetRecoilState(Modal);
+  const UData = useRecoilState(UpdateData);
+
+  console.log(UData);
 
   const openModalHandler = () => {
     setIsaddopen(true);
@@ -106,6 +111,7 @@ const TodoModal = (props: any) => {
 
   const CloseModalHandler = () => {
     setIsaddopen(false);
+    setModal({ toggle: false });
   };
 
   const onSubmit = useCallback(
@@ -113,6 +119,11 @@ const TodoModal = (props: any) => {
       //서버 전송
       e.preventDefault();
       setPostError("");
+      if (title === "") {
+        alert("제목을 입력하세요");
+        e.preventDefault();
+        return;
+      }
       axios
         .post(
           "https://laoh.site/api/todos",
@@ -144,12 +155,62 @@ const TodoModal = (props: any) => {
     [title, detail, prioirty, endDate]
   );
 
+  const onRewrite = useCallback(
+    (e: any) => {
+      //서버 전송
+      e.preventDefault();
+      setPostError("");
+      setPostSuccess(false);
+      if (title === "") {
+        alert("제목을 입력하세요");
+        e.preventDefault();
+        return;
+      }
+      axios
+        .patch(
+          `https://laoh.site/api/todos/${modal.id}`,
+          {
+            title: title,
+            content: detail,
+            end_date: endDate,
+            project_id: null,
+            priority: prioirty,
+            push_status: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JWT}`,
+            },
+            withCredentials: true,
+          }
+        )
+        .then(() => {
+          setPostSuccess(true);
+          CloseModalHandler();
+          mutate("https://laoh.site/api/todos/today");
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setPostError(err.response.data);
+        })
+        .finally(() => {});
+    },
+    [title, detail, prioirty, endDate]
+  );
+
   useEffect(() => {
     setTitle("");
     setDetail("");
     setEndDate(dayjs().format("YYYY.MM.DD"));
     setPriority("높음");
   }, [postSuccess]);
+
+  useEffect(() => {
+    setTitle(UData[0].title);
+    setDetail(UData[0].content);
+    setEndDate(UData[0].end_date);
+    setPriority(UData[0].priority);
+  }, [modal]);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
@@ -179,7 +240,7 @@ const TodoModal = (props: any) => {
         </motion.div>
       ) : null}
 
-      {isaddopen || props.status ? (
+      {isaddopen || modal.toggle ? (
         <ModalBackdrop>
           <ModalView>
             <ExitBtn
@@ -250,7 +311,7 @@ const TodoModal = (props: any) => {
               <Project onChange={setProject} />
             </div>
             <div
-              onClick={onSubmit}
+              onClick={modal.method === "update" ? onRewrite : onSubmit}
               style={{
                 width: "418px",
                 height: "37px",

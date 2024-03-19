@@ -2,13 +2,13 @@ import styled from "styled-components";
 import HashtagPriority from "@/atoms/Hashtag/H_Priority";
 import HashtagProject from "@/atoms/Hashtag/H_Project";
 import { useDrag } from "react-dnd";
-import RewriteModalComponent from "@/organisms/RewriteModal";
-import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { Modal, UpdateData, jwtToken } from "@/reocoil";
 import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
 import useSWR, { mutate } from "swr";
-import Fetcher from "@/utils/fetcher";
+import * as Icon from "react-bootstrap-icons";
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
 import { useToast } from "@/hooks/useToast";
@@ -19,17 +19,64 @@ interface DargProps {
 
 const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
-  border: 0.5px solid #c8c5cb;
-  border-radius: 16px;
+  cursor: pointer;
   width: 320px;
+  max-width: fit-content;
+  min-width: 320px;
+  position: relative;
 `;
 
 const TodoMainBox = styled.div<DargProps>`
+  position: relative;
   width: 100%;
   height: 125px;
   padding-top: 20px;
   padding-left: 23px;
-  opacity: ${(props) => (props.isdragging ? "0.3" : "1")};
+  opacity: ${(props) => (props.isdragging ? "0" : "1")};
+  border-radius: 16px;
+  border: ${(props) => (props.isdragging ? "none" : "0.5px solid #c8c5cb")};
+  transition: 0.3s ease-in-out;
+  & .MoveIcon {
+    display: none;
+    position: absolute;
+    left: 23px;
+    top: 50px;
+    transition: 0.5s ease-in-out;
+    border-radius: 5px;
+  }
+
+  & .MoveIcon:hover {
+    background-color: #d2d2d2;
+  }
+
+  & .MoveIcon:active {
+    background-color: #d2d2d2;
+  }
+
+  &:hover .MoveIcon {
+    display: block;
+  }
+
+  & .PencilIcon {
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    left: 23px;
+    top: 73px;
+    transition: 0.5s ease-in-out;
+  }
+
+  & .PencilIcon:hover {
+    background-color: #d2d2d2;
+  }
+
+  & .PencilIcon:active {
+    background-color: #d2d2d2;
+  }
+
+  &:hover .PencilIcon {
+    display: block;
+  }
 `;
 
 const CheckBox = styled.input`
@@ -108,7 +155,8 @@ const ExitBtn = styled.img`
 
 const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
-  const [rewriteModal, setRewriteModal] = useState(false);
+  const setModal = useSetRecoilState(Modal);
+  const setUData = useSetRecoilState(UpdateData);
 
   const CompleteTodo = async () => {
     await axios
@@ -119,7 +167,11 @@ const TodoBox = ({ Data, category }: any) => {
         withCredentials: true,
       })
       .then((res) => {
-        useToast(`${Data.title} 완료 하셨군요`, true);
+        console.log();
+        res.data.body === "complete"
+          ? useToast(`${Data.title} 완료 하셨군요`, true)
+          : useToast(`${Data.title} 취소 하였습니다.`, true);
+
         mutate("https://laoh.site/api/todos/today");
       })
       .catch((err) => {
@@ -189,53 +241,61 @@ const TodoBox = ({ Data, category }: any) => {
   }));
 
   const RewriteModal = () => {
-    setRewriteModal(!rewriteModal);
+    setModal({ id: Data.id, method: "update", toggle: true });
+    setUData({
+      id: Data.id,
+      title: Data.title,
+      content: Data.content,
+      end_date: Data.end_date,
+      status: Data.status,
+      priority: Data.priority,
+      project: null,
+    });
   };
 
-  console.log(Data);
-
   return (
-    <TodoContainer onClick={RewriteModal}>
-      <TodoMainBox ref={dragRef} isdragging={isDragging ? 1 : 0}>
-        <TodoBoxHeader>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <TodoLabel htmlFor="check">
-              {Data ? (
-                Data.status === "INCOMPLETE" ? (
-                  <CheckBox
-                    type="checkbox"
-                    name="check"
-                    onClick={CompleteTodo}
-                  />
-                ) : (
-                  <CheckBox
-                    type="checkbox"
-                    name="check"
-                    checked
-                    onClick={CompleteTodo}
-                  />
-                )
-              ) : null}
-            </TodoLabel>
-            <TodoBoxName>{Data.title}</TodoBoxName>
-            <TodoBoxDate>{Data.end_date}</TodoBoxDate>
-          </div>
-          <ExitBtn
-            src="/Icon/Modal/ModalExit.png"
-            alt="/"
-            onClick={deleteItem}
-          />
-        </TodoBoxHeader>
-        <TodoBoxDetail>{Data.content}</TodoBoxDetail>
-        <TodoBoxHashTagBox>
-          <HashtagPriority priority={Data.priority} />
-          <HashtagProject project={Data.project ? Data.project : null} />
-        </TodoBoxHashTagBox>
-      </TodoMainBox>
-      {rewriteModal ? (
-        <RewriteModalComponent status={rewriteModal} id={Data.id} />
-      ) : null}
-    </TodoContainer>
+    <>
+      <TodoContainer ref={dragRef}>
+        <TodoMainBox isdragging={isDragging ? 1 : 0}>
+          <Icon.Activity className="MoveIcon" />
+          <Icon.Pencil className="PencilIcon" onClick={RewriteModal} />
+          <TodoBoxHeader>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <TodoLabel htmlFor="check">
+                {Data ? (
+                  Data.status === "INCOMPLETE" ? (
+                    <CheckBox
+                      type="checkbox"
+                      name="check"
+                      onClick={CompleteTodo}
+                    />
+                  ) : (
+                    <CheckBox
+                      type="checkbox"
+                      name="check"
+                      checked
+                      onClick={CompleteTodo}
+                    />
+                  )
+                ) : null}
+              </TodoLabel>
+              <TodoBoxName>{Data.title}</TodoBoxName>
+              <TodoBoxDate>{Data.end_date}</TodoBoxDate>
+            </div>
+            <ExitBtn
+              src="/Icon/Modal/ModalExit.png"
+              alt="/"
+              onClick={deleteItem}
+            />
+          </TodoBoxHeader>
+          <TodoBoxDetail>{Data.content}</TodoBoxDetail>
+          <TodoBoxHashTagBox>
+            <HashtagPriority priority={Data.priority} />
+            <HashtagProject project={Data.project ? Data.project : null} />
+          </TodoBoxHashTagBox>
+        </TodoMainBox>
+      </TodoContainer>
+    </>
   );
 };
 
