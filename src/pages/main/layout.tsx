@@ -24,7 +24,14 @@ export default function MainLayout({
   console.log(router.asPath);
 
   return (
-    <section style={{ display: "flex" }}>
+    <section
+      style={{
+        display: "flex",
+        width: "100vw",
+        height: "100vh",
+        position: "fixed",
+      }}
+    >
       <Sidebar />
 
       {HeaderData.map((item: any) => {

@@ -6,29 +6,87 @@ import { startOfMonth, endOfMonth } from "date-fns";
 import styled from "styled-components";
 
 const ScheduleCalendar = styled.div`
-  width: 35%;
-  height: 94%;
+  width: 940px;
+  height: 857px;
+  margin-top: 136px;
+  margin-left: 43px;
+  border: 1px solid rgba(12, 0, 24, 0.1);
+  border-radius: 16px;
+  font-family: "Pretendard";
+`;
+
+const TextToday = styled.div`
+  width: 100%;
+  height: fit-content;
+  font-size: 0.5rem;
+
+  & p {
+    font-size: 22px;
+    margin-top: 30px;
+    margin-left: 35px;
+  }
+`;
+
+const CalenderList = styled.div`
+  width: 100%;
+  height: 675px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`;
+
+const DateCol = styled.div`
+  color: rgba(37, 37, 48, 0.4);
+  font-size: 20px;
+`;
+
+const DateRow = styled.div`
+  display: flex;
+  width: 907px;
+  justify-content: space-around;
+`;
+
+const CalenderBody = styled.div`
+  height: 602px;
+  width: 907px;
+  margin-top: 15px;
+`;
+
+const CalenderBodyRow = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 907px;
+  height: 132px;
+
+  & .col {
+    text-align: center;
+  }
+
+  & .disabled {
+    color: rgba(37, 37, 48, 0.4);
+  }
+`;
+
+const CalenderItem = styled.div`
+  &:not(:first-child) {
+    margin-top: 37px;
+  }
 `;
 
 const RenderHeader = ({ currentMonth }: any) => {
   return (
     <div className="header row">
-      {currentMonth.toLocaleString("en-US", { month: "long" })}
+      {/* {currentMonth.toLocaleString("en-US", { month: "long" })} */}
     </div>
   );
 };
 
 const RenderDays = () => {
   const days: any[] = [];
-  const date = ["Sun", "Mon", "Thu", "Wed", "Thrs", "Fri", "Sat"];
+  const date = ["일", "월", "화", "수", "목", "금", "토"];
   for (let i = 0; i < 7; i++) {
-    days.push(
-      <div className="col" key={i}>
-        {date[i]}
-      </div>
-    );
+    days.push(<DateCol>{date[i]}</DateCol>);
   }
-  return <div className="days row">{days}</div>;
+  return <DateRow>{days}</DateRow>;
 };
 
 const RenderCells = ({ currentMonth, selectedDate }: any) => {
@@ -71,14 +129,10 @@ const RenderCells = ({ currentMonth, selectedDate }: any) => {
       );
       day = addDays(day, 1);
     }
-    rows.push(
-      <div className="row" key={uuid()}>
-        {days}
-      </div>
-    );
+    rows.push(<CalenderBodyRow key={uuid()}>{days}</CalenderBodyRow>);
     days = [];
   }
-  return <div className="body">{rows}</div>;
+  return <CalenderBody>{rows}</CalenderBody>;
 };
 
 const Calender = () => {
@@ -90,10 +144,11 @@ const Calender = () => {
 
   const monthRef = useRef<HTMLDivElement>(null);
 
+  console.log(monthRef);
+
   for (let i = 0; i < 12; i++) {
     months.push(
-      <div
-        className="calendar__item"
+      <CalenderItem
         key={uuid()}
         ref={
           format(currentMonth, "MM") === format(selectedDate, "MM")
@@ -103,7 +158,7 @@ const Calender = () => {
       >
         <RenderHeader currentMonth={currentMonth} />
         <RenderCells currentMonth={currentMonth} selectedDate={selectedDate} />
-      </div>
+      </CalenderItem>
     );
     currentMonth = addMonths(currentMonth, 1);
   }
@@ -114,23 +169,16 @@ const Calender = () => {
     }
   }, []);
 
-  function scrollCurrentMonth() {
-    if (monthRef.current !== null) {
-      monthRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   return (
     <ScheduleCalendar>
-      <div className="text-today">
-        <p className="text-current" onClick={scrollCurrentMonth}>
-          {currentDate.toLocaleString("en-US", { month: "long" })}
-          {format(currentDate, " dd")}
-        </p>
-        <p className="text-year">{format(currentDate, " yyyy")}</p>
-      </div>
+      <TextToday>
+        <p className="text-year">{`${format(currentDate, "yyyy")}년 ${format(
+          currentDate,
+          "mm"
+        )}월`}</p>
+      </TextToday>
       <RenderDays />
-      <div className="calendar-list">{months}</div>
+      <CalenderList>{months}</CalenderList>
     </ScheduleCalendar>
   );
 };
