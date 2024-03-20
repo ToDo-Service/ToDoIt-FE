@@ -4,6 +4,8 @@ import "react-calendar/dist/Calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { UpdateData } from "@/reocoil";
 
 const CalendarContainer = styled.div`
   position: relative;
@@ -161,15 +163,6 @@ const CalendarContainer = styled.div`
     /* background-color: #e6e6e6; */
   }
 
-  /* .react-calendar__tile--now {
-    color: #862ddf;
-  } */
-
-  /* .react-calendar__tile--now:enabled:hover,
-  .react-calendar__tile--now:enabled:focus {
-    color: #862ddf;
-  } */
-
   .react-calendar__tile--hasActive {
     background: #76baff;
   }
@@ -207,8 +200,6 @@ const DropdownButton = styled.button<{ width: string }>`
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-
-  /* line-height: 140%;   */
   appearance: none;
   background-color: #f6f6f6;
   background-position: right 12px center;
@@ -224,10 +215,21 @@ const CalendarWrapper = styled("div")<{ $iscalopen: number }>`
 `;
 
 const calendar = (props: any) => {
+  const toggle = useRecoilValue(UpdateData);
   dayjs.locale("ko"); // 한국어 세팅
-  const [nowDate, setNowDate] = useState(dayjs().format("MM월 DD일 (ddd)"));
+  const [nowDate, setNowDate] = useState(
+    props.method === "update"
+      ? dayjs(toggle.end_date).format("MM월 DD일 (ddd)")
+      : dayjs().format("MM월 DD일 (ddd)")
+  );
   const [isCalOpen, setIsCalOpen] = useState(false);
-  const [value, onchange] = useState(new Date());
+  const [value, onchange] = useState(
+    props.method === "update"
+      ? dayjs(toggle.end_date).format("MM DD YYYY")
+      : new Date()
+  );
+
+  console.log(new Date());
 
   const handleToggleCalendar = () => {
     setIsCalOpen(!isCalOpen);
@@ -249,7 +251,7 @@ const calendar = (props: any) => {
         <Calendar
           onChange={handleDateChange}
           value={value}
-          formatDay={(locale, date) => dayjs(date).format("DD")}
+          formatDay={(locale, date: any) => dayjs(date).format("DD")}
         />
       </CalendarWrapper>
     </CalendarContainer>

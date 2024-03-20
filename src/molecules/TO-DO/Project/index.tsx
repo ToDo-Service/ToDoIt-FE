@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { UpdateData, jwtToken } from "@/reocoil";
 import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 
@@ -73,21 +73,18 @@ const ColorData = [
   {
     id: 2,
     text: "옐로우",
-
     color: "#FBD580",
     backgroundColor: "rgba(251, 213, 128, 0.15)",
   },
   {
     id: 3,
     text: "블루",
-
     color: "#9ECAFB",
     backgroundColor: "rgba(158, 202, 251, 0.15)",
   },
   {
     id: 4,
     text: "퍼플",
-
     color: "#CCBAF8",
     backgroundColor: "rgba(204, 186, 248, 0.15)",
   },
@@ -99,27 +96,38 @@ const ColorData = [
   },
 ];
 
-const Project = ({ onChange }: any) => {
-  const [project, setProject] = useState(" ");
+const Project = ({ onChange, value, method }: any) => {
+  const toggle = useRecoilValue(UpdateData);
+  const [project, setProject] = useState(
+    method === "update" ? toggle?.project?.id : ""
+  );
   const [projectopen, setProjectOpen] = useState(false);
   const [color, setColor] = useState("");
   const [bgColor, setBgColor] = useState("rgba(251, 213, 128, 0.15)");
-
-  const modalprojectOpen = () => {
-    setProjectOpen(!projectopen);
-  };
-
   const jwt = useRecoilValue(jwtToken);
-
   const { data, error, isLoading } = useSWR(
     jwt.token !== "" ? "https://laoh.site/api/project" : undefined,
     (url) => fetcher(url, jwt)
   );
+  const modalprojectOpen = () => {
+    setProjectOpen(!projectopen);
+  };
+
+  useEffect(() => {
+    if (toggle.project) {
+      ColorData.map((p) => {
+        if (p.color === toggle.project.color) {
+          setColor(p.color);
+          setBgColor(p.backgroundColor);
+        }
+      });
+    }
+  }, [project]);
+
   const onSelect = (e: any) => {
-    onChange(e.target.innerHTML);
+    onChange({ title: e.target.innerHTML, id: e.target.id });
     setProject(e.target.innerHTML);
     setColor(e.target.classList[2]);
-
     ColorData.map((item) => {
       item.color === e.target.classList[2]
         ? setBgColor(item.backgroundColor)
@@ -128,7 +136,7 @@ const Project = ({ onChange }: any) => {
   };
 
   return (
-    <ProjectContainer onClick={modalprojectOpen} bgcolor={bgColor}>
+    <ProjectContainer bgcolor={bgColor} onClick={modalprojectOpen}>
       <span>프로젝트</span>
       <SelectedProject color={color}>{project}</SelectedProject>
       <ProjectWrapper priorityisopen={projectopen ? 1 : 0}>
@@ -136,7 +144,7 @@ const Project = ({ onChange }: any) => {
           {data.body.map((item: any) => {
             return (
               <ProjectListitem
-                key={item.id}
+                id={item.id}
                 className={item.color}
                 color={item.color}
                 onClick={onSelect}

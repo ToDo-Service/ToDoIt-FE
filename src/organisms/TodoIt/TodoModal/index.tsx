@@ -94,7 +94,7 @@ const TodoModal = (props: any) => {
   const [title, onChangeTitle, setTitle] = useInput("");
   const [detail, onChangeDetail, setDetail] = useInput("");
   const [prioirty, setPriority] = useState("높음");
-  const [project, setProject] = useState("");
+  const [project, setProject] = useState({ id: null, title: "" });
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
@@ -103,7 +103,7 @@ const TodoModal = (props: any) => {
   const setModal = useSetRecoilState(Modal);
   const UData = useRecoilState(UpdateData);
 
-  console.log(UData);
+  console.log(prioirty);
 
   const openModalHandler = () => {
     setIsaddopen(true);
@@ -124,6 +124,7 @@ const TodoModal = (props: any) => {
         e.preventDefault();
         return;
       }
+      console.log(project);
       axios
         .post(
           "https://laoh.site/api/todos",
@@ -131,7 +132,7 @@ const TodoModal = (props: any) => {
             title: title,
             content: detail,
             end_date: endDate,
-            project_id: project,
+            project_id: project.id,
             priority: prioirty,
             push_status: false,
           },
@@ -166,14 +167,15 @@ const TodoModal = (props: any) => {
         e.preventDefault();
         return;
       }
+
       axios
         .patch(
-          `https://laoh.site/api/todos/${modal.id}`,
+          `https://laoh.site/api/todos/${UData[0].id}`,
           {
             title: title,
             content: detail,
             end_date: endDate,
-            project_id: null,
+            project_id: project.id,
             priority: prioirty,
             push_status: false,
           },
@@ -199,18 +201,24 @@ const TodoModal = (props: any) => {
   );
 
   useEffect(() => {
+    if (modal.method === "update") {
+      setTitle(UData[0].title);
+      setDetail(UData[0].content);
+      setEndDate(UData[0].end_date);
+      setPriority(UData[0].priority);
+      setProject({
+        id: UData[0]?.project?.id,
+        title: UData[0]?.project?.description,
+      });
+    }
+  }, [modal, prioirty, endDate, title, detail]);
+
+  useEffect(() => {
     setTitle("");
     setDetail("");
     setEndDate(dayjs().format("YYYY.MM.DD"));
     setPriority("높음");
   }, [postSuccess]);
-
-  useEffect(() => {
-    setTitle(UData[0].title);
-    setDetail(UData[0].content);
-    setEndDate(UData[0].end_date);
-    setPriority(UData[0].priority);
-  }, [modal]);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
@@ -257,7 +265,7 @@ const TodoModal = (props: any) => {
                     marginBottom: "15px",
                   }}
                 >
-                  일정추가
+                  {modal.method === "update" ? "일정 수정" : "일정 추가"}
                 </h1>
                 <div
                   style={{
@@ -266,7 +274,9 @@ const TodoModal = (props: any) => {
                     marginBottom: "46px",
                   }}
                 >
-                  새로 할 일을 추가해주세요!
+                  {modal.method === "update"
+                    ? "일정을 수정하세요!"
+                    : "새로 할 일을 추가해주세요!"}
                 </div>
               </div>
               <Form>
@@ -306,9 +316,21 @@ const TodoModal = (props: any) => {
                 justifyContent: "space-between",
               }}
             >
-              <Calendar setDate={setEndDate} width="115px" name="오늘" />
-              <Priority setPriority={setPriority} />
-              <Project onChange={setProject} />
+              <Calendar
+                method={modal.method === "update" ? "update" : "post"}
+                setDate={setEndDate}
+                width="115px"
+                name="오늘"
+              />
+              <Priority
+                setPriority={setPriority}
+                method={modal.method === "update" ? "update" : "post"}
+              />
+              <Project
+                onChange={setProject}
+                value={project}
+                method={modal.method === "update" ? "update" : "post"}
+              />
             </div>
             <div
               onClick={modal.method === "update" ? onRewrite : onSubmit}
@@ -327,7 +349,7 @@ const TodoModal = (props: any) => {
                 alignItems: "center",
               }}
             >
-              추가
+              {modal.method === "update" ? "수정" : "추가"}
             </div>
           </ModalView>
         </ModalBackdrop>

@@ -1,4 +1,7 @@
+import { Modal, UpdateData } from "@/reocoil";
+import { copyFileSync } from "fs";
 import { useEffect, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 // const CalendarWrapper = styled("div")<{ isOpen: boolean }>`
@@ -81,7 +84,10 @@ const PriorityData = [
 ];
 
 const Priority = (props: any) => {
-  const [text, setText] = useState("높음");
+  const toggle = useRecoilValue(UpdateData);
+  const [text, setText] = useState(
+    props.method == "update" ? toggle.priority : "높음"
+  );
   const [color, setColor] = useState("#ff8080");
   const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
   const [priorityopen, setPrioirtyOpen] = useState(false);
@@ -90,7 +96,7 @@ const Priority = (props: any) => {
     setPrioirtyOpen(!priorityopen);
   };
 
-  const test = (e: any) => {
+  const find = (e: any) => {
     props.setPriority(e.target.innerHTML);
     PriorityData.map((p) => {
       if (p.text === e.target.innerHTML) {
@@ -100,6 +106,15 @@ const Priority = (props: any) => {
       }
     });
   };
+
+  useEffect(() => {
+    PriorityData.map((p) => {
+      if (p.text === text) {
+        setColor(p.color);
+        setBgcolor(p.bgcolor);
+      }
+    });
+  }, [text]);
 
   return (
     <PriorityContainer
@@ -113,7 +128,7 @@ const Priority = (props: any) => {
         <Prioritylist>
           {PriorityData.map((e) => {
             return (
-              <div onClick={test} key={e.id}>
+              <div onClick={find} key={e.id}>
                 {e.text}
               </div>
             );

@@ -240,6 +240,8 @@ const TodoBox = ({ Data, category }: any) => {
     },
   }));
 
+  console.log(Data);
+
   const RewriteModal = () => {
     setModal({ id: Data.id, method: "update", toggle: true });
     setUData({
@@ -249,7 +251,7 @@ const TodoBox = ({ Data, category }: any) => {
       end_date: Data.end_date,
       status: Data.status,
       priority: Data.priority,
-      project: null,
+      project: Data.project,
     });
   };
 
