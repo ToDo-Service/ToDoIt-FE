@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import * as Icon from "react-bootstrap-icons";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { UserIcon } from "@/atoms/UserIcon";
 

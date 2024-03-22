@@ -1,17 +1,20 @@
+import dynamic from "next/dynamic";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
-import Calendar from "@/molecules/Calendar";
-import Project from "@/molecules/TO-DO/Project";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { jwtToken, Modal, UpdateData } from "@/reocoil";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import Priority from "@/molecules/TO-DO/Priority";
 import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
 import { motion, AnimatePresence } from "framer-motion";
+
+//동적 호출
+const Calendar = dynamic(import("@/molecules/Calendar"));
+const Project = dynamic(import("@/molecules/TO-DO/Project"));
+const Priority = dynamic(import("@/molecules/TO-DO/Priority"));
 
 const animate = {
   initial: {
