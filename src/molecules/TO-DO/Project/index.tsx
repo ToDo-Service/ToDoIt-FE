@@ -121,8 +121,10 @@ const Project = ({ onChange, value, method }: any) => {
           setBgColor(p.backgroundColor);
         }
       });
+    } else {
+      setBgColor("rgba(251, 213, 128, 0.15)");
     }
-  }, [project]);
+  }, [data, project]);
 
   const onSelect = (e: any) => {
     onChange({ title: e.target.innerHTML, id: e.target.id });

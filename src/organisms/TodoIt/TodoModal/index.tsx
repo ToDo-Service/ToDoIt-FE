@@ -171,6 +171,8 @@ const TodoModal = (props: any) => {
         return;
       }
 
+      console.log(project.id);
+
       axios
         .patch(
           `https://laoh.site/api/todos/${UData[0].id}`,
@@ -221,6 +223,7 @@ const TodoModal = (props: any) => {
     setDetail("");
     setEndDate(dayjs().format("YYYY.MM.DD"));
     setPriority("높음");
+    setProject({ id: null, title: "" });
   }, [postSuccess]);
 
   const handleResizeHeight = useCallback(() => {
