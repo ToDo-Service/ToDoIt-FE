@@ -3,8 +3,8 @@ import * as Icon from "react-bootstrap-icons";
 import { signOut } from "next-auth/react";
 
 const HeaderContainer = styled.div`
-  padding-left: 230px;
-  width: 100vw;
+  /* padding-left: 230px; */
+  width: calc(100vw - 230px);
   height: 110px;
   border-bottom: solid 0.02px #c8c5cb;
   display: flex;
@@ -29,15 +29,27 @@ const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 81px;
+  margin-left: 43px;
+  width: max-content;
 `;
 
-const Header = () => {
+interface Props {
+  title: string;
+  icon: string;
+}
+
+const Header = ({ title, icon }: Props) => {
   return (
     <header>
       <HeaderContainer>
         <HeaderTextIcon>
-          <HeaderTest>프로젝트</HeaderTest>
+          {icon === "BookMarkCheck" ? (
+            <Icon.BookmarkCheck size={"30px"} />
+          ) : undefined}
+          {icon === "CalendarEvent" ? (
+            <Icon.CalendarEvent size={"30px"} />
+          ) : undefined}
+          <HeaderTest>{title}</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin
           onClick={() => signOut({ redirect: true, callbackUrl: "/" })}

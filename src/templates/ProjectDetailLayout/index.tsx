@@ -1,4 +1,3 @@
-import ProjectHeader from "@/organisms/Project/ProjectHeader";
 import ProjectMainPage from "@/organisms/Project/ProjectMainPage";
 import styled from "styled-components";
 
@@ -13,7 +12,10 @@ const ProjectPageLayoutBox = styled.div`
 const ProjectPageLayout = () => {
   return (
     <>
+<<<<<<< HEAD
       {/* <ProjectHeader /> */}
+=======
+>>>>>>> planpage
       <ProjectPageLayoutBox />
     </>
   );

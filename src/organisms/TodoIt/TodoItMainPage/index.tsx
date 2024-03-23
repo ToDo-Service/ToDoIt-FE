@@ -1,10 +1,7 @@
 import KanbanList from "@/atoms/KanbanList";
-import Header from "@/organisms/TodoIt/TodoItHeader";
 import TodoBox from "@/molecules/TO-DO/TodoBox";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-// import { kanbanListState } from "@/reocoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
@@ -19,8 +16,6 @@ interface PriorityList {
 }
 
 const PageTemp = ({ data }: any) => {
-  const [HeaderName, setHeaderName] = useState(["오늘 할 일 "]);
-
   //현재 날짜
   let today = new Date();
   let year = today.getFullYear();
@@ -73,7 +68,6 @@ const PageTemp = ({ data }: any) => {
 
   return (
     <div>
-      <Header Headername={HeaderName[0]} />
       <TodoPageMainBox>
         <DndProvider backend={HTML5Backend}>
           {data
