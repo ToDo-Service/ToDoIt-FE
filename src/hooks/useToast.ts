@@ -1,14 +1,13 @@
 import Swal from "sweetalert2";
 
 export const useToast = (message: string, isSucess: boolean) => {
-  console.log(message);
-
   const ToastMessage = Swal.mixin({
     toast: true,
     position: "bottom-start",
     showCancelButton: false,
     showConfirmButton: false,
-    background: "#f1ebf9",
+    background: "#ffffff",
+
     timer: 1000,
     timerProgressBar: false,
     didOpen: (toast) => {

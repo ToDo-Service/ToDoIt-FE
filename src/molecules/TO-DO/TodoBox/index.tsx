@@ -9,7 +9,7 @@ import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
 import useSWR, { mutate } from "swr";
 import * as Icon from "react-bootstrap-icons";
-import { useRef, useState } from "react";
+import { cloneElement, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { useToast } from "@/hooks/useToast";
 
@@ -157,8 +157,10 @@ const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
   const setModal = useSetRecoilState(Modal);
   const setUData = useSetRecoilState(UpdateData);
+  const [check, setCheck] = useState(Data.status === "COMPLETE" ? true : false);
 
   const CompleteTodo = async () => {
+    setCheck(!check);
     await axios
       .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
         headers: {
@@ -167,11 +169,9 @@ const TodoBox = ({ Data, category }: any) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log();
         res.data.body === "complete"
           ? useToast(`${Data.title} 완료 하셨군요`, true)
           : useToast(`${Data.title} 취소 하였습니다.`, true);
-
         mutate("https://laoh.site/api/todos/today");
       })
       .catch((err) => {
@@ -240,8 +240,6 @@ const TodoBox = ({ Data, category }: any) => {
     },
   }));
 
-  console.log(Data);
-
   const RewriteModal = () => {
     setModal({ id: Data.id, method: "update", toggle: true });
     setUData({
@@ -255,6 +253,8 @@ const TodoBox = ({ Data, category }: any) => {
     });
   };
 
+  console.log(Data.status);
+
   return (
     <>
       <TodoContainer ref={dragRef}>
@@ -264,22 +264,13 @@ const TodoBox = ({ Data, category }: any) => {
           <TodoBoxHeader>
             <div style={{ display: "flex", alignItems: "center" }}>
               <TodoLabel htmlFor="check">
-                {Data ? (
-                  Data.status === "INCOMPLETE" ? (
-                    <CheckBox
-                      type="checkbox"
-                      name="check"
-                      onClick={CompleteTodo}
-                    />
-                  ) : (
-                    <CheckBox
-                      type="checkbox"
-                      name="check"
-                      checked
-                      onClick={CompleteTodo}
-                    />
-                  )
-                ) : null}
+                {
+                  <CheckBox
+                    type="checkbox"
+                    onChange={CompleteTodo}
+                    checked={check}
+                  />
+                }
               </TodoLabel>
               <TodoBoxName>{Data.title}</TodoBoxName>
               <TodoBoxDate>{Data.end_date}</TodoBoxDate>
