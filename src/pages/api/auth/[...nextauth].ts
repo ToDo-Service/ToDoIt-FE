@@ -53,6 +53,7 @@ export default NextAuth({
       if (account) {
         token.accessToken = privateToken;
       }
+
       return token;
     },
 

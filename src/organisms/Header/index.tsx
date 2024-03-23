@@ -11,6 +11,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: fixed;
+  z-index: 2;
 `;
 
 const HeaderTest = styled.h3`

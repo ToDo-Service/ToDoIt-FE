@@ -17,9 +17,9 @@ export default function Home() {
         <title>TodoIt</title>
       </Head>
       <Layout>
-        {router.asPath === "/main/today" ? <ToDoItLayout /> : undefined}
-        {router.asPath === "/main/project" ? <ProjectPageLayout /> : undefined}
-        {router.asPath === "/main/nextplan" ? <NextPlanMainPage /> : undefined}
+        {router.asPath === "/main/today" && <ToDoItLayout />}
+        {router.asPath === "/main/project" && <ProjectPageLayout />}
+        {router.asPath === "/main/nextplan" && <NextPlanMainPage />}
       </Layout>
     </>
   );

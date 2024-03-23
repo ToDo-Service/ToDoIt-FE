@@ -75,14 +75,14 @@ const ProjectMainPage = () => {
     [filterProejct]
   );
 
-  const FindProject = data
-    ? data.body.filter((e: ProejectT) => {
-        return e.title
-          .replace(" ", "")
-          .toLowerCase()
-          .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
-      })
-    : undefined;
+  const FindProject =
+    data &&
+    data.body.filter((e: ProejectT) => {
+      return e.title
+        .replace(" ", "")
+        .toLowerCase()
+        .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
+    });
 
   return (
     <ProjectPageMainBox>
@@ -114,7 +114,6 @@ const ProjectMainPage = () => {
           : undefined}
         <ProjectAdd onclick={openModal} width="790px" />
       </ProjectList>
-
       {modal ? <ProjectModal onclose={openModal} /> : undefined}
     </ProjectPageMainBox>
   );

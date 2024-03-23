@@ -11,7 +11,7 @@ import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
-import { GetServerSideProps } from "next";
+
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const S_Background = styled.nav`
@@ -23,6 +23,7 @@ const S_Background = styled.nav`
   font-family: "Pretendard";
   /* position: fixed; */
   z-index: 1;
+  min-width: 230px;
 
   & ul {
     list-style: none;

@@ -21,10 +21,6 @@ export default function MainLayout({
 }) {
   const router = useRouter();
 
-  console.log(HeaderData[3]);
-  console.log(router.asPath);
-  // console.log(HeaderData[3].path?.includes(router.asPath));
-
   return (
     <section
       style={{
