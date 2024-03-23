@@ -8,10 +8,11 @@ const Fetcher = (url: string, token: string) => {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => res.data)
-    .catch((err) =>
-      err.response.status === 401
-        ? signOut({ redirect: true, callbackUrl: "/auth/Login" })
-        : undefined
+    .catch(
+      (err) => console.log(err)
+      // err.response.status === 401
+      //   ? signOut({ redirect: true, callbackUrl: "/auth/Login" })
+      //   : undefined
     );
 };
 

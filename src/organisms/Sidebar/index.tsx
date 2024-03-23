@@ -112,7 +112,7 @@ const Sidebar = () => {
   const jwt = useRecoilValue(jwtToken);
 
   const { data, error, isLoading } = useSWR(
-    jwt.token !== "" ? "https://laoh.site/api/project" : undefined,
+    jwt.token !== "" && "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
   );
 

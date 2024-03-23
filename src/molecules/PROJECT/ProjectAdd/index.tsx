@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const ProjectboxAddMainbox = styled.div`
-  width: 790px;
+const ProjectboxAddMainbox = styled("div")<{ width: string }>`
+  width: ${(props) => props.width};
   height: 55px;
   border-radius: 12px;
   padding-left: 25px;
@@ -20,8 +20,10 @@ const ProjectboxAddMainbox = styled.div`
 `;
 
 const ProjectAdd = (props: any) => {
+  console.log(props);
+
   return (
-    <ProjectboxAddMainbox onClick={props.onclick}>
+    <ProjectboxAddMainbox width={props.width} onClick={props.onclick}>
       <span>+ 프로젝트를 추가하세요</span>
     </ProjectboxAddMainbox>
   );

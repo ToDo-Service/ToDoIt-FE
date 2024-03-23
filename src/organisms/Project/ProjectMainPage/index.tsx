@@ -14,6 +14,8 @@ const ProjectPageMainBox = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  padding-left: 310px;
+  padding-top: 170px;
   flex-direction: column;
   overflow: hidden;
   padding-left: 310px;
@@ -58,8 +60,8 @@ const ProjectMainPage = () => {
   const jwt = useRecoilValue(jwtToken);
 
   const { data, error, isLoading } = useSWR(
-    "https://laoh.site/api/project",
-    (url) => fetcher(url, jwt)
+    jwt.token !== "" && "https://laoh.site/api/project",
+    (url: string) => fetcher(url, jwt)
   );
 
   const openModal = () => {
@@ -110,7 +112,7 @@ const ProjectMainPage = () => {
               );
             })
           : undefined}
-        <ProjectAdd onclick={openModal} />
+        <ProjectAdd onclick={openModal} width="790px" />
       </ProjectList>
 
       {modal ? <ProjectModal onclose={openModal} /> : undefined}
