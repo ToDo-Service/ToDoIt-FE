@@ -13,7 +13,7 @@ const ProjectPageLayoutBox = styled.div`
 const ProjectPageLayout = () => {
   return (
     <>
-      <ProjectHeader />
+      {/* <ProjectHeader /> */}
       <ProjectPageLayoutBox />
     </>
   );
