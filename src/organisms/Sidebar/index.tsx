@@ -68,12 +68,16 @@ const ProjectListli = styled("li")<{ color: string }>`
   display: flex;
   align-items: center;
   height: 10%;
-  max-width: 50%;
+  max-width: max-content;
   padding: 4px;
 
   & a {
     text-decoration: none;
     color: ${(props) => (props.color ? `${props.color}` : "black")};
+  }
+
+  &:hover {
+    max-width: max-content;
   }
 `;
 
@@ -175,15 +179,14 @@ const Sidebar = () => {
         ) : (
           data.body.map((item: ProejectT) => {
             return (
-              <ProjectListli key={item.id} color={item.color}>
-                <Link
-                  href={`/main/project/${item.id}`}
-                  className={
-                    router.asPath === `/main/project/${item.id}` ? "active" : ""
-                  }
-                >
-                  {item.title}
-                </Link>
+              <ProjectListli
+                key={item.id}
+                color={item.color}
+                className={
+                  router.asPath === `/main/project/${item.id}` ? "active" : ""
+                }
+              >
+                <Link href={`/main/project/${item.id}`}>{item.title}</Link>
               </ProjectListli>
             );
           })
