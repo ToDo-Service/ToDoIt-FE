@@ -21,7 +21,9 @@ export default function MainLayout({
 }) {
   const router = useRouter();
 
+  console.log(HeaderData[3]);
   console.log(router.asPath);
+  // console.log(HeaderData[3].path?.includes(router.asPath));
 
   return (
     <section
@@ -33,15 +35,13 @@ export default function MainLayout({
       }}
     >
       <Sidebar />
-
       {HeaderData.map((item: any) => {
-        return item.path === router.asPath ? (
-          <Header icon={item.Icon} title={item.title} />
-        ) : (
-          ""
+        return (
+          router.asPath.includes(item.path) && (
+            <Header icon={item.Icon} title={item.title} />
+          )
         );
       })}
-
       {children}
     </section>
   );

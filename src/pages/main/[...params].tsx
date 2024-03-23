@@ -1,10 +1,6 @@
 import ToDoItLayout from "@/templates/ToDoItLayout";
 import ProjectPageLayout from "@/templates/ProjectPageLayout";
-<<<<<<< HEAD
-
-=======
 import NextPlanMainPage from "@/organisms/NextPlan/NextPlanMainPage";
->>>>>>> planpage
 import { useRouter } from "next/router";
 import Layout from "./layout";
 

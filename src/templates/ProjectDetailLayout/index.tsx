@@ -12,10 +12,6 @@ const ProjectPageLayoutBox = styled.div`
 const ProjectPageLayout = () => {
   return (
     <>
-<<<<<<< HEAD
-      {/* <ProjectHeader /> */}
-=======
->>>>>>> planpage
       <ProjectPageLayoutBox />
     </>
   );
