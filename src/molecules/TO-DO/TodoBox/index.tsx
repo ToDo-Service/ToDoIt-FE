@@ -241,7 +241,6 @@ const TodoBox = ({ Data, category }: any) => {
   }));
 
   const RewriteModal = () => {
-    setModal({ id: Data.id, method: "update", toggle: true });
     setUData({
       id: Data.id,
       title: Data.title,
@@ -251,9 +250,8 @@ const TodoBox = ({ Data, category }: any) => {
       priority: Data.priority,
       project: Data.project,
     });
+    setModal({ id: Data.id, method: "update", toggle: true });
   };
-
-  console.log(Data.status);
 
   return (
     <>
@@ -284,7 +282,7 @@ const TodoBox = ({ Data, category }: any) => {
           <TodoBoxDetail>{Data.content}</TodoBoxDetail>
           <TodoBoxHashTagBox>
             <HashtagPriority priority={Data.priority} />
-            <HashtagProject project={Data.project ? Data.project : null} />
+            <HashtagProject project={Data.project} />
           </TodoBoxHashTagBox>
         </TodoMainBox>
       </TodoContainer>

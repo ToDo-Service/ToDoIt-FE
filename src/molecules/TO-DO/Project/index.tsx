@@ -121,8 +121,6 @@ const Project = ({ onChange, value, method }: any) => {
           setBgColor(p.backgroundColor);
         }
       });
-    } else {
-      setBgColor("rgba(251, 213, 128, 0.15)");
     }
   }, [data, project]);
 
@@ -131,10 +129,10 @@ const Project = ({ onChange, value, method }: any) => {
     setProject(e.target.innerHTML);
     setColor(e.target.classList[2]);
     ColorData.map((item) => {
-      item.color === e.target.classList[2]
-        ? setBgColor(item.backgroundColor)
-        : undefined;
+      item.color === e.target.classList[2] && setBgColor(item.backgroundColor);
     });
+
+    console.log(bgColor);
   };
 
   return (

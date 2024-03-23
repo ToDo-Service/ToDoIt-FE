@@ -10,11 +10,9 @@ import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
 import { motion, AnimatePresence } from "framer-motion";
-
-//동적 호출
-const Calendar = dynamic(import("@/molecules/Calendar"));
-const Project = dynamic(import("@/molecules/TO-DO/Project"));
-const Priority = dynamic(import("@/molecules/TO-DO/Priority"));
+import Calendar from "@/molecules/Calendar";
+import Project from "@/molecules/TO-DO/Project";
+import Priority from "@/molecules/TO-DO/Priority";
 
 const animate = {
   initial: {
@@ -106,8 +104,6 @@ const TodoModal = (props: any) => {
   const setModal = useSetRecoilState(Modal);
   const UData = useRecoilState(UpdateData);
 
-  console.log(prioirty);
-
   const openModalHandler = () => {
     setIsaddopen(true);
   };
@@ -127,7 +123,7 @@ const TodoModal = (props: any) => {
         e.preventDefault();
         return;
       }
-      console.log(project);
+      console.log(title, detail, endDate, project.id, prioirty);
       axios
         .post(
           "https://laoh.site/api/todos",
@@ -216,7 +212,7 @@ const TodoModal = (props: any) => {
         title: UData[0]?.project?.description,
       });
     }
-  }, [modal, prioirty, endDate, title, detail]);
+  }, [modal]);
 
   useEffect(() => {
     setTitle("");
