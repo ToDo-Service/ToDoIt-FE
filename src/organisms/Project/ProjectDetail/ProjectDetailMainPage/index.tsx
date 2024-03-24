@@ -51,7 +51,7 @@ const ProjectDeatailMainPage = () => {
             return <ProjectTodoBox todolist={item} />;
           })}
       </ProjectDetailList>
-      <ProjectAdd width="320px" />
+      <ProjectAdd width="22.2222vw" comment="+ 할 일을 추가하세요" />
     </ProjectDetailMainPageBox>
   );
 };

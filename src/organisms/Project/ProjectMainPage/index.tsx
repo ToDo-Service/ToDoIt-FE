@@ -106,7 +106,11 @@ const ProjectMainPage = () => {
                 />
               );
             })}
-        <ProjectAdd onclick={openModal} width="54.8611vw" />
+        <ProjectAdd
+          onclick={openModal}
+          width="54.8611vw"
+          comment="+ 프로젝트를 추가하세요"
+        />
       </ProjectList>
       {modal && <ProjectModal onclose={openModal} />}
     </ProjectPageMainBox>

@@ -21,12 +21,16 @@ const ProjectboxAddMainbox = styled("div")<{ width: string }>`
   }
 `;
 
-const ProjectAdd = (props: any) => {
-  console.log(props);
+interface Props {
+  comment: string;
+  width: string;
+  // onclick: () => void;
+}
 
+const ProjectAdd = (props: any) => {
   return (
     <ProjectboxAddMainbox width={props.width} onClick={props.onclick}>
-      <span>+ 프로젝트를 추가하세요</span>
+      <span>{props.comment}</span>
     </ProjectboxAddMainbox>
   );
 };
