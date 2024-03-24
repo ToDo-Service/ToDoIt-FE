@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 const ProjectboxAddMainbox = styled("div")<{ width: string }>`
   width: ${(props) => props.width};
-  height: 55px;
+  height: 5.3711vh;
+  max-width: 790px;
+  max-height: 55px;
   border-radius: 12px;
   padding-left: 25px;
   margin-bottom: 20px;

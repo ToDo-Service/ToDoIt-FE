@@ -6,13 +6,14 @@ import { startOfMonth, endOfMonth } from "date-fns";
 import styled from "styled-components";
 
 const ScheduleCalendar = styled.div`
-  width: 940px;
-  height: 857px;
+  width: 65.2778vw;
+  height: 83.6914vh;
   margin-top: 136px;
   margin-left: 43px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   font-family: "Pretendard";
+  overflow: hidden;
 `;
 
 const TextToday = styled.div`
@@ -29,7 +30,7 @@ const TextToday = styled.div`
 
 const CalenderList = styled.div`
   width: 100%;
-  height: 675px;
+  height: 65.918vh;
   overflow-y: scroll;
   overflow-x: hidden;
 `;
@@ -41,21 +42,21 @@ const DateCol = styled.div`
 
 const DateRow = styled.div`
   display: flex;
-  width: 907px;
+  width: 88.5742vw;
   justify-content: space-around;
 `;
 
 const CalenderBody = styled.div`
-  height: 602px;
-  width: 907px;
+  height: 58.7891vh;
+  width: 88.5742vw;
   margin-top: 15px;
 `;
 
 const CalenderBodyRow = styled.div`
   display: flex;
   justify-content: center;
-  width: 907px;
-  height: 132px;
+  width: 88.5742vw;
+  height: 12.8906vh;
 
   & .col {
     text-align: center;

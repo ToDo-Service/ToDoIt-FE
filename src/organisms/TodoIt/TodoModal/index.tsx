@@ -123,7 +123,6 @@ const TodoModal = (props: any) => {
         e.preventDefault();
         return;
       }
-      console.log(title, detail, endDate, project.id, prioirty);
       axios
         .post(
           "https://laoh.site/api/todos",
@@ -152,7 +151,7 @@ const TodoModal = (props: any) => {
         })
         .finally(() => {});
     },
-    [title, detail, prioirty, endDate]
+    [title, detail, prioirty, endDate, project]
   );
 
   const onRewrite = useCallback(
@@ -166,8 +165,6 @@ const TodoModal = (props: any) => {
         e.preventDefault();
         return;
       }
-
-      console.log(project.id);
 
       axios
         .patch(
@@ -188,7 +185,7 @@ const TodoModal = (props: any) => {
           }
         )
         .then(() => {
-          setPostSuccess(true);
+          setPostSuccess(!postSuccess);
           CloseModalHandler();
           mutate("https://laoh.site/api/todos/today");
         })
@@ -198,14 +195,14 @@ const TodoModal = (props: any) => {
         })
         .finally(() => {});
     },
-    [title, detail, prioirty, endDate]
+    [title, detail, prioirty, endDate, project]
   );
 
   useEffect(() => {
     if (modal.method === "update") {
       setTitle(UData[0].title);
       setDetail(UData[0].content);
-      setEndDate(UData[0].end_date);
+      setEndDate(dayjs(UData[0].end_date).format("YYYY.MM.DD"));
       setPriority(UData[0].priority);
       setProject({
         id: UData[0]?.project?.id,
@@ -220,13 +217,12 @@ const TodoModal = (props: any) => {
     setEndDate(dayjs().format("YYYY.MM.DD"));
     setPriority("높음");
     setProject({ id: null, title: "" });
-  }, [postSuccess]);
+  }, [postSuccess, isaddopen]);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
       return;
     }
-
     if (ref.current.scrollHeight <= 60) {
       ref.current.style.height = "37px";
       ref.current.style.height = ref.current.scrollHeight + "px";
@@ -234,8 +230,6 @@ const TodoModal = (props: any) => {
       ref.current.style.height = "60px";
     }
   }, []);
-
-  console.log(modal.toggle);
 
   return (
     <AnimatePresence>

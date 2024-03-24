@@ -17,9 +17,7 @@ const ProjectPageMainBox = styled.div`
   padding-left: 310px;
   padding-top: 170px;
   flex-direction: column;
-  overflow: hidden;
-  padding-left: 310px;
-  padding-top: 170px;
+  /* overflow: hidden; */
 `;
 const ProjectList = styled.div`
   overflow-y: scroll;
@@ -75,14 +73,12 @@ const ProjectMainPage = () => {
     [filterProejct]
   );
 
-  const FindProject =
-    data &&
-    data.body.filter((e: ProejectT) => {
-      return e.title
-        .replace(" ", "")
-        .toLowerCase()
-        .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
-    });
+  const FindProject = data?.body.filter((e: ProejectT) => {
+    return e.title
+      .replace(" ", "")
+      .toLowerCase()
+      .includes(filterProejct.replace(" ", "").toLocaleLowerCase());
+  });
 
   return (
     <ProjectPageMainBox>
@@ -100,8 +96,7 @@ const ProjectMainPage = () => {
                 />
               );
             })
-          : data
-          ? data.body.map((e: ProejectT) => {
+          : data?.body.map((e: ProejectT) => {
               return (
                 <Projectbox
                   description={e.description}
@@ -110,11 +105,10 @@ const ProjectMainPage = () => {
                   id={e.id}
                 />
               );
-            })
-          : undefined}
-        <ProjectAdd onclick={openModal} width="790px" />
+            })}
+        <ProjectAdd onclick={openModal} width="54.8611vw" />
       </ProjectList>
-      {modal ? <ProjectModal onclose={openModal} /> : undefined}
+      {modal && <ProjectModal onclose={openModal} />}
     </ProjectPageMainBox>
   );
 };

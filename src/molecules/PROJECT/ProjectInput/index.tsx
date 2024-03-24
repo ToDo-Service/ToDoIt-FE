@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 const ProjectInputboxMainbox = styled.input`
-  width: 790px;
-  height: 55px;
+  width: 54.8611vw;
+  height: 5.3711vh;
+  max-width: 790px;
+  max-height: 55px;
   border-radius: 12px;
   padding-left: 25px;
   display: flex;

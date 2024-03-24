@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { UpdateData, jwtToken } from "@/reocoil";
@@ -124,6 +124,8 @@ const Project = ({ onChange, value, method }: any) => {
     }
   }, [data, project]);
 
+  console.log(value);
+
   const onSelect = (e: any) => {
     onChange({ title: e.target.innerHTML, id: e.target.id });
     setProject(e.target.innerHTML);
@@ -131,17 +133,15 @@ const Project = ({ onChange, value, method }: any) => {
     ColorData.map((item) => {
       item.color === e.target.classList[2] && setBgColor(item.backgroundColor);
     });
-
-    console.log(bgColor);
   };
 
   return (
     <ProjectContainer bgcolor={bgColor} onClick={modalprojectOpen}>
       <span>프로젝트</span>
-      <SelectedProject color={color}>{project}</SelectedProject>
+      <SelectedProject color={color}>{value.title}</SelectedProject>
       <ProjectWrapper priorityisopen={projectopen ? 1 : 0}>
         <Projectlist>
-          {data.body.map((item: any) => {
+          {data?.body.map((item: any) => {
             return (
               <ProjectListitem
                 id={item.id}
