@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const ProjectboxAddMainbox = styled("div")<{ width: string }>`
+const ProjectboxAddMainbox = styled("div")<{ width: string; maxwidth: string }>`
   width: ${(props) => props.width};
   height: 5.3711vh;
-  max-width: 790px;
+  max-width: ${(props) => props.maxwidth};
   max-height: 55px;
   border-radius: 12px;
   padding-left: 25px;
@@ -29,7 +29,11 @@ interface Props {
 
 const ProjectAdd = (props: any) => {
   return (
-    <ProjectboxAddMainbox width={props.width} onClick={props.onclick}>
+    <ProjectboxAddMainbox
+      width={props.width}
+      onClick={props.onclick}
+      maxwidth={props.maxwidth}
+    >
       <span>{props.comment}</span>
     </ProjectboxAddMainbox>
   );

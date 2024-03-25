@@ -1,14 +1,36 @@
 import { atom } from "recoil";
+import { v1 } from "uuid";
+import type { RecoilState } from "recoil";
 
-export const jwtToken = atom<any>({
-  key: "JWT",
+interface ModalTp {
+  id: number;
+  method: string;
+  toggle: boolean;
+}
+
+interface UpdateDataTp {
+  id: number;
+  title: string;
+  content: string;
+  end_date: string;
+  status: string;
+  priority: string;
+  project: null;
+}
+
+interface jwtTp {
+  token: string;
+}
+
+export const jwtToken: RecoilState<any> = atom<any>({
+  key: `JWT${v1}`,
   default: {
     token: "",
   },
 });
 
-export const Modal = atom<any>({
-  key: "Modal",
+export const Modal: RecoilState<any> = atom<any>({
+  key: `Modal${v1}`,
   default: {
     id: 0,
     method: "",
@@ -16,8 +38,8 @@ export const Modal = atom<any>({
   },
 });
 
-export const UpdateData = atom<any>({
-  key: "UData",
+export const UpdateData: RecoilState<any> = atom<any>({
+  key: `UData${v1}`,
   default: {
     id: 0,
     title: "",

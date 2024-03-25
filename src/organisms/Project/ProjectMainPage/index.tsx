@@ -110,6 +110,7 @@ const ProjectMainPage = () => {
           onclick={openModal}
           width="54.8611vw"
           comment="+ 프로젝트를 추가하세요"
+          maxwidth="791px"
         />
       </ProjectList>
       {modal && <ProjectModal onclose={openModal} />}

@@ -34,7 +34,7 @@ export default function MainLayout({
       {HeaderData.map((item: any) => {
         return (
           router.asPath.includes(item.path) && (
-            <Header icon={item.Icon} title={item.title} />
+            <Header key={item.id} icon={item.Icon} title={item.title} />
           )
         );
       })}

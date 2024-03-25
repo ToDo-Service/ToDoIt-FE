@@ -45,7 +45,8 @@ const Projectlist = styled.div`
   font-family: "Pretendard";
   color: #8f8f8f;
   font-size: 10px;
-  height: 100%;
+  height: fit-content;
+
   padding-left: 14px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -99,7 +100,7 @@ const ColorData = [
 const Project = ({ onChange, value, method }: any) => {
   const toggle = useRecoilValue(UpdateData);
   const [project, setProject] = useState(
-    method === "update" ? toggle?.project?.id : ""
+    method === "update" && toggle?.project?.id
   );
   const [projectopen, setProjectOpen] = useState(false);
   const [color, setColor] = useState("");
@@ -123,8 +124,6 @@ const Project = ({ onChange, value, method }: any) => {
       });
     }
   }, [data, project]);
-
-  console.log(value);
 
   const onSelect = (e: any) => {
     onChange({ title: e.target.innerHTML, id: e.target.id });

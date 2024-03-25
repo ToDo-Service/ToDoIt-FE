@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ProgressBar from "../ProgressBar";
+import ProgressBar from "../../atoms/ProgressBar";
 import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
 import { motion, AnimatePresence } from "framer-motion";
