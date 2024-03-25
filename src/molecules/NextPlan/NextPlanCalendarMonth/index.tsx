@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const MonthPage = styled.div`
-  margin-top: 50px;
+  /* margin-top: 50px; */
   height: 602px;
 `;
 

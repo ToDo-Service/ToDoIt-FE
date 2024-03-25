@@ -5,6 +5,10 @@ import { format, addMonths, startOfWeek, addDays } from "date-fns";
 import { endOfWeek, isSameDay, isSameMonth } from "date-fns";
 import { startOfMonth, endOfMonth } from "date-fns";
 import styled from "styled-components";
+import useSWR from "swr";
+import Fetcher from "@/utils/fetcher";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -59,6 +63,10 @@ const CalenderBodyRow = styled.div`
   width: 100%;
   height: 12.8906vh;
 
+  & hr {
+    margin-bottom: 50px;
+  }
+
   & .col {
     text-align: center;
   }
@@ -91,11 +99,12 @@ const RenderDays = () => {
   return <DateRow>{days}</DateRow>;
 };
 
-const RenderCells = ({ currentMonth, selectedDate }: any) => {
+const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
+  let CurrentDateData: any = [];
 
   const rows: any[] = [];
   let days: any[] = [];
@@ -104,6 +113,11 @@ const RenderCells = ({ currentMonth, selectedDate }: any) => {
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
+      Data?.map((item: any) => {
+        `${item.date[2] - 0}` === formattedDate.toString() &&
+          CurrentDateData.push(<div>{item.title}</div>);
+      });
+      console.log(CurrentDateData);
       formattedDate = format(day, "d");
       days.push(
         <div
@@ -126,9 +140,14 @@ const RenderCells = ({ currentMonth, selectedDate }: any) => {
             }
           >
             {formattedDate}
+            {CurrentDateData.map((item: any) => {
+              return item;
+            })}
           </span>
         </div>
       );
+      CurrentDateData = [];
+
       day = addDays(day, 1);
     }
     rows.push(<CalenderBodyRow key={uuid()}>{days}</CalenderBodyRow>);
@@ -142,14 +161,29 @@ const Calender = () => {
   const currentDate = new Date();
   const selectedDate = new Date();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [month, setMonth] = useState<number>(0);
-
+  const today = new Date();
+  const [month, setMonth] = useState<number>(today.getMonth() + 1);
+  const jwt = useRecoilValue(jwtToken);
   let currentMonth = new Date(format(currentDate, "yyyy"));
-  let months: any[] = [];
-
+  const cureentYear = today.getFullYear();
+  const months: any[] = [];
   const monthRef = useRef<HTMLDivElement>(null);
+  const { data, error } = useSWR(
+    jwt &&
+      `https://laoh.site/api/todos/month?year=${cureentYear}&month=${month}`,
+    (uri: string) => Fetcher(uri, jwt)
+  );
+  if (error) return <div>캘린더 데이터 패칭 에러입니다.</div>;
+
+  const MonthData = data?.body.map((item: any, index: any) => {
+    return { date: item.end_date.split("-"), id: index, title: item.title };
+  });
 
   for (let i = 0; i < 12; i++) {
+    const CurrentMonthData = MonthData?.filter((item: any) => {
+      return `${item.date[1]}` === `0${i + 1}`;
+    });
+
     months.push(
       <CalenderItem
         key={uuid()}
@@ -160,7 +194,11 @@ const Calender = () => {
         }
       >
         <RenderHeader currentMonth={currentMonth} />
-        <RenderCells currentMonth={currentMonth} selectedDate={selectedDate} />
+        <RenderCells
+          currentMonth={currentMonth}
+          selectedDate={selectedDate}
+          Data={CurrentMonthData}
+        />
       </CalenderItem>
     );
     currentMonth = addMonths(currentMonth, 1);
@@ -172,18 +210,13 @@ const Calender = () => {
     }
   }, []);
 
-  function scrollCurrentMonth() {
-    if (monthRef.current !== null) {
-      monthRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }
   // 스크롤 감지
 
   useEffect(() => {
     const handleScroll = () => {
       if (scrollRef.current) {
         const position = scrollRef.current.scrollTop;
-
+        console.log(position);
         setMonth(Number((position / 645).toFixed(0)) + 1);
       }
     };
