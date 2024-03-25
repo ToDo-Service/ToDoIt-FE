@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import NextPlanCalendarMonth from "../NextPlanCalendarMonth";
 import uuid from "react-uuid";
 import { format, addMonths, startOfWeek, addDays } from "date-fns";
 import { endOfWeek, isSameDay, isSameMonth } from "date-fns";
@@ -8,12 +9,12 @@ import styled from "styled-components";
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
   height: 83.6914vh;
+  max-height: 857px;
   margin-top: 136px;
   margin-left: 43px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   font-family: "Pretendard";
-  overflow: hidden;
 `;
 
 const TextToday = styled.div`
@@ -31,6 +32,7 @@ const TextToday = styled.div`
 const CalenderList = styled.div`
   width: 100%;
   height: 65.918vh;
+
   overflow-y: scroll;
   overflow-x: hidden;
 `;
@@ -42,20 +44,20 @@ const DateCol = styled.div`
 
 const DateRow = styled.div`
   display: flex;
-  width: 88.5742vw;
+  width: 100%;
   justify-content: space-around;
 `;
 
 const CalenderBody = styled.div`
   height: 58.7891vh;
-  width: 88.5742vw;
+  width: 100%;
   margin-top: 15px;
 `;
 
 const CalenderBodyRow = styled.div`
   display: flex;
   justify-content: center;
-  width: 88.5742vw;
+  width: 100%;
   height: 12.8906vh;
 
   & .col {
@@ -133,6 +135,7 @@ const RenderCells = ({ currentMonth, selectedDate }: any) => {
     rows.push(<CalenderBodyRow key={uuid()}>{days}</CalenderBodyRow>);
     days = [];
   }
+
   return <CalenderBody>{rows}</CalenderBody>;
 };
 
@@ -144,8 +147,6 @@ const Calender = () => {
   let months: any[] = [];
 
   const monthRef = useRef<HTMLDivElement>(null);
-
-  console.log(monthRef);
 
   for (let i = 0; i < 12; i++) {
     months.push(
@@ -170,6 +171,36 @@ const Calender = () => {
     }
   }, []);
 
+  function scrollCurrentMonth() {
+    if (monthRef.current !== null) {
+      monthRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+  // 스크롤 감지
+
+  const [scroll, setScroll] = useState<number>(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollRef.current) {
+        const position = scrollRef.current.scrollTop;
+        setScroll(position);
+      }
+    };
+
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+  console.log(scroll);
+
   return (
     <ScheduleCalendar>
       <TextToday>
@@ -179,7 +210,12 @@ const Calender = () => {
         )}월`}</p>
       </TextToday>
       <RenderDays />
-      <CalenderList>{months}</CalenderList>
+
+      <CalenderList ref={scrollRef}>
+        {months.map((item: any, index: number) => {
+          return <NextPlanCalendarMonth month={item} index={index} />;
+        })}
+      </CalenderList>
     </ScheduleCalendar>
   );
 };
