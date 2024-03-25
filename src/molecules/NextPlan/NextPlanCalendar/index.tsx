@@ -32,7 +32,6 @@ const TextToday = styled.div`
 const CalenderList = styled.div`
   width: 100%;
   height: 65.918vh;
-
   overflow-y: scroll;
   overflow-x: hidden;
 `;
@@ -142,6 +141,8 @@ const RenderCells = ({ currentMonth, selectedDate }: any) => {
 const Calender = () => {
   const currentDate = new Date();
   const selectedDate = new Date();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [month, setMonth] = useState<number>(0);
 
   let currentMonth = new Date(format(currentDate, "yyyy"));
   let months: any[] = [];
@@ -178,14 +179,12 @@ const Calender = () => {
   }
   // 스크롤 감지
 
-  const [scroll, setScroll] = useState<number>(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleScroll = () => {
       if (scrollRef.current) {
         const position = scrollRef.current.scrollTop;
-        setScroll(position);
+
+        setMonth(Number((position / 645).toFixed(0)) + 1);
       }
     };
 
@@ -199,21 +198,25 @@ const Calender = () => {
       }
     };
   }, []);
-  console.log(scroll);
 
   return (
     <ScheduleCalendar>
       <TextToday>
-        <p className="text-year">{`${format(currentDate, "yyyy")}년 ${format(
+        <p className="text-year">{`${format(
           currentDate,
-          "mm"
-        )}월`}</p>
+          "yyyy"
+        )}년 ${month}월`}</p>
       </TextToday>
       <RenderDays />
 
       <CalenderList ref={scrollRef}>
         {months.map((item: any, index: number) => {
-          return <NextPlanCalendarMonth month={item} index={index} />;
+          return (
+            <>
+              {index !== 0 && <hr />}
+              <NextPlanCalendarMonth month={item} index={index} />
+            </>
+          );
         })}
       </CalenderList>
     </ScheduleCalendar>
