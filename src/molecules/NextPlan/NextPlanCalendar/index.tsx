@@ -9,6 +9,7 @@ import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
+import FindColor from "@/utils/findColor";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -38,6 +39,9 @@ const CalenderList = styled.div`
   height: 65.918vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  & > div:not(:first-child) {
+    margin-top: 200px;
+  }
 `;
 
 const DateCol = styled.div`
@@ -77,17 +81,16 @@ const CalenderBodyRow = styled.div`
 `;
 
 const CalenderItem = styled.div`
+  height: 100%;
   &:not(:first-child) {
     margin-top: 37px;
   }
 `;
 
+const CalenderData = styled.div<{ color: string }>``;
+
 const RenderHeader = ({ currentMonth }: any) => {
-  return (
-    <div className="header row">
-      {/* {currentMonth.toLocaleString("en-US", { month: "long" })} */}
-    </div>
-  );
+  return <div className="header row"></div>;
 };
 
 const RenderDays = () => {
@@ -117,7 +120,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
         `${item.date[2] - 0}` === formattedDate.toString() &&
           CurrentDateData.push(<div>{item.title}</div>);
       });
-      console.log(CurrentDateData);
+
       formattedDate = format(day, "d");
       days.push(
         <div
@@ -179,6 +182,9 @@ const Calender = () => {
     return { date: item.end_date.split("-"), id: index, title: item.title };
   });
 
+  //컬러 찾기
+  console.log(FindColor("#9ECAFB"));
+
   for (let i = 0; i < 12; i++) {
     const CurrentMonthData = MonthData?.filter((item: any) => {
       return `${item.date[1]}` === `0${i + 1}`;
@@ -216,8 +222,7 @@ const Calender = () => {
     const handleScroll = () => {
       if (scrollRef.current) {
         const position = scrollRef.current.scrollTop;
-        console.log(position);
-        setMonth(Number((position / 645).toFixed(0)) + 1);
+        setMonth(Number((position / 772).toFixed(0)) + 1);
       }
     };
 
@@ -245,10 +250,10 @@ const Calender = () => {
       <CalenderList ref={scrollRef}>
         {months.map((item: any, index: number) => {
           return (
-            <>
-              {index !== 0 && <hr />}
+            <div>
               <NextPlanCalendarMonth month={item} index={index} />
-            </>
+              {/* {index !== 0 && <hr />} */}
+            </div>
           );
         })}
       </CalenderList>
