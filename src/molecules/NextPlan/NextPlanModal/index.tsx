@@ -17,6 +17,17 @@ const NextPlanModalLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translate3d(100%, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+  }
+  animation: fadeInLeft 1s;
 `;
 
 const NextPlanModalHeader = styled.header`

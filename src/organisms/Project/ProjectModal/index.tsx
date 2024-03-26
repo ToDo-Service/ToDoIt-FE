@@ -27,6 +27,15 @@ const ModalBackdrop = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  animation: fadeIn 0.5s;
 `;
 
 const ProjectInputboxMainbox = styled.input`

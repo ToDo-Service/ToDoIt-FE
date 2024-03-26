@@ -29,7 +29,6 @@ const ProjectboxAddMainbox = styled("div")<{
 interface Props {
   comment: string;
   width: string;
-  // onclick: () => void;
 }
 
 const ProjectAdd = (props: any) => {
