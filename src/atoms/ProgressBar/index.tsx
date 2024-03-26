@@ -25,6 +25,7 @@ const Progress = styled("div")<{ width: number }>`
   text-align: center;
   color: white;
   font-family: "Pretendard";
+  font-weight: 300;
   font-size: 10px;
   background-color: ${(props) =>
     props.width < 50 ? "rgba(12, 0, 24, 0.5)" : "rgba(255, 98, 98, 0.7)"};

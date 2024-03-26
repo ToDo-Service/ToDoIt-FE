@@ -103,6 +103,26 @@ const CalenderCell = styled.div`
   & span div:first-child {
     margin-top: 9px;
   }
+  & span {
+    margin-bottom: 10px;
+  }
+
+  & .texttoday {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .Date {
+      width: 25px;
+      height: 25px;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      background-color: #bd03bd;
+      border-radius: 50%;
+      color: white;
+    }
+  }
 `;
 
 const RenderHeader = ({ currentMonth }: any) => {
@@ -164,19 +184,20 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
               format(currentMonth, "M") !== format(day, "M")
                 ? "text not-valid"
                 : isSameMonth(day, monthStart) && isSameDay(day, selectedDate)
-                ? "text today"
+                ? "texttoday"
                 : ""
             }
           >
-            {formattedDate}
+            <p className="Date">{formattedDate}</p>
             {CurrentDateData.map((item: any, index: number) => {
               return index <= 2 && item;
             })}
-            {CurrentDateData.length > 2 && <p>...</p>}
+            {/* {CurrentDateData.length > 2 && <p>...</p>} */}
           </span>
         </CalenderCell>
       );
       CurrentDateData = [];
+      console.log(formattedDate);
 
       day = addDays(day, 1);
     }
