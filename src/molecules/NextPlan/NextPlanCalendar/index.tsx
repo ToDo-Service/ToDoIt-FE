@@ -189,9 +189,10 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
             }
           >
             <p className="Date">{formattedDate}</p>
-            {CurrentDateData.map((item: any, index: number) => {
-              return index <= 2 && item;
-            })}
+            {isSameMonth(day, monthStart) &&
+              CurrentDateData.map((item: any, index: number) => {
+                return index <= 2 && item;
+              })}
             {/* {CurrentDateData.length > 2 && <p>...</p>} */}
           </span>
         </CalenderCell>
