@@ -10,6 +10,7 @@ import Fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 import FindColor from "@/utils/findColor";
+import Month from "react-calendar/dist/cjs/YearView/Month";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -87,7 +88,22 @@ const CalenderItem = styled.div`
   }
 `;
 
-const CalenderData = styled.div<{ color: string }>``;
+const CalenderData = styled.div<{ Bgcolor: string }>`
+  background-color: ${(props) => props.Bgcolor};
+  width: 95%;
+  height: 25px;
+  border-radius: 4px;
+  border: 1px solid rgba(12, 0, 24, 0.1);
+`;
+
+const CalenderCell = styled.div`
+  & span div:not(:last-child) {
+    margin-bottom: 3px;
+  }
+  & span div:first-child {
+    margin-top: 9px;
+  }
+`;
 
 const RenderHeader = ({ currentMonth }: any) => {
   return <div className="header row"></div>;
@@ -118,12 +134,22 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
     for (let i = 0; i < 7; i++) {
       Data?.map((item: any) => {
         `${item.date[2] - 0}` === formattedDate.toString() &&
-          CurrentDateData.push(<div>{item.title}</div>);
+          CurrentDateData.push(
+            <CalenderData
+              Bgcolor={
+                item.color
+                  ? item.color[0]?.backgroundColor
+                  : "rgba(251, 213, 128, 0.15)"
+              }
+            >
+              {item.title}
+            </CalenderData>
+          );
       });
 
       formattedDate = format(day, "d");
       days.push(
-        <div
+        <CalenderCell
           className={`col cell ${
             !isSameMonth(day, monthStart)
               ? "disabled"
@@ -143,11 +169,12 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
             }
           >
             {formattedDate}
-            {CurrentDateData.map((item: any) => {
-              return item;
+            {CurrentDateData.map((item: any, index: number) => {
+              return index <= 2 && item;
             })}
+            {CurrentDateData.length > 2 && <p>...</p>}
           </span>
-        </div>
+        </CalenderCell>
       );
       CurrentDateData = [];
 
@@ -179,11 +206,13 @@ const Calender = () => {
   if (error) return <div>캘린더 데이터 패칭 에러입니다.</div>;
 
   const MonthData = data?.body.map((item: any, index: any) => {
-    return { date: item.end_date.split("-"), id: index, title: item.title };
+    return {
+      date: item.end_date.split("-"),
+      id: index,
+      title: item.title,
+      color: FindColor(item.project?.color),
+    };
   });
-
-  //컬러 찾기
-  console.log(FindColor("#9ECAFB"));
 
   for (let i = 0; i < 12; i++) {
     const CurrentMonthData = MonthData?.filter((item: any) => {
