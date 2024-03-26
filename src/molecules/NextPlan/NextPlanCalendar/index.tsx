@@ -8,7 +8,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { GlobalModal, jwtToken } from "@/reocoil";
+import { CheckProject, GlobalModal, jwtToken } from "@/reocoil";
 
 import FindColor from "@/utils/findColor";
 
@@ -21,6 +21,7 @@ const ScheduleCalendar = styled.div`
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   font-family: "Pretendard";
+  position: relative;
 `;
 
 const TextToday = styled.div`
@@ -150,11 +151,19 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
   let CurrentDateData: any = [];
-  const Modal = useSetRecoilState(GlobalModal);
   const rows: any[] = [];
   let days: any[] = [];
   let day = startDate;
   let formattedDate = "";
+  const CurrentModal = useRecoilValue(GlobalModal);
+  const GModal = useSetRecoilState(GlobalModal);
+
+  const PopProejct = () => {
+    GModal(!CurrentModal);
+    console.log(CurrentModal);
+  };
+
+  const SetSlectedDate = (id: number, date: string) => {};
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
@@ -176,6 +185,10 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
       formattedDate = format(day, "d");
       days.push(
         <CalenderCell
+          onClick={() => {
+            PopProejct();
+            SetSlectedDate(1, formattedDate);
+          }}
           className={`col cell ${
             !isSameMonth(day, monthStart)
               ? "disabled"
@@ -236,7 +249,7 @@ const Calender = () => {
   const MonthData = data?.body.map((item: any, index: any) => {
     return {
       date: item.end_date.split("-"),
-      id: index,
+      id: item.id,
       title: item.title,
       color: FindColor(item.project?.color),
     };
@@ -303,13 +316,12 @@ const Calender = () => {
         )}년 ${month}월`}</p>
       </TextToday>
       <RenderDays />
-
       <CalenderList ref={scrollRef}>
         {months.map((item: any, index: number) => {
           return (
             <div>
-              <NextPlanCalendarMonth month={item} index={index} />
               {/* {index !== 0 && <hr />} */}
+              <NextPlanCalendarMonth month={item} index={index} />
             </div>
           );
         })}
