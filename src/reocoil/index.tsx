@@ -50,3 +50,18 @@ export const UpdateData: RecoilState<any> = atom<any>({
     project: null,
   },
 });
+
+export const CheckProject: RecoilState<any> = atom<any>({
+  key: `CPoject${v1}`,
+  default: {
+    id: 0,
+    date: "",
+  },
+});
+
+export const GlobalModal: RecoilState<any> = atom<any>({
+  key: `GModal${v1}`,
+  default: {
+    toggle: false,
+  },
+});

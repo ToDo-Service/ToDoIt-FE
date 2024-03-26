@@ -7,10 +7,10 @@ import { startOfMonth, endOfMonth } from "date-fns";
 import styled from "styled-components";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
-import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { GlobalModal, jwtToken } from "@/reocoil";
+
 import FindColor from "@/utils/findColor";
-import Month from "react-calendar/dist/cjs/YearView/Month";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -27,7 +27,6 @@ const TextToday = styled.div`
   width: 100%;
   height: fit-content;
   font-size: 0.5rem;
-
   & p {
     font-size: 22px;
     margin-top: 30px;
@@ -36,6 +35,13 @@ const TextToday = styled.div`
 `;
 
 const CalenderList = styled.div`
+  & {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
   width: 100%;
   height: 65.918vh;
   overflow-y: scroll;
@@ -118,7 +124,7 @@ const CalenderCell = styled.div`
       text-align: center;
       align-items: center;
       justify-content: center;
-      background-color: #bd03bd;
+      background-color: #c01ac0;
       border-radius: 50%;
       color: white;
     }
@@ -144,7 +150,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
   let CurrentDateData: any = [];
-
+  const Modal = useSetRecoilState(GlobalModal);
   const rows: any[] = [];
   let days: any[] = [];
   let day = startDate;
@@ -198,7 +204,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
         </CalenderCell>
       );
       CurrentDateData = [];
-      console.log(formattedDate);
 
       day = addDays(day, 1);
     }
@@ -221,7 +226,8 @@ const Calender = () => {
   const months: any[] = [];
   const monthRef = useRef<HTMLDivElement>(null);
   const { data, error } = useSWR(
-    jwt &&
+    () =>
+      jwt &&
       `https://laoh.site/api/todos/month?year=${cureentYear}&month=${month}`,
     (uri: string) => Fetcher(uri, jwt)
   );
