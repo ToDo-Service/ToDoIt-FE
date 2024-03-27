@@ -1,6 +1,6 @@
 **Main화면**
 
-![Uploading 스크린샷 2024-03-27 오후 8.42.00.png…]()
+<img width="678" alt="스크린샷 2024-03-27 오후 8 42 38" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/97a1de81-eb02-4bae-a5dd-b4690b8a89eb">
 
 
 <aside>
