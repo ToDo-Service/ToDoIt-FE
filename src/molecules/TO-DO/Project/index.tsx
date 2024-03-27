@@ -8,7 +8,7 @@ import useSWR from "swr";
 const ProjectContainer = styled.div<{ bgcolor: string }>`
   width: 168px;
   background-color: ${(props) => props.bgcolor};
-  border: 0.8px solid var(--festie-gray-600, #949494);
+  border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 8px;
   display: flex;
   align-items: center;

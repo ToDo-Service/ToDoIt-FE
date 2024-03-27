@@ -9,7 +9,7 @@ import styled from "styled-components";
 const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   width: 110px;
   background-color: ${(props) => props.bgcolor};
-  border: 0.8px solid var(--festie-gray-600, #949494);
+  border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 8px;
   display: flex;
   align-items: center;
