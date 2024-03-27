@@ -2,6 +2,9 @@
 
 <img width="678" alt="스크린샷 2024-03-27 오후 8 42 38" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/97a1de81-eb02-4bae-a5dd-b4690b8a89eb">
 
+</br>
+</br>
+</br>
 
 <aside>
 💡 저희 서비스는 ToDo 서비스로 일정 관리와 달성률에 대한 통계를 시각적으로 보여줌으로 일정을 효율적으로 관리할 수 있는 기능을 제공합니다.
