@@ -52,7 +52,7 @@ Recoil
 </br>
 </br>
 </br>
-[1차 스프린트] [https://velog.io/@omnipo/Todoit1차-스프린트](https://velog.io/@omnipo/Todoit1%EC%B0%A8-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8)
+[1차 스프린트] https://velog.io/@omnipo/Todoit1차-스프린트] (https://velog.io/@omnipo/Todoit1%EC%B0%A8-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8)
 
 [2차 스프린트] [https://velog.io/@omnipo/Todoit2차-스프린트](https://velog.io/@omnipo/Todoit2%EC%B0%A8-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8)
 
