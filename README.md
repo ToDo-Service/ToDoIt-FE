@@ -56,8 +56,6 @@ Recoil
 
 [2차 스프린트] [https://velog.io/@omnipo/Todoit2차-스프린트](https://velog.io/@omnipo/Todoit2%EC%B0%A8-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8)
 
-배포링크 / [https://todoit-two.vercel.app](https://todoit-two.vercel.app/)
-
 
 
 ## https://todoit-two.vercel.app/
