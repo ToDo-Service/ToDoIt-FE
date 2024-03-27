@@ -1,6 +1,6 @@
 import KanbanList from "@/molecules/KanbanList";
 import TodoBox from "@/molecules/TO-DO/TodoBox";
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { FC, ReactElement, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
@@ -15,16 +15,14 @@ interface PriorityList {
   [key: string]: number;
 }
 
-const PageTemp = ({ data }: any) => {
-  //아이템 위아래
-
+const PageTemp: FC<any> = ({ Data }) => {
   const cardDataHandlertest = (cardTitle: string) => {
     const todoBoxes: Array<ReactElement> = [];
     const PriorityList: PriorityList = { 높음: 1, 보통: 2, 낮음: 3 };
-    data &&
-      Object.keys(data.body).forEach((key) => {
+    Data &&
+      Object.keys(Data.body).forEach((key) => {
         key === cardTitle &&
-          data.body[key].map((item: any, index: number) => {
+          Data.body[key].map((item: any, index: number) => {
             Object.keys(PriorityList).forEach((e: string) => {
               item.priority === e &&
                 todoBoxes.push(
@@ -48,8 +46,8 @@ const PageTemp = ({ data }: any) => {
     <div>
       <TodoPageMainBox>
         <DndProvider backend={HTML5Backend}>
-          {data &&
-            Object.keys(data.body).map((key) => {
+          {Data &&
+            Object.keys(Data.body).map((key) => {
               return (
                 <KanbanList title={`${key}`}>
                   {cardDataHandlertest(key)}

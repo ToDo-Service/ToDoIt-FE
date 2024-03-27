@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { signOut, useSession } from "next-auth/react";
-import { useSetRecoilState } from "recoil";
-import { jwtToken } from "@/reocoil";
+
 import MainPage from "@/organisms/TodoIt/TodoItMainPage";
-import fetcher from "@/utils/fetcher";
-import useSWR from "swr";
+
 import { useRecoilValue } from "recoil";
 import { SidebarLayout } from "@/reocoil";
+import { FC } from "react";
+import type { TodayData } from "@/types/tb";
 
 const MainLayout = styled.div<{ open: boolean | null }>`
   width: 100vw;
@@ -38,22 +37,10 @@ const MainLayout = styled.div<{ open: boolean | null }>`
   }
 `;
 
-const MainLayouts = () => {
-  const { data: session, status } = useSession();
-  const setToken = useSetRecoilState(jwtToken);
+const MainLayouts: FC<TodayData> = ({ Data }) => {
   const SToogleState = useRecoilValue(SidebarLayout);
-
-  if (status === "authenticated") {
-    setToken(session?.user.accessToken);
-  }
-
-  const { data, error, isLoading } = useSWR(
-    status === "authenticated" ? "https://laoh.site/api/todos/today" : null,
-    (url) => fetcher(url, session?.user.accessToken as string)
-  );
-
   return (
-    <MainLayout open={SToogleState}>{<MainPage data={data} />}</MainLayout>
+    <MainLayout open={SToogleState}>{<MainPage Data={Data} />}</MainLayout>
   );
 };
 

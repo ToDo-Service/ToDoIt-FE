@@ -6,13 +6,14 @@ import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useState } from "react";
+import { FC, useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SidebarLayout, jwtToken } from "@/reocoil";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 import BurgerIcon from "@/atoms/BurgerIcon";
+import type { ProejectProps } from "@/types/tb";
 
 const S_Background = styled.div<{ Open: boolean | null }>`
   z-index: 99;
@@ -164,26 +165,16 @@ const SidebarOpenIcon = styled.span`
   }
 `;
 
-interface ProejectT {
-  id: number;
-  category: string;
-  color: string;
-  description: string;
-  end_date: string;
-  title: string;
-}
-
-const Sidebar = () => {
+const Sidebar: FC = () => {
   const router = useRouter();
   const [active, setActive] = useState(
     router.asPath === "/main/today" ? "today" : ""
   );
   const SToggle = useSetRecoilState(SidebarLayout);
-  const SToogleStaet = useRecoilValue(SidebarLayout);
   const [sideMenu, setSideMenu] = useState<boolean | null>(null);
   const jwt = useRecoilValue(jwtToken);
 
-  const { data, error, isLoading } = useSWR(
+  const { data } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
   );
@@ -258,23 +249,19 @@ const Sidebar = () => {
           </h3>
         </Link>
         <ProjectListUl>
-          {!data ? (
-            <LoadingSpinner />
-          ) : (
-            data.body.map((item: ProejectT) => {
-              return (
-                <ProjectListli
-                  key={item.id}
-                  color={item.color}
-                  className={
-                    router.asPath === `/main/project/${item.id}` ? "active" : ""
-                  }
-                >
-                  <Link href={`/main/project/${item.id}`}>{item.title}</Link>
-                </ProjectListli>
-              );
-            })
-          )}
+          {data?.body.map((item: ProejectProps) => {
+            return (
+              <ProjectListli
+                key={item.id}
+                color={item.color}
+                className={
+                  router.asPath === `/main/project/${item.id}` ? "active" : ""
+                }
+              >
+                <Link href={`/main/project/${item.id}`}>{item.title}</Link>
+              </ProjectListli>
+            );
+          })}
         </ProjectListUl>
       </S_Content>
 

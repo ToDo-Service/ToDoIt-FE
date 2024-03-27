@@ -4,11 +4,12 @@ import ProjectInputbox from "@/molecules/PROJECT/ProjectInput";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import ProjectModal from "@/organisms/Project/ProjectModal";
 import { useSession } from "next-auth/react";
-import { HtmlHTMLAttributes, useCallback, useState } from "react";
+import { FC, HtmlHTMLAttributes, useCallback, useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
+import type { ProejectT } from "@/types/tb";
 
 const ProjectPageMainBox = styled.div`
   display: flex;
@@ -17,7 +18,6 @@ const ProjectPageMainBox = styled.div`
   padding-left: 310px;
   padding-top: 170px;
   flex-direction: column;
-  /* overflow: hidden; */
 `;
 const ProjectList = styled.div`
   overflow-y: scroll;
@@ -42,22 +42,13 @@ const ProjectUserName = styled.p`
   margin-top: 69px;
 `;
 
-interface ProejectT {
-  id: number;
-  category: string;
-  color: string;
-  description: string;
-  end_date: string;
-  title: string;
-}
-
-const ProjectMainPage = () => {
+const ProjectMainPage: FC = () => {
   const session = useSession();
   const [modal, setModal] = useState(false);
   const [filterProejct, setFilterProject] = useState<string>("");
   const jwt = useRecoilValue(jwtToken);
 
-  const { data, error, isLoading } = useSWR(
+  const { data } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
     (url: string) => fetcher(url, jwt)
   );

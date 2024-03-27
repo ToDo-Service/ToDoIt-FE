@@ -320,7 +320,6 @@ const Calender = () => {
         {months.map((item: any, index: number) => {
           return (
             <div>
-              {/* {index !== 0 && <hr />} */}
               <NextPlanCalendarMonth month={item} index={index} />
             </div>
           );
