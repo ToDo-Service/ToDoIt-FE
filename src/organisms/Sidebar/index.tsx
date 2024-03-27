@@ -6,24 +6,58 @@ import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
-
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
+import BurgerIcon from "@/atoms/BurgerIcon";
 
-const S_Background = styled.nav`
+const S_Background = styled.div<{ Open: boolean | null }>`
+  z-index: 99;
   height: 100vh;
-  width: 230px;
+  width: 264px;
+  display: flex;
+  animation: 0.7s
+    ${(props) => (props.Open !== null && props.Open ? "PopUp" : "PopOut")}
+    forwards;
+
+  @keyframes PopUp {
+    0% {
+      transform: translate(-70%, 0);
+    }
+
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes PopOut {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    100% {
+      transform: translate(-70%, 0);
+      display: none;
+    }
+  }
+`;
+
+const S_Content = styled.nav<{ Open: boolean | null }>`
+  height: 100%;
+  width: 80%;
   background-color: #f7f8f9;
   border-radius: 6px;
   filter: drop-shadow(2px 4px rgba(12, 0, 24, 0.1));
   font-family: "Pretendard";
-  /* position: fixed; */
-  z-index: 1;
+
+  z-index: 99;
   min-width: 230px;
+  animation: 0.7s
+    ${(props) => (props.Open !== null && props.Open ? "PopUp" : "PopOut")}
+    forwards;
 
   & ul {
     list-style: none;
@@ -52,7 +86,6 @@ const S_Background = styled.nav`
     font-size: 18px;
     width: fit-content;
     border-radius: 6px;
-
     font-weight: 400;
   }
   & h3:last-child:hover {
@@ -62,6 +95,26 @@ const S_Background = styled.nav`
   & h3.active {
     color: #dfc9fb;
     transition: 0.5s ease-in-out;
+  }
+
+  @keyframes PopUp {
+    0% {
+      transform: translate(-70%, 0);
+    }
+
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes PopOut {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    100% {
+      transform: translate(-70%, 0);
+    }
   }
 `;
 
@@ -95,6 +148,11 @@ const ProjectListUl = styled.ul`
   }
 `;
 
+const SidebarPopUpBtn = styled.button<{ show: boolean | null }>`
+  display: ${(props) => (props.show ? "none" : "block")};
+  z-index: 99;
+`;
+
 interface ProejectT {
   id: number;
   category: string;
@@ -111,88 +169,105 @@ const Sidebar = () => {
   );
 
   const jwt = useRecoilValue(jwtToken);
-
+  const [sideMenu, setSideMenu] = useState<boolean | null>(null);
   const { data, error, isLoading } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
   );
 
-  return (
-    <S_Background>
-      <SidebarHeader />
-      <h3
-        className={active === "today" || active === "nextplan" ? "active" : ""}
-        onClick={() => setActive("project")}
-      >
-        TO-DO
-      </h3>
-      <ul>
-        <Link
-          href={{ pathname: `/main/today` }}
-          style={{ textDecoration: "none", color: "black" }}
-          passHref
-        >
-          <li
-            className={active === "today" ? "active" : ""}
-            onClick={() => setActive("today")}
-          >
-            <TodaySchedule />
-          </li>
-        </Link>
-        <Link
-          href={{ pathname: `/main/nextplan` }}
-          style={{ textDecoration: "none", color: "black" }}
-          passHref
-        >
-          <li
-            className={active === "nextplan" ? "active" : ""}
-            onClick={() => setActive("nextplan")}
-          >
-            <NextSchedule />
-          </li>
-        </Link>
-      </ul>
+  const showSidebar = () => {
+    setSideMenu(true);
+  };
+  const hideSidebar = () => {
+    setSideMenu(false);
+  };
 
-      <h3>ANAYLYTICS</h3>
-      <ul>
-        <li>
-          <MyAnaylytics />
-        </li>
-        <li>
-          <FollowAnaylytics />
-        </li>
-      </ul>
-      <Link
-        href={{ pathname: `/main/project` }}
-        style={{ textDecoration: "none", color: "black" }}
-        passHref
-      >
+  return (
+    <S_Background Open={sideMenu}>
+      <S_Content Open={sideMenu}>
+        <SidebarHeader />
         <h3
-          className={active === "project" ? "active" : ""}
+          className={
+            active === "today" || active === "nextplan" ? "active" : ""
+          }
           onClick={() => setActive("project")}
         >
-          PROJECT
+          TO-DO
         </h3>
-      </Link>
-      <ProjectListUl>
-        {!data ? (
-          <LoadingSpinner />
-        ) : (
-          data.body.map((item: ProejectT) => {
-            return (
-              <ProjectListli
-                key={item.id}
-                color={item.color}
-                className={
-                  router.asPath === `/main/project/${item.id}` ? "active" : ""
-                }
-              >
-                <Link href={`/main/project/${item.id}`}>{item.title}</Link>
-              </ProjectListli>
-            );
-          })
-        )}
-      </ProjectListUl>
+        <ul>
+          <Link
+            href={{ pathname: `/main/today` }}
+            style={{ textDecoration: "none", color: "black" }}
+            passHref
+          >
+            <li
+              className={active === "today" ? "active" : ""}
+              onClick={() => setActive("today")}
+            >
+              <TodaySchedule />
+            </li>
+          </Link>
+          <Link
+            href={{ pathname: `/main/nextplan` }}
+            style={{ textDecoration: "none", color: "black" }}
+            passHref
+          >
+            <li
+              className={active === "nextplan" ? "active" : ""}
+              onClick={() => setActive("nextplan")}
+            >
+              <NextSchedule />
+            </li>
+          </Link>
+        </ul>
+
+        <h3>ANAYLYTICS</h3>
+        <ul>
+          <li>
+            <MyAnaylytics />
+          </li>
+          <li>
+            <FollowAnaylytics />
+          </li>
+        </ul>
+        <Link
+          href={{ pathname: `/main/project` }}
+          style={{ textDecoration: "none", color: "black" }}
+          passHref
+        >
+          <h3
+            className={active === "project" ? "active" : ""}
+            onClick={() => setActive("project")}
+          >
+            PROJECT
+          </h3>
+        </Link>
+        <ProjectListUl>
+          {!data ? (
+            <LoadingSpinner />
+          ) : (
+            data.body.map((item: ProejectT) => {
+              return (
+                <ProjectListli
+                  key={item.id}
+                  color={item.color}
+                  className={
+                    router.asPath === `/main/project/${item.id}` ? "active" : ""
+                  }
+                >
+                  <Link href={`/main/project/${item.id}`}>{item.title}</Link>
+                </ProjectListli>
+              );
+            })
+          )}
+        </ProjectListUl>
+      </S_Content>
+
+      <BurgerIcon
+        size="40px"
+        show={sideMenu}
+        onclick={sideMenu ? hideSidebar : showSidebar}
+      />
     </S_Background>
   );
 };

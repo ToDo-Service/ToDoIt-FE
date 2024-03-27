@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import { UserIcon } from "@/atoms/UserIcon";
+import React from "react";
 
 const SidebarHeaderContainer = styled.div`
   width: 100%;
@@ -19,13 +20,18 @@ const UserNickName = styled.div`
   font-weight: 400;
 `;
 
-const SidebarHeader = () => {
+type Props = {
+  children?: React.ReactNode;
+};
+
+const SidebarHeader = ({ children }: Props) => {
   const { data: session } = useSession();
 
   return (
     <SidebarHeaderContainer>
       <UserIcon Img={session?.user?.image} />
       <UserNickName>{session?.user?.name}</UserNickName>
+      {children}
     </SidebarHeaderContainer>
   );
 };

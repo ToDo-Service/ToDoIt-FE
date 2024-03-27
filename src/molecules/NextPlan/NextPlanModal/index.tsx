@@ -27,6 +27,7 @@ const NextPlanModalLayout = styled.div`
       transform: translateZ(0);
     }
   }
+
   animation: fadeInLeft 1s;
 `;
 
@@ -37,7 +38,6 @@ const NextPlanModalHeader = styled.header`
   display: flex;
   margin-left: 1.25vw;
   margin-top: 1.7578vh;
-
   margin-bottom: 3.8086vh;
 `;
 
@@ -54,7 +54,7 @@ const NextPlanModal = () => {
   const TestData = [1, 2, 3, 4, 5];
 
   return (
-    Modal && (
+    Modal! && (
       <NextPlanModalLayout>
         <NextPlanModalHeader>
           <span>선택 날짜</span>
