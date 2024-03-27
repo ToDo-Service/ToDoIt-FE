@@ -62,6 +62,13 @@ export const CheckProject: RecoilState<any> = atom<any>({
 export const GlobalModal: RecoilState<any> = atom<any>({
   key: `GModal${v1}`,
   default: {
-    toggle: false,
+    toggle: null,
+  },
+});
+
+export const SidebarLayout: RecoilState<any> = atom<any>({
+  key: `SModal${v1}`,
+  default: {
+    sidebartoggle: null,
   },
 });

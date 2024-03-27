@@ -4,15 +4,17 @@ import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import styled from "styled-components";
 import NextPlanTodobox from "@/atoms/NextPlan/NextPlanTodobox";
 
-const NextPlanModalLayout = styled.div`
+const NextPlanModalLayout = styled.div<{ open: boolean }>`
   width: 26.4583vw;
   height: 83.6914vh;
+  max-width: 381px;
+  max-height: 857px;
   background-color: white;
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   position: absolute;
-  right: 100px;
-  top: 135px;
+  right: 300px;
+  top: 28px;
   font-family: "Pretendard";
   display: flex;
   flex-direction: column;
@@ -27,8 +29,22 @@ const NextPlanModalLayout = styled.div`
       transform: translateZ(0);
     }
   }
+  @keyframes fadeoutLeft {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      opacity: 0;
+      transform: translateZ(0);
+      transform: translate3d(100%, 0, 0);
+    }
+  }
 
-  animation: fadeInLeft 1s;
+  animation: 0.7s
+    ${(props) =>
+      props.open !== null && props.open ? "fadeoutLeft" : "fadeInLeft"}
+    forwards;
 `;
 
 const NextPlanModalHeader = styled.header`
@@ -54,24 +70,22 @@ const NextPlanModal = () => {
   const TestData = [1, 2, 3, 4, 5];
 
   return (
-    Modal! && (
-      <NextPlanModalLayout>
-        <NextPlanModalHeader>
-          <span>선택 날짜</span>
-        </NextPlanModalHeader>
-        <ProjectList>
-          {TestData.map((item) => (
-            <NextPlanTodobox item={item} />
-          ))}
-        </ProjectList>
-        <ProjectAdd
-          width="23.9583vw"
-          comment="+ 할 일을 추가하세요"
-          maxwidth="345x"
-          minwidth="345px"
-        />
-      </NextPlanModalLayout>
-    )
+    <NextPlanModalLayout open={Modal}>
+      <NextPlanModalHeader>
+        <span>선택 날짜</span>
+      </NextPlanModalHeader>
+      <ProjectList>
+        {TestData.map((item) => (
+          <NextPlanTodobox item={item} />
+        ))}
+      </ProjectList>
+      <ProjectAdd
+        width="345px"
+        comment="+ 할 일을 추가하세요"
+        maxwidth="345x"
+        minwidth="345px"
+      />
+    </NextPlanModalLayout>
   );
 };
 

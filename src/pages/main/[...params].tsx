@@ -1,6 +1,6 @@
 import ToDoItLayout from "@/templates/ToDoItLayout";
 import ProjectPageLayout from "@/templates/ProjectPageLayout";
-import NextPlanMainPage from "@/organisms/NextPlan/NextPlanMainPage";
+import NextPlanPageLayout from "@/templates/NextPlanPageLayout";
 import { useRouter } from "next/router";
 import Layout from "./layout";
 
@@ -19,7 +19,7 @@ export default function Home() {
       <Layout>
         {router.asPath === "/main/today" && <ToDoItLayout />}
         {router.asPath === "/main/project" && <ProjectPageLayout />}
-        {router.asPath === "/main/nextplan" && <NextPlanMainPage />}
+        {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
       </Layout>
     </>
   );

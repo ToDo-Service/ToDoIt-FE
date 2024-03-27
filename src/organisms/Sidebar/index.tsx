@@ -6,11 +6,11 @@ import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
-import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { SidebarLayout, jwtToken } from "@/reocoil";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 import BurgerIcon from "@/atoms/BurgerIcon";
 
@@ -167,9 +167,11 @@ const Sidebar = () => {
   const [active, setActive] = useState(
     router.asPath === "/main/today" ? "today" : ""
   );
-
-  const jwt = useRecoilValue(jwtToken);
+  const SToggle = useSetRecoilState(SidebarLayout);
+  const SToogleStaet = useRecoilValue(SidebarLayout);
   const [sideMenu, setSideMenu] = useState<boolean | null>(null);
+  const jwt = useRecoilValue(jwtToken);
+
   const { data, error, isLoading } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
@@ -177,9 +179,11 @@ const Sidebar = () => {
 
   const showSidebar = () => {
     setSideMenu(true);
+    SToggle(true);
   };
   const hideSidebar = () => {
     setSideMenu(false);
+    SToggle(false);
   };
 
   return (

@@ -1,16 +1,41 @@
 import styled from "styled-components";
 import * as Icon from "react-bootstrap-icons";
 import { signOut } from "next-auth/react";
+import { useRecoilValue } from "recoil";
+import { SidebarLayout } from "@/reocoil";
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{ open: boolean | null }>`
   width: calc(100vw - 230px);
   height: 110px;
-  border-bottom: solid 0.02px #c8c5cb;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: fixed;
+
+  animation: 0.7s
+    ${(prop) =>
+      prop.open !== null && prop.open ? "PopUpHeader" : "PopOutHeader"}
+    forwards;
   z-index: 2;
+  @keyframes PopUpHeader {
+    0% {
+      transform: translate(-10%, 0);
+    }
+
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes PopOutHeader {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    100% {
+      transform: translate(-10%, 0);
+    }
+  }
 `;
 
 const HeaderTest = styled.h3`
@@ -39,9 +64,11 @@ interface Props {
 }
 
 const Header = ({ title, icon }: Props) => {
+  const SToogleState = useRecoilValue(SidebarLayout);
+
   return (
     <header>
-      <HeaderContainer>
+      <HeaderContainer open={SToogleState}>
         <HeaderTextIcon>
           {icon === "BookMarkCheck" ? (
             <Icon.BookmarkCheck size={"30px"} />

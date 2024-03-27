@@ -8,7 +8,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CheckProject, GlobalModal, jwtToken } from "@/reocoil";
+import { GlobalModal, jwtToken } from "@/reocoil";
 
 import FindColor from "@/utils/findColor";
 
@@ -16,8 +16,8 @@ const ScheduleCalendar = styled.div`
   width: 65.2778vw;
   height: 83.6914vh;
   max-height: 857px;
-  margin-top: 136px;
-  margin-left: 43px;
+  max-width: 940px;
+  margin-top: 28px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   font-family: "Pretendard";

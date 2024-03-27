@@ -5,6 +5,8 @@ const NextPlanTodoboxMainbox = styled.article<{ bgColor: string }>`
   padding: 0;
   width: 23.9583vw;
   height: 7.2266vh;
+  max-width: 345px;
+  max-height: 74px;
   background-color: ${(props) => props.bgColor};
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 12px;

@@ -1,21 +1,20 @@
-import ProjectMainPage from "@/organisms/Project/ProjectMainPage";
+import NextPlanMainPage from "@/organisms/NextPlan/NextPlanMainPage";
 import styled from "styled-components";
 
-const ProjectPageLayoutBox = styled.div`
+const NextPageLayoutBox = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  /* margin-left: 230px; */
 `;
 
-const ProjectPageLayout = () => {
+const NextPageLayout = () => {
   return (
     <>
-      <ProjectPageLayoutBox>
-        <ProjectMainPage />
-      </ProjectPageLayoutBox>
+      <NextPageLayoutBox>
+        <NextPlanMainPage />
+      </NextPageLayoutBox>
     </>
   );
 };
 
-export default ProjectPageLayout;
+export default NextPageLayout;
