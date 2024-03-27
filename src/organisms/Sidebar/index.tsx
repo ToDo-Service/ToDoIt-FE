@@ -47,14 +47,14 @@ const S_Background = styled.div<{ Open: boolean | null }>`
 
 const S_Content = styled.nav<{ Open: boolean | null }>`
   height: 100%;
-  width: 80%;
+  width: 70%;
   background-color: #f7f8f9;
   border-radius: 6px;
   filter: drop-shadow(2px 4px rgba(12, 0, 24, 0.1));
   font-family: "Pretendard";
 
   z-index: 99;
-  min-width: 230px;
+  min-width: 220px;
   animation: 0.7s
     ${(props) => (props.Open !== null && props.Open ? "PopUp" : "PopOut")}
     forwards;
@@ -148,9 +148,20 @@ const ProjectListUl = styled.ul`
   }
 `;
 
-const SidebarPopUpBtn = styled.button<{ show: boolean | null }>`
-  display: ${(props) => (props.show ? "none" : "block")};
-  z-index: 99;
+const SidebarOpenIcon = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: #d2d2d2;
+    transition: 0.1s ease-in-out;
+  }
 `;
 
 interface ProejectT {
@@ -267,11 +278,13 @@ const Sidebar = () => {
         </ProjectListUl>
       </S_Content>
 
-      <BurgerIcon
-        size="40px"
-        show={sideMenu}
-        onclick={sideMenu ? hideSidebar : showSidebar}
-      />
+      <SidebarOpenIcon>
+        <BurgerIcon
+          size="25px"
+          show={sideMenu}
+          onclick={sideMenu ? hideSidebar : showSidebar}
+        />
+      </SidebarOpenIcon>
     </S_Background>
   );
 };

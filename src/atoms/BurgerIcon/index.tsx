@@ -13,7 +13,10 @@ const BurgerIcon = ({ size, show, onclick }: Props) => {
       size={size}
       role="button"
       onClick={onclick}
-      style={{ zIndex: "99", marginLeft: "10px", marginTop: "10px" }}
+      style={{
+        zIndex: "99",
+        cursor: "pointer",
+      }}
     />
   );
 };
