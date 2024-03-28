@@ -8,12 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-
 const WrapStyled = styled.div`
-  position: relative;
-
-  max-width: 978px;
-  padding: 0 0 30px 0;
+  position: fixed;
+  padding: 0;
 `;
 
 const animate = {
