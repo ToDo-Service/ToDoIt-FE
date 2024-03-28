@@ -12,8 +12,8 @@ export const LoadingSpinner = () => {
 
 const Spinner = styled.div`
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   left: 50%;
   top: 50%;

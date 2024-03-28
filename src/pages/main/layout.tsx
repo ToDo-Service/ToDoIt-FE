@@ -10,13 +10,16 @@ const LayouyMainbox = styled.section`
   display: flex;
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  /* position: fixed; */
+  z-index: 99;
+  position: relative;
 `;
 
 const LayouyHeader = styled.header`
   display: flex;
   width: 100%;
   height: 110px;
+  z-index: 99;
   border-bottom: solid 0.02px #c8c5cb;
 `;
 

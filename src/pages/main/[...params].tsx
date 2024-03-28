@@ -1,6 +1,5 @@
-import ToDoItLayout from "@/templates/ToDoItLayout";
-import ProjectPageLayout from "@/templates/ProjectPageLayout";
-import NextPlanPageLayout from "@/templates/NextPlanPageLayout";
+import React from "react";
+
 import { useRouter } from "next/router";
 import Layout from "./layout";
 import { useSession } from "next-auth/react";
@@ -11,6 +10,16 @@ import fetcher from "@/utils/fetcher";
 import Head from "next/head";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
+
+//스플리팅
+
+const ToDoItLayout = React.lazy(() => import("@/templates/ToDoItLayout"));
+const ProjectPageLayout = React.lazy(
+  () => import("@/templates/ProjectDetailLayout")
+);
+const NextPlanPageLayout = React.lazy(
+  () => import("@/templates/NextPlanPageLayout")
+);
 
 export default function Home() {
   const router = useRouter();
@@ -35,15 +44,16 @@ export default function Home() {
         <link rel="icon" href="Icon/Todoit/TodoitLogo.png" />
         <title>TodoIt</title>
       </Head>
-      <SWRConfig value={{ suspense: true }}>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Layout>
+
+      <Layout>
+        <SWRConfig value={{ suspense: true }}>
+          <Suspense fallback={<div>...loading</div>}>
             {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
             {router.asPath === "/main/project" && <ProjectPageLayout />}
             {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
-          </Layout>
-        </Suspense>
-      </SWRConfig>
+          </Suspense>
+        </SWRConfig>
+      </Layout>
     </>
   );
 }

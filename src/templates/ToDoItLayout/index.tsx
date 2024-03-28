@@ -40,7 +40,7 @@ const MainLayout = styled.div<{ open: boolean | null }>`
 const MainLayouts: FC<TodayData> = ({ Data }) => {
   const SToogleState = useRecoilValue(SidebarLayout);
   return (
-    <MainLayout open={SToogleState}>{<MainPage Data={Data} />}</MainLayout>
+    <MainLayout open={SToogleState}>{<MainPage Data={Data}/>}</MainLayout>
   );
 };
 

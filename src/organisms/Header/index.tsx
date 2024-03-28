@@ -48,6 +48,7 @@ const HeaderTest = styled.h3`
 
 const HeaderLogin = styled.div`
   width: 130px;
+  cursor: pointer;
 `;
 
 const HeaderTextIcon = styled.div`
