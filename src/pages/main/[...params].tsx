@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useRouter } from "next/router";
 import Layout from "./layout";
 import { useSession } from "next-auth/react";
@@ -15,7 +14,7 @@ import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const ToDoItLayout = React.lazy(() => import("@/templates/ToDoItLayout"));
 const ProjectPageLayout = React.lazy(
-  () => import("@/templates/ProjectDetailLayout")
+  () => import("@/templates/ProjectPageLayout")
 );
 const NextPlanPageLayout = React.lazy(
   () => import("@/templates/NextPlanPageLayout")
@@ -47,7 +46,7 @@ export default function Home() {
 
       <Layout>
         <SWRConfig value={{ suspense: true }}>
-          <Suspense fallback={<div>...loading</div>}>
+          <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
             {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
             {router.asPath === "/main/project" && <ProjectPageLayout />}
             {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}

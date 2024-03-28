@@ -3,6 +3,8 @@ import { useRecoilValue } from "recoil";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import styled from "styled-components";
 import NextPlanTodobox from "@/atoms/NextPlan/NextPlanTodobox";
+import { useRecoilCallback } from "recoil";
+import { useEffect } from "react";
 
 const NextPlanModalLayout = styled.div<{ open: boolean }>`
   width: 26.4583vw;
@@ -13,10 +15,14 @@ const NextPlanModalLayout = styled.div<{ open: boolean }>`
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   position: absolute;
-  right: 300px;
+  left: 800px;
   top: 28px;
   font-family: "Pretendard";
-  display: flex;
+  display: ${(props) => (props.open ? "block" : "none")};
+  animation: 0.7s
+    ${(props) =>
+      props.open !== null && props.open ? "fadeInLeft" : "fadeoutLeft"}
+    forwards;
   flex-direction: column;
   align-items: center;
   @keyframes fadeInLeft {
@@ -40,11 +46,6 @@ const NextPlanModalLayout = styled.div<{ open: boolean }>`
       transform: translate3d(100%, 0, 0);
     }
   }
-
-  animation: 0.7s
-    ${(props) =>
-      props.open !== null && props.open ? "fadeoutLeft" : "fadeInLeft"}
-    forwards;
 `;
 
 const NextPlanModalHeader = styled.header`
@@ -67,6 +68,17 @@ const ProjectList = styled.section`
 
 const NextPlanModal = () => {
   const Modal = useRecoilValue(GlobalModal);
+  const resetModalState = useRecoilCallback(({ reset }) => () => {
+    reset(Modal);
+  });
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", () => resetModalState);
+    return () => {
+      window.removeEventListener("beforeunload", () => resetModalState);
+    };
+  }, []);
+
   const TestData = [1, 2, 3, 4, 5];
 
   return (

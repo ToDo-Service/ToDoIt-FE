@@ -1,7 +1,6 @@
 import ProjectMainPage from "@/organisms/Project/ProjectMainPage";
 import styled from "styled-components";
 import { FC } from "react";
-import { TodayData } from "@/types/tb";
 
 const ProjectPageLayoutBox = styled.div`
   width: 100vw;

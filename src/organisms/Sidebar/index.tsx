@@ -181,11 +181,11 @@ const Sidebar: FC = () => {
 
   const showSidebar = () => {
     setSideMenu(true);
-    SToggle(true);
+    SToggle({ sidebartoggle: true, HeaderAnimaion: null });
   };
   const hideSidebar = () => {
     setSideMenu(false);
-    SToggle(false);
+    SToggle({ sidebartoggle: false, HeaderAnimaion: null });
   };
 
   return (

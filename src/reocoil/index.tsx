@@ -70,5 +70,6 @@ export const SidebarLayout: RecoilState<any> = atom<any>({
   key: `SModal${v1}`,
   default: {
     sidebartoggle: null,
+    HeaderAnimaion: null,
   },
 });

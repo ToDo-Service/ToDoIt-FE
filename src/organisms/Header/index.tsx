@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import * as Icon from "react-bootstrap-icons";
 import { signOut } from "next-auth/react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SidebarLayout } from "@/reocoil";
+import { useEffect } from "react";
 
-const HeaderContainer = styled.div<{ open: boolean | null }>`
+const HeaderContainer = styled.div<{
+  open: boolean | null;
+  nullCheck: boolean | null;
+}>`
   width: calc(100vw - 230px);
   height: 110px;
   display: flex;
@@ -66,17 +70,28 @@ interface Props {
 
 const Header = ({ title, icon }: Props) => {
   const SToogleState = useRecoilValue(SidebarLayout);
+  const setSToogleState = useSetRecoilState(SidebarLayout);
+
+  // useEffect(() => {
+  //   setSToogleState({
+  //     sidebartoggle: SToogleState.sidebartoggle,
+  //     HeaderAnimaion:
+  //       SToogleState.HeaderAnimaion === null
+  //         ? null
+  //         : SToogleState.sidebartoggle,
+  //   });
+  // }, [SToogleState.sidebartoggle]);
+  // console.log(SToogleState.HeaderAnimaion);
 
   return (
     <header>
-      <HeaderContainer open={SToogleState}>
+      <HeaderContainer
+        open={SToogleState.sidebartoggle}
+        nullCheck={SToogleState.HeaderAnimaion}
+      >
         <HeaderTextIcon>
-          {icon === "BookMarkCheck" ? (
-            <Icon.BookmarkCheck size={"30px"} />
-          ) : undefined}
-          {icon === "CalendarEvent" ? (
-            <Icon.CalendarEvent size={"30px"} />
-          ) : undefined}
+          {icon === "BookMarkCheck" && <Icon.BookmarkCheck size={"30px"} />}
+          {icon === "CalendarEvent" && <Icon.CalendarEvent size={"30px"} />}
           <HeaderTest>{title}</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin
