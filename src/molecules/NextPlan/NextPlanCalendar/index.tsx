@@ -8,8 +8,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { GlobalModal, jwtToken } from "@/reocoil";
-
+import { GlobalModal, jwtToken, NextPlanCalender } from "@/reocoil";
 import FindColor from "@/utils/findColor";
 
 const ScheduleCalendar = styled.div`
@@ -104,13 +103,26 @@ const CalenderData = styled.div<{ Bgcolor: string }>`
 `;
 
 const CalenderCell = styled.div`
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 0.4s ease-in-out;
+    border-radius: 6px;
+    padding: 5px;
+    height: max-content;
+  }
   & span div:not(:last-child) {
     margin-bottom: 3px;
   }
   & span div:first-child {
     margin-top: 9px;
   }
+
   & span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 10px;
   }
 
@@ -158,12 +170,17 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const CurrentModal = useRecoilValue(GlobalModal);
   const GModal = useSetRecoilState(GlobalModal);
 
-  const PopProejct = () => {
-    GModal(!CurrentModal);
-    console.log(CurrentModal);
+  const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
+  const test = useRecoilValue(NextPlanCalender);
+  console.log(test);
+  const SetSlectedDate = (e: any) => {
+    console.log(e.target.innerText);
+    console.log(e.target);
+    // CurrentSelectedDate({
+    //   id: id,
+    //   date: date,
+    // });
   };
-
-  const SetSlectedDate = (id: number, date: string) => {};
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
@@ -183,11 +200,12 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
       });
 
       formattedDate = format(day, "d");
+
       days.push(
         <CalenderCell
-          onClick={() => {
-            PopProejct();
-            SetSlectedDate(1, formattedDate);
+          onClick={(e) => {
+            GModal(!CurrentModal);
+            SetSlectedDate(e);
           }}
           className={`col cell ${
             !isSameMonth(day, monthStart)

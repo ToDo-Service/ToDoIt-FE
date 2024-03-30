@@ -73,3 +73,14 @@ export const SidebarLayout: RecoilState<any> = atom<any>({
     HeaderAnimaion: null,
   },
 });
+
+export const NextPlanCalender: RecoilState<any> = atom<{
+  id: number;
+  date: string;
+}>({
+  key: `Calender${v1}`,
+  default: {
+    id: 0,
+    date: "",
+  },
+});

@@ -21,13 +21,19 @@ export default NextAuth({
       clientSecret: process.env.NAVER_CLIENT_SECRET as string,
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30days,
+    updateAge: 24 * 60 * 60, // 24hours
+  },
   pages: {
     error: "/auth/error",
     signOut: "/auth/Login",
     signIn: "/main/today",
   },
   callbacks: {
-    signIn: async ({ user, account, profile, credentials }: any) => {
+    signIn: async ({ user, account }: any) => {
+      // console.log("expire", account?.expires_at);
       try {
         if (account) {
           const response = await axios.post(

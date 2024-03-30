@@ -35,7 +35,7 @@ const ProjectDeatailMainPage = () => {
   const router = useRouter();
   const ProjectId = router.asPath.substring(14, 16);
   const JwtToken = useRecoilValue(jwtToken);
-  const { data, error, isLoading } = useSWR(
+  const { data } = useSWR(
     ProjectId && `https://laoh.site/api/project/${ProjectId}`,
     (url: string) => Fetcher(url, JwtToken)
   );

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { NextPlanCalender, jwtToken } from "@/reocoil";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import ColorSelect from "@/molecules/PROJECT/ProjectModal/Color";
@@ -104,7 +104,9 @@ const ProejectModal = (props: any) => {
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const [categoryPopup, setCategoryPopup] = useState(false);
+  const SelectedDate = useRecoilValue(NextPlanCalender);
 
+  console.log(SelectedDate);
   const JWT = useRecoilValue(jwtToken);
 
   const onSubmit = useCallback(
