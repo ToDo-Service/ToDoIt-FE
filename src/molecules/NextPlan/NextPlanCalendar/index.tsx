@@ -10,6 +10,8 @@ import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { GlobalModal, jwtToken, NextPlanCalender } from "@/reocoil";
 import FindColor from "@/utils/findColor";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -103,9 +105,8 @@ const CalenderData = styled.div<{ Bgcolor: string }>`
 `;
 
 const CalenderCell = styled.div`
-  cursor: pointer;
-
-  &:hover {
+  & span p:hover {
+    cursor: pointer;
     background-color: rgba(0, 0, 0, 0.05);
     transition: 0.4s ease-in-out;
     border-radius: 6px;
@@ -158,6 +159,7 @@ const RenderDays = () => {
 };
 
 const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
+  dayjs.locale("ko");
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
@@ -169,17 +171,15 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   let formattedDate = "";
   const CurrentModal = useRecoilValue(GlobalModal);
   const GModal = useSetRecoilState(GlobalModal);
-
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
-  const test = useRecoilValue(NextPlanCalender);
-  console.log(test);
+
   const SetSlectedDate = (e: any) => {
-    console.log(e.target.innerText);
-    console.log(e.target);
-    // CurrentSelectedDate({
-    //   id: id,
-    //   date: date,
-    // });
+    CurrentSelectedDate({
+      id: 0,
+      date: `${dayjs(currentMonth).format("M")}월 ${
+        e.target.innerText
+      }일 (${dayjs(currentMonth).format("dd")})`,
+    });
   };
 
   while (day <= endDate) {
@@ -203,10 +203,10 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
 
       days.push(
         <CalenderCell
-          onClick={(e) => {
-            GModal(!CurrentModal);
-            SetSlectedDate(e);
-          }}
+          // onClick={(e) => {
+          //   GModal(!CurrentModal);
+          //   SetSlectedDate(e);
+          // }}
           className={`col cell ${
             !isSameMonth(day, monthStart)
               ? "disabled"
@@ -225,7 +225,15 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
                 : ""
             }
           >
-            <p className="Date">{formattedDate}</p>
+            <p
+              className="Date"
+              onClick={(e) => {
+                GModal(!CurrentModal);
+                SetSlectedDate(e);
+              }}
+            >
+              {formattedDate}
+            </p>
             {isSameMonth(day, monthStart) &&
               CurrentDateData.map((item: any, index: number) => {
                 return index <= 2 && item;
