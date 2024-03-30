@@ -11,17 +11,17 @@ const NextPageLayoutBox = styled.div`
 `;
 
 const NextPageLayout = () => {
-  const Modal = useRecoilValue(GlobalModal);
-  const resetModalState = useRecoilCallback(({ reset }) => () => {
-    reset(Modal);
-  });
+  // const Modal = useRecoilValue(GlobalModal);
+  // const resetModalState = useRecoilCallback(({ reset }) => () => {
+  //   reset(Modal);
+  // });
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", () => resetModalState);
-    return () => {
-      window.removeEventListener("beforeunload", () => resetModalState);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", () => resetModalState);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", () => resetModalState);
+  //   };
+  // }, []);
 
   return (
     <>

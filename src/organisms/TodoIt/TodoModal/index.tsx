@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { jwtToken, Modal, UpdateData } from "@/reocoil";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import axios from "axios";
 import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
@@ -100,7 +100,7 @@ export const ModalView = styled.div.attrs((props) => ({
 const TodoModal = (props: any) => {
   const [method, setMethod] = useState(props.method);
   const [isaddopen, setIsaddopen] = useState(false);
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
+  const [endDate, setEndDate] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [detail, onChangeDetail, setDetail] = useInput("");
   const [prioirty, setPriority] = useState("높음");
@@ -113,10 +113,6 @@ const TodoModal = (props: any) => {
   const setModal = useSetRecoilState(Modal);
   const UData = useRecoilState(UpdateData);
 
-  const openModalHandler = () => {
-    setIsaddopen(true);
-  };
-
   const CloseModalHandler = () => {
     setIsaddopen(false);
     setModal({ toggle: false });
@@ -127,6 +123,7 @@ const TodoModal = (props: any) => {
       //서버 전송
       e.preventDefault();
       setPostError("");
+      console.log(title, detail, endDate, project);
       if (title === "") {
         alert("제목을 입력하세요");
         e.preventDefault();
@@ -211,22 +208,26 @@ const TodoModal = (props: any) => {
     if (modal.method === "update") {
       setTitle(UData[0].title);
       setDetail(UData[0].content);
-      setEndDate(dayjs(UData[0].end_date).format("YYYY.MM.DD"));
+      setEndDate(dayjs(UData[0].end_date).format("YYYY-MM-DD"));
       setPriority(UData[0].priority);
       setProject({
         id: UData[0]?.project?.id,
         title: UData[0]?.project?.description,
       });
+    } else {
+      setEndDate(dayjs().format("YYYY.MM.DD"));
     }
-  }, [modal]);
+  }, [modal.toggle]);
 
   useEffect(() => {
     setTitle("");
     setDetail("");
-    setEndDate(dayjs().format("YYYY.MM.DD"));
+    setEndDate(dayjs().format("YYYY-MM-DD"));
     setPriority("높음");
     setProject({ id: null, title: "" });
-  }, [postSuccess, isaddopen]);
+  }, [postSuccess]);
+
+  console.log(modal);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
@@ -238,7 +239,7 @@ const TodoModal = (props: any) => {
     } else {
       ref.current.style.height = "60px";
     }
-  }, []);
+  }, [ref]);
 
   return (
     <AnimatePresence>
@@ -250,7 +251,9 @@ const TodoModal = (props: any) => {
           //@ts-ignore
           exit={animate.exit}
         >
-          <AddTodo onClick={openModalHandler}>
+          <AddTodo
+            onClick={() => setModal({ id: 0, method: "post", toggle: true })}
+          >
             <span>+ 할 일을 추가해주세요</span>
           </AddTodo>
         </motion.div>
@@ -326,6 +329,7 @@ const TodoModal = (props: any) => {
               <Calendar
                 method={modal.method === "update" ? "update" : "post"}
                 setDate={setEndDate}
+                value={endDate}
                 width="115px"
                 name="오늘"
               />
@@ -431,6 +435,7 @@ const TodoModal = (props: any) => {
               <Calendar
                 method={modal.method === "update" ? "update" : "post"}
                 setDate={setEndDate}
+                value={endDate}
                 width="115px"
                 name="오늘"
               />

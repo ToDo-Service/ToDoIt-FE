@@ -38,7 +38,6 @@ const ProjectList = styled.div`
 const ProjectUserName = styled.p`
   font-family: "Pretendard";
   font-size: 20px;
-
   margin-top: 69px;
 `;
 

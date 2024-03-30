@@ -4,7 +4,7 @@ import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import styled from "styled-components";
 import NextPlanTodobox from "@/atoms/NextPlan/NextPlanTodobox";
 import { useRecoilCallback } from "recoil";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 const NextPlanModalLayout = styled.div<{ open: boolean }>`
   width: 26.4583vw;
@@ -68,11 +68,14 @@ const ProjectList = styled.section`
 
 const NextPlanModal = () => {
   const Modal = useRecoilValue(GlobalModal);
+
+  console.log(Modal.toggle);
+
   const resetModalState = useRecoilCallback(({ reset }) => () => {
     reset(Modal);
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.addEventListener("beforeunload", () => resetModalState);
     return () => {
       window.removeEventListener("beforeunload", () => resetModalState);

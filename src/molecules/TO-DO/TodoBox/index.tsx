@@ -2,8 +2,7 @@ import styled from "styled-components";
 import HashtagPriority from "@/atoms/Hashtag/H_Priority";
 import HashtagProject from "@/atoms/Hashtag/H_Project";
 import { useDrag } from "react-dnd";
-
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Modal, UpdateData, jwtToken } from "@/reocoil";
 import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
@@ -156,6 +155,7 @@ const ExitBtn = styled.img`
 const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
   const setModal = useSetRecoilState(Modal);
+
   const setUData = useSetRecoilState(UpdateData);
   const [check, setCheck] = useState(Data.status === "COMPLETE" ? true : false);
 
@@ -188,7 +188,7 @@ const TodoBox = ({ Data, category }: any) => {
           title: Data.title,
           content: Data.content,
           end_date: dayjs().format("YYYY.MM.DD"),
-          project_id: null,
+          project_id: Data.project?.id,
           priority: Data.priority,
           push_status: false,
         },
@@ -204,7 +204,6 @@ const TodoBox = ({ Data, category }: any) => {
         mutate("https://laoh.site/api/todos/today");
       })
       .catch((err) => {
-        console.log(err);
         useToast("실패", false);
       });
   };

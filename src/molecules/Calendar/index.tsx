@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import dayjs from "dayjs";
@@ -215,37 +215,34 @@ const CalendarWrapper = styled("div")<{ $iscalopen: number }>`
 `;
 
 const calendar = (props: any) => {
-  const toggle = useRecoilValue(UpdateData);
   dayjs.locale("ko"); // 한국어 세팅
-  const [nowDate, setNowDate] = useState(
-    props.method === "update"
-      ? dayjs(toggle.end_date).format("MM월 DD일 (ddd)")
-      : dayjs().format("MM월 DD일 (ddd)")
-  );
+  const toggle = useRecoilValue(UpdateData);
   const [isCalOpen, setIsCalOpen] = useState(false);
-  const [value, onchange] = useState(
-    props.method === "update"
-      ? dayjs(toggle.end_date).format("MM DD YYYY")
-      : new Date()
-  );
+  const [value, setValue] = useState(new Date());
 
-  console.log(new Date());
+  useEffect(() => {
+    props.method === "update"
+      ? setValue(new Date(dayjs(toggle.end_date).format("YYYY-MM-DD")))
+      : new Date();
+  }, [props.method]);
 
   const handleToggleCalendar = () => {
     setIsCalOpen(!isCalOpen);
   };
 
   const handleDateChange = (selectedDate: any) => {
-    onchange(selectedDate);
+    setValue(selectedDate);
     setIsCalOpen(false);
-    setNowDate(dayjs(selectedDate).format("MM월 DD일 (ddd)"));
     props.setDate(dayjs(selectedDate).format("YYYY.MM.DD"));
   };
 
   return (
     <CalendarContainer>
       <DropdownButton onClick={handleToggleCalendar} width={props.width}>
-        {props.name} <div style={{ fontSize: "10px" }}>{nowDate}</div>
+        {props.name}
+        <div style={{ fontSize: "10px" }}>
+          {dayjs(props.value).format("MM월 DD일 (ddd)")}
+        </div>
       </DropdownButton>
       <CalendarWrapper $iscalopen={isCalOpen ? 1 : 0}>
         <Calendar
