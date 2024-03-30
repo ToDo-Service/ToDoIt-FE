@@ -123,7 +123,6 @@ const TodoModal = (props: any) => {
       //서버 전송
       e.preventDefault();
       setPostError("");
-      console.log(title, detail, endDate, project);
       if (title === "") {
         alert("제목을 입력하세요");
         e.preventDefault();
@@ -166,6 +165,7 @@ const TodoModal = (props: any) => {
       e.preventDefault();
       setPostError("");
       setPostSuccess(false);
+      console.log(title, detail, endDate, prioirty, project);
       if (title === "") {
         alert("제목을 입력하세요");
         e.preventDefault();
@@ -208,7 +208,7 @@ const TodoModal = (props: any) => {
     if (modal.method === "update") {
       setTitle(UData[0].title);
       setDetail(UData[0].content);
-      setEndDate(dayjs(UData[0].end_date).format("YYYY-MM-DD"));
+      setEndDate(dayjs(UData[0].end_date).format("YYYY.MM.DD"));
       setPriority(UData[0].priority);
       setProject({
         id: UData[0]?.project?.id,
@@ -216,18 +216,12 @@ const TodoModal = (props: any) => {
       });
     } else {
       setEndDate(dayjs().format("YYYY.MM.DD"));
+      setTitle("");
+      setDetail("");
+      setPriority("높음");
+      setProject({ id: null, title: "" });
     }
-  }, [modal.toggle]);
-
-  useEffect(() => {
-    setTitle("");
-    setDetail("");
-    setEndDate(dayjs().format("YYYY-MM-DD"));
-    setPriority("높음");
-    setProject({ id: null, title: "" });
-  }, [postSuccess]);
-
-  console.log(modal);
+  }, [modal.toggle, [postSuccess]]);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
@@ -335,6 +329,7 @@ const TodoModal = (props: any) => {
               />
               <Priority
                 setPriority={setPriority}
+                value={prioirty}
                 method={modal.method === "update" ? "update" : "post"}
               />
               <Project
@@ -441,6 +436,7 @@ const TodoModal = (props: any) => {
               />
               <Priority
                 setPriority={setPriority}
+                value={prioirty}
                 method={modal.method === "update" ? "update" : "post"}
               />
               <Project

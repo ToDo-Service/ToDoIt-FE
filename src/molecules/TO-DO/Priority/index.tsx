@@ -84,14 +84,11 @@ const PriorityData = [
 ];
 
 const Priority = (props: any) => {
-  const toggle = useRecoilValue(UpdateData);
-  const [text, setText] = useState(
-    props.method == "update" ? toggle.priority : "높음"
-  );
+  // const toggle = useRecoilValue(UpdateData);
+
   const [color, setColor] = useState("#ff8080");
   const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
   const [priorityopen, setPrioirtyOpen] = useState(false);
-
   const modalpriorityOpen = () => {
     setPrioirtyOpen(!priorityopen);
   };
@@ -100,21 +97,20 @@ const Priority = (props: any) => {
     props.setPriority(e.target.innerHTML);
     PriorityData.map((p) => {
       if (p.text === e.target.innerHTML) {
-        setText(p.text);
+        props.setPriority(p.text);
         setColor(p.color);
         setBgcolor(p.bgcolor);
       }
     });
   };
-
   useEffect(() => {
     PriorityData.map((p) => {
-      if (p.text === text) {
+      if (p.text === props.value) {
         setColor(p.color);
         setBgcolor(p.bgcolor);
       }
     });
-  }, [text]);
+  }, [props.value]);
 
   return (
     <PriorityContainer
@@ -123,7 +119,7 @@ const Priority = (props: any) => {
       bgcolor={bgcolor}
     >
       <span>우선 순위</span>
-      <span>{text}</span>
+      <span>{props.value}</span>
       <PriorityWrapper priorityisopen={priorityopen ? 1 : 0}>
         <Prioritylist>
           {PriorityData.map((e) => {
