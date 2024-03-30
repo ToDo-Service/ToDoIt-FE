@@ -113,11 +113,6 @@ const TodoModal = (props: any) => {
   const setModal = useSetRecoilState(Modal);
   const UData = useRecoilState(UpdateData);
 
-  const CloseModalHandler = () => {
-    setIsaddopen(false);
-    setModal({ toggle: false });
-  };
-
   const onSubmit = useCallback(
     (e: any) => {
       //서버 전송
@@ -146,9 +141,9 @@ const TodoModal = (props: any) => {
           }
         )
         .then(() => {
-          setPostSuccess(!postSuccess);
-          CloseModalHandler();
           mutate("https://laoh.site/api/todos/today");
+          setPostSuccess(!postSuccess);
+          setModal({ toggle: false });
         })
         .catch((err) => {
           console.log(err.response);
@@ -165,7 +160,7 @@ const TodoModal = (props: any) => {
       e.preventDefault();
       setPostError("");
       setPostSuccess(false);
-      console.log(title, detail, endDate, prioirty, project);
+
       if (title === "") {
         alert("제목을 입력하세요");
         e.preventDefault();
@@ -191,9 +186,9 @@ const TodoModal = (props: any) => {
           }
         )
         .then(() => {
-          setPostSuccess(!postSuccess);
-          CloseModalHandler();
           mutate("https://laoh.site/api/todos/today");
+          setPostSuccess(!postSuccess);
+          setModal({ toggle: false });
         })
         .catch((err) => {
           console.log(err.response);
@@ -252,120 +247,13 @@ const TodoModal = (props: any) => {
           </AddTodo>
         </motion.div>
       )}
-      {isaddopen ? (
+      {modal.toggle && (
         <ModalBackdrop ontoggle={true}>
           <ModalView>
             <ExitBtn
               src="/Icon/Modal/ModalExit.png"
               alt="/"
-              onClick={CloseModalHandler}
-            />
-            <div style={{ width: "418px" }}>
-              <div style={{ textAlign: "center" }}>
-                <h1
-                  style={{
-                    fontFamily: "Pretendard",
-                    fontSize: "32px",
-                    marginBottom: "15px",
-                  }}
-                >
-                  {modal.method === "update" ? "일정 수정" : "일정 추가"}
-                </h1>
-                <div
-                  style={{
-                    fontFamily: "Pretendard",
-                    fontSize: "14px",
-                    marginBottom: "46px",
-                  }}
-                >
-                  {modal.method === "update"
-                    ? "일정을 수정하세요!"
-                    : "새로 할 일을 추가해주세요!"}
-                </div>
-              </div>
-              <Form>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="제목"
-                    value={title}
-                    onChange={onChangeTitle}
-                  />
-                </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
-                  <Form.Control
-                    as="textarea"
-                    placeholder="설명"
-                    maxLength={20}
-                    ref={ref}
-                    value={detail}
-                    onInput={handleResizeHeight}
-                    style={{ resize: "none" }}
-                    onChange={onChangeDetail}
-                  />
-                </Form.Group>
-              </Form>
-            </div>
-            <div
-              style={{
-                width: "418px",
-                height: "37px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Calendar
-                method={modal.method === "update" ? "update" : "post"}
-                setDate={setEndDate}
-                value={endDate}
-                width="115px"
-                name="오늘"
-              />
-              <Priority
-                setPriority={setPriority}
-                value={prioirty}
-                method={modal.method === "update" ? "update" : "post"}
-              />
-              <Project
-                onChange={setProject}
-                value={project}
-                method={modal.method === "update" ? "update" : "post"}
-              />
-            </div>
-            <div
-              onClick={modal.method === "update" ? onRewrite : onSubmit}
-              style={{
-                width: "418px",
-                height: "37px",
-                backgroundColor: "#862DDF",
-                marginTop: "11px",
-                borderRadius: "8px",
-                fontFamily: "Pretendard",
-                fontWeight: "200",
-                color: "white",
-                fontSize: "17px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {modal.method === "update" ? "수정" : "추가"}
-            </div>
-          </ModalView>
-        </ModalBackdrop>
-      ) : (
-        <ModalBackdrop ontoggle={modal.toggle}>
-          <ModalView>
-            <ExitBtn
-              src="/Icon/Modal/ModalExit.png"
-              alt="/"
-              onClick={CloseModalHandler}
+              onClick={() => setModal({ toggle: false })}
             />
             <div style={{ width: "418px" }}>
               <div style={{ textAlign: "center" }}>
