@@ -221,7 +221,7 @@ const TodoModal = (props: any) => {
       setPriority("높음");
       setProject({ id: null, title: "" });
     }
-  }, [modal.toggle, [postSuccess]]);
+  }, [modal.toggle, postSuccess]);
 
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {

@@ -106,7 +106,7 @@ const Project = ({ onChange, value, method }: any) => {
   const [color, setColor] = useState("");
   const [bgColor, setBgColor] = useState("rgba(251, 213, 128, 0.15)");
   const jwt = useRecoilValue(jwtToken);
-  const { data, error, isLoading } = useSWR(
+  const { data } = useSWR(
     jwt.token !== "" ? "https://laoh.site/api/project" : undefined,
     (url) => fetcher(url, jwt)
   );
