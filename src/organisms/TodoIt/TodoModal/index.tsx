@@ -23,8 +23,8 @@ const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   background-color: rgba(0, 0, 0, 0.2);
   filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1));
   border-radius: 10px;
-  width: 100vw;
-  height: 100vh;
+  width: 110%;
+  height: 110%;
   top: 0;
   left: 0;
   right: 0;
@@ -212,9 +212,10 @@ const TodoModal = (props: any) => {
     }
     if (ref.current.scrollHeight <= 60) {
       ref.current.style.height = "37px";
-      ref.current.style.height = ref.current.scrollHeight + "px";
+      // ref.current.style.height = ref.current.scrollHeight + "px";
     } else {
-      ref.current.style.height = "60px";
+      ref.current.style.height = "37px";
+      // ref.current.style.height = "60px";
     }
   }, [ref]);
 
@@ -268,6 +269,7 @@ const TodoModal = (props: any) => {
                     placeholder="제목"
                     value={title}
                     onChange={onChangeTitle}
+                    autoFocus
                   />
                 </Form.Group>
                 <Form.Group

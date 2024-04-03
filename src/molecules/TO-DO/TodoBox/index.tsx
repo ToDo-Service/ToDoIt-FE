@@ -96,6 +96,7 @@ const TodoBoxName = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   width: max-content;
+  max-width: 50px;
   margin-left: 10px;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.8);
@@ -111,11 +112,12 @@ const TodoBoxDate = styled.div`
 
 const TodoBoxDetail = styled.div`
   width: 201px;
-  overflow: hidden;
+
   font-family: "PretendardVariable";
   font-weight: 250;
 
   //css 글 자수 초과
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-left: 27px;
