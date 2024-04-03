@@ -13,7 +13,7 @@ const NextSchedueBox = styled.section`
 const NextSchedule = () => {
   return (
     <NextSchedueBox>
-      <span>계획된 할 일</span>
+      <span>월간 할 일</span>
     </NextSchedueBox>
   );
 };

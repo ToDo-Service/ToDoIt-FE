@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import * as Icon from "react-bootstrap-icons";
+
 import { signOut } from "next-auth/react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { SidebarLayout } from "@/reocoil";
-import { useEffect } from "react";
 
 const HeaderContainer = styled.div<{
   open: boolean | null;
@@ -59,7 +58,7 @@ const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 43px;
+
   width: max-content;
 `;
 

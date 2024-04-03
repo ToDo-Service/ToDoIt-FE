@@ -34,17 +34,12 @@ const TodoMainBox = styled.div<DargProps>`
   border: ${(props) => (props.isdragging ? "none" : "0.5px solid #c8c5cb")};
   transition: 0.3s ease-in-out;
 
-  &:hover .MoveIcon {
-    display: block;
-  }
-
   & .PencilIcon {
     border-radius: 5px;
     display: none;
     position: absolute;
     left: 23px;
     top: 50px;
-
     transition: 0.5s ease-in-out;
     border-radius: 6px;
   }

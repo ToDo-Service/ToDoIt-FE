@@ -10,6 +10,7 @@ const SidebarHeaderContainer = styled.div`
   border-bottom: solid 0.02px #c8c5cb;
   align-items: center;
   filter: drop-shadow(1px 2px 4 #c5c5c5);
+  position: relative;
 `;
 
 const UserNickName = styled.div`
@@ -29,7 +30,7 @@ const SidebarHeader = ({ children }: Props) => {
 
   return (
     <SidebarHeaderContainer>
-      <UserIcon Img={session?.user?.image} />
+      <UserIcon Img={session?.user?.image} email={session?.user?.email} />
       <UserNickName>{session?.user?.name}</UserNickName>
       {children}
     </SidebarHeaderContainer>

@@ -124,7 +124,6 @@ const ProjectListli = styled("li")<{ color: string }>`
   align-items: center;
   max-height: 25px;
   max-width: max-content;
-  padding: 4px;
 
   & a {
     text-decoration: none;

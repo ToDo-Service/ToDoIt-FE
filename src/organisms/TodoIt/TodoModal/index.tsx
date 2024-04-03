@@ -106,6 +106,11 @@ const TodoModal = (props: any) => {
         e.preventDefault();
         return;
       }
+      if (detail === "") {
+        alert("내욜을 입력하세요");
+        e.preventDefault();
+        return;
+      }
       axios
         .post(
           "https://laoh.site/api/todos",
