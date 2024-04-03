@@ -48,12 +48,11 @@ const S_Background = styled.div<{ Open: boolean | null }>`
 
 const S_Content = styled.nav<{ Open: boolean | null }>`
   height: 100%;
-  width: 70%;
+  width: 100%;
   background-color: #f7f8f9;
   border-radius: 6px;
-  filter: drop-shadow(2px 4px rgba(12, 0, 24, 0.1));
-  font-family: "Pretendard";
-
+  font-family: "PretendardVariable";
+  font-weight: 350;
   z-index: 99;
   min-width: 220px;
   animation: 0.7s
@@ -65,8 +64,10 @@ const S_Content = styled.nav<{ Open: boolean | null }>`
   }
 
   & ul li {
+    display: flex;
+    align-items: center;
     width: 95%;
-    height: 5vh;
+    height: 4.0039vh;
     line-height: 5vh;
     border-radius: 6px;
     cursor: pointer;
@@ -122,7 +123,7 @@ const S_Content = styled.nav<{ Open: boolean | null }>`
 const ProjectListli = styled("li")<{ color: string }>`
   display: flex;
   align-items: center;
-  max-height: 25px;
+  max-height: 11px;
   max-width: max-content;
 
   & a {
@@ -137,9 +138,14 @@ const ProjectListli = styled("li")<{ color: string }>`
 
 const ProjectListUl = styled.ul`
   overflow-y: scroll;
-  height: 350px;
+  height: max-content;
   position: relative;
-  margin-top: 25px;
+  margin-top: 20px;
+  overflow: scroll;
+
+  & li:first-child {
+    margin-top: 5px;
+  }
 
   & li:not(:first-child) {
     margin-top: 20px;

@@ -22,6 +22,8 @@ const ProjectboxMainbox = styled.div<{
   align-items: center;
   justify-content: space-between;
   border: 1px solid rgba(12, 0, 24, 0.1);
+  font-family: "PretendardVariable";
+  font-weight: 250;
 `;
 const ExitBtn = styled.img`
   width: 12px;

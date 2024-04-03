@@ -21,7 +21,6 @@ const TodoContainer = styled.article`
   cursor: pointer;
   width: 100%;
   position: relative;
-  font-family: "PretendardVariable";
 `;
 
 const TodoMainBox = styled.div<DargProps>`
@@ -91,6 +90,8 @@ const TodoBoxHeader = styled.div`
 `;
 
 const TodoBoxName = styled.span`
+  font-family: "PretendardVariable";
+  font-weight: 250;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -101,6 +102,8 @@ const TodoBoxName = styled.span`
 `;
 
 const TodoBoxDate = styled.div`
+  font-family: "PretendardVariable";
+  font-weight: 250;
   margin-left: 5px;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.2);
@@ -109,6 +112,8 @@ const TodoBoxDate = styled.div`
 const TodoBoxDetail = styled.div`
   width: 201px;
   overflow: hidden;
+  font-family: "PretendardVariable";
+  font-weight: 250;
 
   //css 글 자수 초과
   text-overflow: ellipsis;

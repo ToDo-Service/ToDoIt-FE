@@ -14,8 +14,9 @@ const SidebarHeaderContainer = styled.div`
 `;
 
 const UserNickName = styled.div`
-  font-family: "Pretendard";
-  font-weight: bold;
+  font-family: "Pretendard-Bold";
+
+  font-weight: 300;
   margin-left: 10%;
   color: black;
   font-size: 15px;

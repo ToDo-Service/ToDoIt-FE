@@ -29,7 +29,7 @@ const TodoHeader = styled("div")<{ interval: string }>`
   background-color: white;
   opacity: 1;
   font-family: "Pretendard";
-  font-weight: 500;
+  font-weight: bold;
   font-size: 20px;
   margin-bottom: 19px;
   display: flex;
@@ -43,7 +43,7 @@ const TodoHeader = styled("div")<{ interval: string }>`
     display: flex;
     align-items: center;
     font-family: "Pretendard";
-    font-weight: 500;
+    font-weight: bold;
   }
 `;
 

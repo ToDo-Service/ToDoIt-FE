@@ -46,7 +46,8 @@ const Hasttag = styled.div<{ Bgcolor: string }>`
   background-color: ${(props) => props.Bgcolor};
   color: #8f8f8f;
   font-size: 14px;
-  font-family: "Pretendard";
+  font-family: "PretendardVariable";
+  font-weight: 250;
   border: 1px solid rgba(197, 197, 197, 0.5);
 `;
 

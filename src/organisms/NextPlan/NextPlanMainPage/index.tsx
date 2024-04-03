@@ -7,6 +7,8 @@ const NextPlanMainBox = styled.div`
   margin-left: 270px;
   margin-top: 110px;
   position: relative;
+  font-family: "PretendardVariable";
+  font-weight: 250;
 `;
 
 const NextPlanMainPage = () => {

@@ -21,7 +21,7 @@ const ScheduleCalendar = styled.div`
   margin-top: 28px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
-  font-family: "Pretendard";
+
   position: relative;
 `;
 
@@ -29,6 +29,9 @@ const TextToday = styled.div`
   width: 100%;
   height: fit-content;
   font-size: 0.5rem;
+  font-family: "Pretendard-Bold";
+  font-weight: 300;
+
   & p {
     font-size: 22px;
     margin-top: 30px;
@@ -44,6 +47,8 @@ const CalenderList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  font-family: "PretendardVariable";
+  font-weight: 250;
   width: 100%;
   height: 65.918vh;
   overflow-y: scroll;
@@ -54,11 +59,15 @@ const CalenderList = styled.div`
 `;
 
 const DateCol = styled.div`
+  font-family: "PretendardVariable";
+  font-weight: 250;
   color: rgba(37, 37, 48, 0.4);
   font-size: 20px;
 `;
 
 const DateRow = styled.div`
+  font-family: "PretendardVariable";
+  font-weight: 250;
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -97,9 +106,17 @@ const CalenderItem = styled.div`
 `;
 
 const CalenderData = styled.div<{ Bgcolor: string }>`
+  font-family: "PretendardVariable";
+  font-weight: 250;
   background-color: ${(props) => props.Bgcolor};
-  width: 95%;
-  height: 25px;
+  width: max-content;
+  max-height: 25px;
+  max-width: 125px;
+  padding: 0 5px;
+  height: max-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border-radius: 4px;
   border: 1px solid rgba(12, 0, 24, 0.1);
 `;
@@ -132,13 +149,13 @@ const CalenderCell = styled.div`
     flex-direction: column;
     align-items: center;
     .Date {
-      width: 25px;
-      height: 25px;
+      width: 20px;
+      height: 20px;
       display: flex;
       text-align: center;
       align-items: center;
       justify-content: center;
-      background-color: #c01ac0;
+      background-color: #862ddf;
       border-radius: 50%;
       color: white;
     }
@@ -227,6 +244,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
           >
             <p
               className="Date"
+              style={{ marginBottom: "4px" }}
               onClick={(e) => {
                 GModal(!CurrentModal);
                 SetSlectedDate(e);

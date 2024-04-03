@@ -13,11 +13,13 @@ const NextPlanModalLayout = styled.div<{ open: boolean }>`
   max-height: 857px;
   background-color: white;
   border: 1px solid rgba(12, 0, 24, 0.1);
+  font-family: "PretendardVariable";
+  font-weight: 250;
   border-radius: 16px;
   position: absolute;
-  left: 800px;
+  left: 950px;
   top: 28px;
-  font-family: "Pretendard";
+
   display: ${(props) => (props.open ? "block" : "none")};
   animation: 0.7s
     ${(props) =>

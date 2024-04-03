@@ -9,6 +9,8 @@ const Hasttag = styled("div")<{ bgcolor: string }>`
   border-radius: 8px;
   background-color: ${(props) => props.bgcolor};
   border: 1px solid rgba(197, 197, 197, 0.5);
+  font-family: "PretendardVariable";
+  font-weight: 250;
 `;
 
 const RankText = styled.span`

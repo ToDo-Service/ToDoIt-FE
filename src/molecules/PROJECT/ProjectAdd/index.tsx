@@ -19,6 +19,8 @@ const ProjectboxAddMainbox = styled("div")<{
   border: 1px solid rgba(12, 0, 24, 0.1);
   background-color: rgba(12, 0, 24, 0.04);
   cursor: pointer;
+  font-family: "PretendardVariable";
+  font-weight: 300;
 
   & span {
     color: rgba(37, 37, 48, 0.6);

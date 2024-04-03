@@ -40,13 +40,12 @@ const HeaderContainer = styled.div<{
   }
 `;
 
-const HeaderTest = styled.h3`
-  font-family: "Pretendard";
-  font-weight: bold;
+const HeaderTest = styled.p`
+  font-family: "Pretendard-Bold";
+  font-weight: 300;
   font-size: 24px;
   margin-top: 7px;
   margin-left: 12px;
-  font-weight: 500;
 `;
 
 const HeaderLogin = styled.div`
@@ -69,17 +68,6 @@ interface Props {
 
 const Header = ({ title, icon }: Props) => {
   const SToogleState = useRecoilValue(SidebarLayout);
-
-  // useEffect(() => {
-  //   setSToogleState({
-  //     sidebartoggle: SToogleState.sidebartoggle,
-  //     HeaderAnimaion:
-  //       SToogleState.HeaderAnimaion === null
-  //         ? null
-  //         : SToogleState.sidebartoggle,
-  //   });
-  // }, [SToogleState.sidebartoggle]);
-  // console.log(SToogleState.HeaderAnimaion);
 
   return (
     <header>

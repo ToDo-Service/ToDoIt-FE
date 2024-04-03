@@ -36,7 +36,8 @@ const ProjectList = styled.div`
 `;
 
 const ProjectUserName = styled.p`
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
+  font-weight: 300;
   font-size: 20px;
   margin-top: 69px;
 `;
