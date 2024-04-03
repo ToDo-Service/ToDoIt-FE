@@ -6,6 +6,7 @@ import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 
 const ProjectContainer = styled.div<{ bgcolor: string }>`
+  cursor: pointer;
   width: 168px;
   background-color: ${(props) => props.bgcolor};
   border: 1px solid rgba(12, 0, 24, 0.1);
@@ -57,6 +58,7 @@ const Projectlist = styled.div`
 `;
 
 const ProjectListitem = styled("div")<{ color: string }>`
+  cursor: pointer;
   color: ${(props) => props.color};
 `;
 

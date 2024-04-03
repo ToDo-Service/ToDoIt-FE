@@ -16,13 +16,16 @@ const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   justify-content: space-evenly;
   font-family: "Pretendard";
   position: relative;
+  cursor: pointer;
 
   & span:first-child {
     color: #8f8f8f;
     font-size: 14px;
+    cursor: pointer;
   }
 
   & span:nth-child(2) {
+    cursor: pointer;
     color: ${(props) => props.color};
     font-size: 10px;
   }
