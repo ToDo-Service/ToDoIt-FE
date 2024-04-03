@@ -2,11 +2,4 @@ body {
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
-  font-style: "Pretendard";
-  /* position: fixed; */
-  /* overflow: scroll; */
 }
-
-/* body > div {
-  overflow: hidden;
-} */
