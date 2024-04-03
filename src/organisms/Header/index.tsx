@@ -90,8 +90,6 @@ const Header = ({ title, icon }: Props) => {
         nullCheck={SToogleState.HeaderAnimaion}
       >
         <HeaderTextIcon>
-          {icon === "BookMarkCheck" && <Icon.BookmarkCheck size={"30px"} />}
-          {icon === "CalendarEvent" && <Icon.CalendarEvent size={"30px"} />}
           <HeaderTest>{title}</HeaderTest>
         </HeaderTextIcon>
         <HeaderLogin

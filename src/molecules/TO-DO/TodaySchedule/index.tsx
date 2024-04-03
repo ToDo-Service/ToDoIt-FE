@@ -13,7 +13,6 @@ const TodaySchedueBox = styled.section`
 const TodaySchedule = () => {
   return (
     <TodaySchedueBox>
-      <Icon.BookmarkCheck className="BookmarkCheck" />
       <span>오늘 할 일</span>
     </TodaySchedueBox>
   );

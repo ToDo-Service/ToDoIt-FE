@@ -10,7 +10,6 @@ const MyAnaylyticsBox = styled.section`
 const MyAnaylytics = () => {
   return (
     <MyAnaylyticsBox>
-      <MyAnaylyticsIcon />
       <span>내 평균</span>
     </MyAnaylyticsBox>
   );

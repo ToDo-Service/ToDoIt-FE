@@ -13,7 +13,6 @@ const NextSchedueBox = styled.section`
 const NextSchedule = () => {
   return (
     <NextSchedueBox>
-      <Icon.CalendarEvent className="CalendarEvent" />
       <span>계획된 할 일</span>
     </NextSchedueBox>
   );

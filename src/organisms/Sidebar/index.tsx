@@ -122,7 +122,7 @@ const S_Content = styled.nav<{ Open: boolean | null }>`
 const ProjectListli = styled("li")<{ color: string }>`
   display: flex;
   align-items: center;
-  height: 10%;
+  max-height: 25px;
   max-width: max-content;
   padding: 4px;
 
@@ -140,6 +140,11 @@ const ProjectListUl = styled.ul`
   overflow-y: scroll;
   height: 350px;
   position: relative;
+  margin-top: 25px;
+
+  & li:not(:first-child) {
+    margin-top: 20px;
+  }
   & {
     -ms-overflow-style: none;
     scrollbar-width: none;
