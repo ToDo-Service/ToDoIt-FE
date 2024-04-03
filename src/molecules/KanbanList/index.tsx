@@ -3,6 +3,7 @@ import ProgressBar from "../../atoms/ProgressBar";
 import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
 import { motion, AnimatePresence } from "framer-motion";
+import dayjs from "dayjs";
 
 const animate = {
   initial: {
@@ -53,9 +54,7 @@ const TodoHeader = styled("div")<{ interval: string }>`
   display: flex;
   position: sticky;
   top: 0;
-  /* top: 140px; */
 
-  /* align-items: center; */
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-between" : "space-between"};
 
@@ -68,6 +67,8 @@ const TodoHeader = styled("div")<{ interval: string }>`
 `;
 
 const KanbanList = ({ title, children }: any) => {
+  const CurrentDate = dayjs().format("M월 DD일 (dd)");
+
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: "card",
     drop: () => ({ name: title }),
@@ -83,7 +84,7 @@ const KanbanList = ({ title, children }: any) => {
     <>
       <TodoListMainBox ref={drop}>
         <TodoHeader interval={title}>
-          <p>{title === "past_todos" ? "지난 일정" : "오늘 일정"}</p>
+          <p>{title === "past_todos" ? "지난 일정" : CurrentDate}</p>
           {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>
         <AnimatePresence>
