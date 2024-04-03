@@ -21,6 +21,7 @@ const TodoContainer = styled.article`
   cursor: pointer;
   width: 100%;
   position: relative;
+  font-family: "PretendardVariable";
 `;
 
 const TodoMainBox = styled.div<DargProps>`
@@ -93,16 +94,14 @@ const TodoBoxName = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 56px;
+  width: max-content;
   margin-left: 10px;
-  font-family: "Pretendard";
   font-size: 16px;
   color: rgba(0, 0, 0, 0.8);
 `;
 
-const TodoBoxDate = styled.span`
+const TodoBoxDate = styled.div`
   margin-left: 5px;
-  font-family: "Pretendard";
   font-size: 12px;
   color: rgba(0, 0, 0, 0.2);
 `;
@@ -110,13 +109,13 @@ const TodoBoxDate = styled.span`
 const TodoBoxDetail = styled.div`
   width: 201px;
   overflow: hidden;
+
   //css 글 자수 초과
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-left: 27px;
   color: rgba(0, 0, 0, 0.5);
   font-size: 16px;
-  font-family: "Pretendard";
 `;
 
 const TodoBoxHashTagBox = styled.div`
@@ -255,7 +254,9 @@ const TodoBox = ({ Data, category }: any) => {
                 }
               </TodoLabel>
               <TodoBoxName>{Data.title}</TodoBoxName>
-              <TodoBoxDate>{Data.end_date}</TodoBoxDate>
+              <TodoBoxDate>
+                {dayjs(Data.end_date).format("M월 DD일")}
+              </TodoBoxDate>
             </div>
             <ExitBtn
               src="/Icon/Modal/ModalExit.png"

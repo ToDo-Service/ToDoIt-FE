@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { signOut } from "next-auth/react";
 import { useRecoilValue } from "recoil";
 import { SidebarLayout } from "@/reocoil";
@@ -43,6 +42,7 @@ const HeaderContainer = styled.div<{
 
 const HeaderTest = styled.h3`
   font-family: "Pretendard";
+  font-weight: bold;
   font-size: 24px;
   margin-top: 7px;
   margin-left: 12px;

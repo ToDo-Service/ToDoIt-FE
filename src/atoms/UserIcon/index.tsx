@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import styled from "styled-components";
 
 const U_Icon = styled.img`
@@ -19,7 +17,7 @@ const UserEmail = styled.div`
   width: max-content;
   padding: 5px;
   font-size: 12px;
-  background-color: #f8f4fd;
+  background-color: white;
   transition: 0.5s ease-in-out;
 `;
 
