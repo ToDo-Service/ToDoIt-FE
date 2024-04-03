@@ -33,22 +33,6 @@ const TodoMainBox = styled.div<DargProps>`
   border-radius: 16px;
   border: ${(props) => (props.isdragging ? "none" : "0.5px solid #c8c5cb")};
   transition: 0.3s ease-in-out;
-  & .MoveIcon {
-    display: none;
-    position: absolute;
-    left: 23px;
-    top: 50px;
-    transition: 0.5s ease-in-out;
-    border-radius: 5px;
-  }
-
-  & .MoveIcon:hover {
-    background-color: #d2d2d2;
-  }
-
-  & .MoveIcon:active {
-    background-color: #d2d2d2;
-  }
 
   &:hover .MoveIcon {
     display: block;
@@ -59,8 +43,10 @@ const TodoMainBox = styled.div<DargProps>`
     display: none;
     position: absolute;
     left: 23px;
-    top: 73px;
+    top: 50px;
+
     transition: 0.5s ease-in-out;
+    border-radius: 6px;
   }
 
   & .PencilIcon:hover {
@@ -162,7 +148,8 @@ const TodoBox = ({ Data, category }: any) => {
   const setUData = useSetRecoilState(UpdateData);
   const [check, setCheck] = useState(Data.status === "COMPLETE" ? true : false);
 
-  const CompleteTodo = async () => {
+  const CompleteTodo = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     setCheck(!check);
     await axios
       .patch(`https://laoh.site/api/todos/status/${Data.id}`, null, {
@@ -211,7 +198,8 @@ const TodoBox = ({ Data, category }: any) => {
       });
   };
 
-  const deleteItem = () => {
+  const deleteItem = (e: React.MouseEvent) => {
+    e.stopPropagation();
     axios
       .delete(`https://laoh.site/api/todos/${Data.id}`, {
         withCredentials: true,
@@ -257,9 +245,8 @@ const TodoBox = ({ Data, category }: any) => {
 
   return (
     <>
-      <TodoContainer ref={dragRef}>
+      <TodoContainer ref={dragRef} onClick={RewriteModal}>
         <TodoMainBox isdragging={isDragging ? 1 : 0}>
-          <Icon.Activity className="MoveIcon" />
           <Icon.Pencil className="PencilIcon" onClick={RewriteModal} />
           <TodoBoxHeader>
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -267,7 +254,7 @@ const TodoBox = ({ Data, category }: any) => {
                 {
                   <CheckBox
                     type="checkbox"
-                    onChange={CompleteTodo}
+                    onClick={(e) => CompleteTodo(e)}
                     checked={check}
                   />
                 }
@@ -278,7 +265,7 @@ const TodoBox = ({ Data, category }: any) => {
             <ExitBtn
               src="/Icon/Modal/ModalExit.png"
               alt="/"
-              onClick={deleteItem}
+              onClick={(e) => deleteItem(e)}
             />
           </TodoBoxHeader>
           <TodoBoxDetail>{Data.content}</TodoBoxDetail>
