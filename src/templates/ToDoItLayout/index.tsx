@@ -41,7 +41,9 @@ const MainLayouts: FC<TodayData> = ({ Data }) => {
   const SToogleState = useRecoilValue(SidebarLayout);
 
   return (
-    <MainLayout open={SToogleState}>{<MainPage Data={Data} />}</MainLayout>
+    <MainLayout open={SToogleState.sidebartoggle}>
+      {<MainPage Data={Data} />}
+    </MainLayout>
   );
 };
 

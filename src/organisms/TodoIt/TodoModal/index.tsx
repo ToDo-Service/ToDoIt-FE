@@ -45,6 +45,7 @@ const ExitBtn = styled.img`
   height: 16px;
   margin-top: 34px;
   margin-left: 537px;
+  cursor: pointer;
 `;
 
 const AddTodo = styled.div`

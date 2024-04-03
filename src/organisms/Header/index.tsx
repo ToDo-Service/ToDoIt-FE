@@ -70,7 +70,6 @@ interface Props {
 
 const Header = ({ title, icon }: Props) => {
   const SToogleState = useRecoilValue(SidebarLayout);
-  const setSToogleState = useSetRecoilState(SidebarLayout);
 
   // useEffect(() => {
   //   setSToogleState({
