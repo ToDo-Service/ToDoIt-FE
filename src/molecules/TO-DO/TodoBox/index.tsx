@@ -142,7 +142,9 @@ const TodoBoxHashTagBox = styled.div`
   margin-top: 16.5px;
   width: 201px;
   margin-left: 27px;
-  justify-content: space-evenly;
+  & > div {
+    margin-right: 10px;
+  }
 `;
 
 const ExitBtn = styled.img`
