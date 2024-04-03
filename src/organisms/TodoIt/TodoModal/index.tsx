@@ -49,7 +49,7 @@ const ExitBtn = styled.img`
 
 const AddTodo = styled.div`
   cursor: pointer;
-  width: 376px;
+  width: 320px;
   height: 55px;
   background-color: rgba(12, 0, 24, 0.1);
   border-radius: 12px;

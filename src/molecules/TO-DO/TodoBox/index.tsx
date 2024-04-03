@@ -20,7 +20,6 @@ const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
   cursor: pointer;
   width: 100%;
-
   position: relative;
 `;
 
@@ -110,6 +109,10 @@ const TodoBoxHeader = styled.div`
 `;
 
 const TodoBoxName = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 56px;
   margin-left: 10px;
   font-family: "Pretendard";
   font-size: 16px;
@@ -156,7 +159,6 @@ const ExitBtn = styled.img`
 const TodoBox = ({ Data, category }: any) => {
   const JwtToken = useRecoilValue(jwtToken);
   const setModal = useSetRecoilState(Modal);
-
   const setUData = useSetRecoilState(UpdateData);
   const [check, setCheck] = useState(Data.status === "COMPLETE" ? true : false);
 

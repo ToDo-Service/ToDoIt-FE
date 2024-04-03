@@ -2,15 +2,13 @@ import styled from "styled-components";
 import ProgressBar from "../../atoms/ProgressBar";
 import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
-
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 
 const TodoListMainBox = styled.section`
-  width: 376px;
+  width: 320px;
   height: 80vh;
   margin-top: 57px;
-
   z-index: 1;
   overflow-y: scroll;
   & article:not(:first-child) {
@@ -27,7 +25,7 @@ const TodoListMainBox = styled.section`
 
 const TodoHeader = styled("div")<{ interval: string }>`
   z-index: 2;
-  width: 325px;
+  width: 320px;
   background-color: white;
   opacity: 1;
   font-family: "Pretendard";
