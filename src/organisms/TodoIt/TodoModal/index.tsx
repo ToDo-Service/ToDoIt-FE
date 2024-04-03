@@ -14,24 +14,6 @@ import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import Priority from "@/molecules/TO-DO/Priority";
 
-const animate = {
-  initial: {
-    transform: `translateY(50px)`,
-    opacity: 0,
-    transition: `transform 0.33s ease`,
-  },
-  animate: {
-    transform: `translateY(0px)`,
-    opacity: 1,
-    transition: `transform 0.33s ease`,
-  },
-  exit: {
-    transform: `translateY(50px)`,
-    opacity: 0,
-    transition: `transform 0.33s ease`,
-  },
-};
-
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   z-index: 3;
   position: fixed;
@@ -67,7 +49,7 @@ const ExitBtn = styled.img`
 
 const AddTodo = styled.div`
   cursor: pointer;
-  width: 320px;
+  width: 376px;
   height: 55px;
   background-color: rgba(12, 0, 24, 0.1);
   border-radius: 12px;
@@ -233,19 +215,11 @@ const TodoModal = (props: any) => {
   return (
     <AnimatePresence>
       {method === "post" && (
-        <motion.div
-          initial={animate.initial}
-          //@ts-ignore
-          animate={animate.animate}
-          //@ts-ignore
-          exit={animate.exit}
+        <AddTodo
+          onClick={() => setModal({ id: 0, method: "post", toggle: true })}
         >
-          <AddTodo
-            onClick={() => setModal({ id: 0, method: "post", toggle: true })}
-          >
-            <span>+ 할 일을 추가해주세요</span>
-          </AddTodo>
-        </motion.div>
+          <span>+ 할 일을 추가해주세요</span>
+        </AddTodo>
       )}
       {modal.toggle && (
         <ModalBackdrop ontoggle={true}>

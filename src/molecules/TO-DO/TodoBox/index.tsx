@@ -19,9 +19,8 @@ interface DargProps {
 const TodoContainer = styled.article`
   filter: drop-shadow(1px 2px 4px #c5c5c5);
   cursor: pointer;
-  width: 320px;
-  max-width: fit-content;
-  min-width: 320px;
+  width: 100%;
+
   position: relative;
 `;
 

@@ -2,32 +2,15 @@ import styled from "styled-components";
 import ProgressBar from "../../atoms/ProgressBar";
 import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
-import { motion, AnimatePresence } from "framer-motion";
-import dayjs from "dayjs";
 
-const animate = {
-  initial: {
-    transform: `translateY(50px)`,
-    opacity: 0,
-    transition: `transform 0.33s ease`,
-  },
-  animate: {
-    transform: `translateY(0px)`,
-    opacity: 1,
-    transition: `transform 0.33s ease`,
-  },
-  exit: {
-    transform: `translateY(50px)`,
-    opacity: 0,
-    transition: `transform 0.33s ease`,
-  },
-};
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 const TodoListMainBox = styled.section`
-  width: 30vw;
+  width: 376px;
   height: 80vh;
   margin-top: 57px;
-  margin-left: 45px;
+
   z-index: 1;
   overflow-y: scroll;
   & article:not(:first-child) {
@@ -67,6 +50,8 @@ const TodoHeader = styled("div")<{ interval: string }>`
 `;
 
 const KanbanList = ({ title, children }: any) => {
+  dayjs.locale("ko");
+
   const CurrentDate = dayjs().format("M월 DD일 (dd)");
 
   const [{ canDrop, isOver }, drop] = useDrop({
@@ -87,18 +72,8 @@ const KanbanList = ({ title, children }: any) => {
           <p>{title === "past_todos" ? "지난 일정" : CurrentDate}</p>
           {title !== "past_todos" ? <ProgressBar /> : null}
         </TodoHeader>
-        <AnimatePresence>
-          <motion.div
-            initial={animate.initial}
-            //@ts-ignore
-            animate={animate.animate}
-            //@ts-ignore
-            exit={animate.exit}
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
-        {title !== "past_todos" ? <TodoModal method="post" /> : null}
+        {children}
+        {title !== "past_todos" && <TodoModal method="post" />}
       </TodoListMainBox>
     </>
   );

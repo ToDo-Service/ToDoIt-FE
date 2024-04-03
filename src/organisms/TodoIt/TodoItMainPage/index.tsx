@@ -1,14 +1,22 @@
 import KanbanList from "@/molecules/KanbanList";
 import TodoBox from "@/molecules/TO-DO/TodoBox";
-import { FC, ReactElement, useCallback, useEffect, useState } from "react";
+import { FC, ReactElement } from "react";
 import styled from "styled-components";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
 const TodoPageMainBox = styled.div`
   display: flex;
-  margin-left: 270px;
+  margin-left: 220px;
   margin-top: 110px;
+
+  & section:first-child {
+    margin-left: 67px;
+  }
+
+  & section:last-child {
+    margin-left: 48px;
+  }
 `;
 
 interface PriorityList {
