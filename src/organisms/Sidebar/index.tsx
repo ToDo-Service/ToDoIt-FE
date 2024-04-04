@@ -11,18 +11,15 @@ import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SidebarLayout, jwtToken } from "@/reocoil";
-import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 import BurgerIcon from "@/atoms/BurgerIcon";
 import type { ProejectProps } from "@/types/tb";
 
-const S_Background = styled.div<{ Open: boolean | null }>`
+const S_Background = styled.div<{ Open: boolean }>`
   z-index: 99;
   height: 100vh;
   width: 264px;
   display: flex;
-  animation: 0.7s
-    ${(props) => (props.Open !== null && props.Open ? "PopUp" : "PopOut")}
-    forwards;
+  animation: 0.7s ${(props) => (props.Open ? "PopUp" : "PopOut")} forwards;
 
   @keyframes PopUp {
     0% {
@@ -41,12 +38,11 @@ const S_Background = styled.div<{ Open: boolean | null }>`
 
     100% {
       transform: translate(-70%, 0);
-      display: none;
     }
   }
 `;
 
-const S_Content = styled.nav<{ Open: boolean | null }>`
+const S_Content = styled.nav<{ Open: boolean }>`
   height: 100%;
   width: 100%;
   background-color: #f7f8f9;
@@ -55,9 +51,7 @@ const S_Content = styled.nav<{ Open: boolean | null }>`
   font-weight: 350;
   z-index: 99;
   min-width: 220px;
-  animation: 0.7s
-    ${(props) => (props.Open !== null && props.Open ? "PopUp" : "PopOut")}
-    forwards;
+  animation: 0.7s ${(props) => (props.Open ? "PopUp" : "PopOut")} forwards;
 
   & ul {
     list-style: none;
@@ -184,7 +178,7 @@ const Sidebar: FC = () => {
   const SidePop = useRecoilValue(SidebarLayout);
   const jwt = useRecoilValue(jwtToken);
 
-  console.log(SidePop);
+  console.log(SidePop.sidebartoggle);
 
   const { data } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
@@ -199,8 +193,10 @@ const Sidebar: FC = () => {
   };
 
   return (
-    <S_Background Open={SidePop.sidebartoggle}>
-      <S_Content Open={SidePop.sidebartoggle}>
+    <S_Background
+      Open={SidePop.sidebartoggle ? SidePop.sidebartoggle : "false"}
+    >
+      <S_Content Open={SidePop.sidebartoggle ? SidePop.sidebartoggle : "false"}>
         <SidebarHeader />
         <h3
           className={

@@ -10,9 +10,11 @@ export default function Home() {
         <link rel="icon" href="Icon/Todoit/TodoitLogo.png" />
         <title>TodoIt</title>
       </Head>
-      <Layout>
-        <ProjectDetailLayout />
-      </Layout>
+      <main>
+        <Layout>
+          <ProjectDetailLayout />
+        </Layout>
+      </main>
     </>
   );
 }

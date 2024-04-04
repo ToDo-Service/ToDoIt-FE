@@ -9,7 +9,9 @@ export default function Home() {
         <link rel="icon" href="Icon/Todoit/TodoitLogo.png" />
         <title>TodoIt</title>
       </Head>
-      <MainPageLayout />
+      <main>
+        <MainPageLayout />
+      </main>
     </>
   );
 }

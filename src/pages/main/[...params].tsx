@@ -25,7 +25,6 @@ export default function Home() {
 
   const { data: session, status } = useSession();
   const setToken = useSetRecoilState(jwtToken);
-  const SToogleState = useRecoilValue(SidebarLayout);
 
   if (status === "authenticated") {
     setToken(session?.user.accessToken);
@@ -44,15 +43,17 @@ export default function Home() {
         <title>TodoIt</title>
       </Head>
 
-      <Layout>
-        <SWRConfig value={{ suspense: true }}>
-          <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
-            {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
-            {router.asPath === "/main/project" && <ProjectPageLayout />}
-            {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
-          </Suspense>
-        </SWRConfig>
-      </Layout>
+      <main>
+        <Layout>
+          <SWRConfig value={{ suspense: true }}>
+            <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+              {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
+              {router.asPath === "/main/project" && <ProjectPageLayout />}
+              {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
+            </Suspense>
+          </SWRConfig>
+        </Layout>
+      </main>
     </>
   );
 }
