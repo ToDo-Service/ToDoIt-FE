@@ -184,6 +184,8 @@ const Sidebar: FC = () => {
   const SidePop = useRecoilValue(SidebarLayout);
   const jwt = useRecoilValue(jwtToken);
 
+  console.log(SidePop);
+
   const { data } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
