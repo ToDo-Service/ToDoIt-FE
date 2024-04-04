@@ -19,7 +19,6 @@ const NextPlanModalLayout = styled.div<{ open: boolean }>`
   position: absolute;
   left: 950px;
   top: 28px;
-
   display: ${(props) => (props.open ? "block" : "none")};
   animation: 0.7s
     ${(props) =>
@@ -85,6 +84,8 @@ const NextPlanModal = () => {
     reset(Modal);
   });
 
+  console.log(Modal.toggle);
+
   //페이지 전환시 toglle 상태 null 로 초기화
   useEffect(() => {
     window.addEventListener("beforeunload", () => resetModalState);
@@ -96,7 +97,7 @@ const NextPlanModal = () => {
   const TestData = [1, 2, 3, 4, 5];
 
   return (
-    <NextPlanModalLayout open={Modal}>
+    <NextPlanModalLayout open={Modal.toggle === null ? null : Modal}>
       <NextPlanModalHeader>
         <span>{SelectedDate}</span>
         <ExitBtn
