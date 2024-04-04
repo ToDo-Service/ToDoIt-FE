@@ -202,7 +202,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       Data?.map((item: any) => {
-        `${item.date[2] - 0}` === formattedDate.toString() &&
+        `${Number(item.date[2] - 0) - 1}` === formattedDate.toString() &&
           CurrentDateData.push(
             <CalenderData
               Bgcolor={

@@ -49,6 +49,8 @@ const Hasttag = styled.div<{ Bgcolor: string }>`
   font-family: "PretendardVariable";
   font-weight: 250;
   border: 1px solid rgba(197, 197, 197, 0.5);
+  font-family: "PretendardVariable";
+  font-weight: 250;
 `;
 
 const HashtagProject = ({ project }: any) => {
@@ -59,7 +61,9 @@ const HashtagProject = ({ project }: any) => {
   });
 
   return project !== null ? (
-    <Hasttag Bgcolor={SelectedProject[0].backgroundColor}>{project.id}</Hasttag>
+    <Hasttag Bgcolor={SelectedProject[0].backgroundColor}>
+      {project.title}
+    </Hasttag>
   ) : undefined;
 };
 

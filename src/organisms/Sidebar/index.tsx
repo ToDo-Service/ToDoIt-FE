@@ -192,11 +192,11 @@ const Sidebar: FC = () => {
     SToggle({ sidebartoggle: false, HeaderAnimaion: null });
   };
 
+  // console.log(SidePop ? SidePop.sidebartoggle : "false");
+
   return (
-    <S_Background
-      Open={SidePop.sidebartoggle ? SidePop.sidebartoggle : "false"}
-    >
-      <S_Content Open={SidePop.sidebartoggle ? SidePop.sidebartoggle : "false"}>
+    <S_Background Open={SidePop.sidebartoggle}>
+      <S_Content Open={SidePop.sidebartoggle}>
         <SidebarHeader />
         <h3
           className={
