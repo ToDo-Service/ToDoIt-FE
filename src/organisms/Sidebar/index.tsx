@@ -181,7 +181,7 @@ const Sidebar: FC = () => {
     router.asPath === "/main/today" ? "today" : ""
   );
   const SToggle = useSetRecoilState(SidebarLayout);
-  const [sideMenu, setSideMenu] = useState<boolean | null>(null);
+  const SidePop = useRecoilValue(SidebarLayout);
   const jwt = useRecoilValue(jwtToken);
 
   const { data } = useSWR(
@@ -190,17 +190,15 @@ const Sidebar: FC = () => {
   );
 
   const showSidebar = () => {
-    setSideMenu(true);
     SToggle({ sidebartoggle: true, HeaderAnimaion: null });
   };
   const hideSidebar = () => {
-    setSideMenu(false);
     SToggle({ sidebartoggle: false, HeaderAnimaion: null });
   };
 
   return (
-    <S_Background Open={sideMenu}>
-      <S_Content Open={sideMenu}>
+    <S_Background Open={SidePop.sidebartoggle}>
+      <S_Content Open={SidePop.sidebartoggle}>
         <SidebarHeader />
         <h3
           className={
@@ -278,8 +276,8 @@ const Sidebar: FC = () => {
       <SidebarOpenIcon>
         <BurgerIcon
           size="25px"
-          show={sideMenu}
-          onclick={sideMenu ? hideSidebar : showSidebar}
+          show={SidePop.sidebartoggle}
+          onclick={SidePop.sidebartoggle ? hideSidebar : showSidebar}
         />
       </SidebarOpenIcon>
     </S_Background>

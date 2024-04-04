@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 import { v1 } from "uuid";
 import type { RecoilState } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
 interface ModalTp {
   id: number;
@@ -21,6 +22,8 @@ interface UpdateDataTp {
 interface jwtTp {
   token: string;
 }
+
+const { persistAtom } = recoilPersist();
 
 export const jwtToken: RecoilState<any> = atom<any>({
   key: `JWT${v1}`,
@@ -72,6 +75,7 @@ export const SidebarLayout: RecoilState<any> = atom<any>({
     sidebartoggle: null,
     HeaderAnimaion: null,
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const NextPlanCalender: RecoilState<any> = atom<{
