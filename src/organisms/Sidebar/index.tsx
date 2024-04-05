@@ -175,9 +175,7 @@ const SidebarOpenIcon = styled.span`
 
 const Sidebar: FC = () => {
   const router = useRouter();
-  const [active, setActive] = useState(
-    router.asPath === "/main/today" ? "today" : ""
-  );
+  const [active, setActive] = useState("/main/today");
   const SToggle = useSetRecoilState(SidebarLayout);
   const SidePop = useRecoilValue(SidebarLayout);
   const jwt = useRecoilValue(jwtToken);
@@ -186,6 +184,10 @@ const Sidebar: FC = () => {
   useEffect(() => {
     setSidePop(SidePop.sidebartoggle);
   }, [SidePop]);
+
+  useEffect(() => {
+    setActive(router.asPath);
+  }, [router.asPath]);
 
   const { data } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
@@ -205,7 +207,7 @@ const Sidebar: FC = () => {
         <SidebarHeader />
         <h3
           className={
-            active === "today" || active === "nextplan" ? "active" : ""
+            active === "/main/today" || active === "nextplan" ? "active" : ""
           }
         >
           TO-DO
@@ -214,12 +216,9 @@ const Sidebar: FC = () => {
           <Link
             href={{ pathname: `/main/today` }}
             style={{ textDecoration: "none", color: "black" }}
-            passHref
+            passHref // a태그로 href 보냄, 검색엔진 최적화
           >
-            <li
-              className={active === "today" ? "active" : ""}
-              onClick={() => setActive("today")}
-            >
+            <li className={active === "/main/today" ? "active" : ""}>
               <TodaySchedule />
             </li>
           </Link>
@@ -228,10 +227,7 @@ const Sidebar: FC = () => {
             style={{ textDecoration: "none", color: "black" }}
             passHref
           >
-            <li
-              className={active === "nextplan" ? "active" : ""}
-              onClick={() => setActive("nextplan")}
-            >
+            <li className={active === "/main/nextplan" ? "active" : ""}>
               <NextSchedule />
             </li>
           </Link>
@@ -251,10 +247,7 @@ const Sidebar: FC = () => {
           style={{ textDecoration: "none", color: "black" }}
           passHref
         >
-          <h3
-            className={active === "project" ? "active" : ""}
-            onClick={() => setActive("project")}
-          >
+          <h3 className={active === "/main/project" ? "active" : ""}>
             PROJECT
           </h3>
         </Link>
