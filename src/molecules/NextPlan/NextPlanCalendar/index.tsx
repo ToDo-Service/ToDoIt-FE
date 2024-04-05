@@ -110,31 +110,48 @@ const CalenderData = styled.div<{ Bgcolor: string }>`
   font-weight: 250;
   background-color: ${(props) => props.Bgcolor};
   width: max-content;
-  max-height: 25px;
+  height: 25px;
   max-width: 125px;
+  font-size: 13px;
   padding: 0 5px;
-  height: max-content;
+  display: flex;
+  align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   border-radius: 4px;
   border: 1px solid rgba(12, 0, 24, 0.1);
+  color: rgba(37, 37, 48, 0.6);
 `;
 
 const CalenderCell = styled.div`
-  & span p:hover {
+  /* & span p:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.05);
     transition: 0.4s ease-in-out;
     border-radius: 6px;
-    padding: 5px;
+    padding: 0 5px;
     height: max-content;
-  }
+  } */
   & span div:not(:last-child) {
     margin-bottom: 3px;
   }
   & span div:first-child {
     margin-top: 9px;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 0.5s ease-in-out;
+    border-radius: 6px;
+    padding: 5px;
+  }
+  & .active {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 0.5s ease-in-out;
+    border-radius: 6px;
+    padding: 5px;
   }
 
   & span {
@@ -190,12 +207,14 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
 
-  const SetSlectedDate = (e: any) => {
+  const SetSlectedDate = (e: React.MouseEvent<HTMLDivElement>) => {
+    const selectedDateInfo = `${dayjs(
+      e.currentTarget.getAttribute("data-date")
+    ).format("M월 DD일 dd")}`;
+
     CurrentSelectedDate({
       id: 0,
-      date: `${dayjs(currentMonth).format("M")}월 ${
-        e.target.innerText
-      }일 (${dayjs(currentMonth).format("dd")})`,
+      date: selectedDateInfo,
     });
   };
 
@@ -220,10 +239,11 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
 
       days.push(
         <CalenderCell
-          // onClick={(e) => {
-          //   GModal(!CurrentModal);
-          //   SetSlectedDate(e);
-          // }}
+          onClick={(e) => {
+            GModal(!CurrentModal);
+            SetSlectedDate(e);
+          }}
+          data-date={day}
           className={`col cell ${
             !isSameMonth(day, monthStart)
               ? "disabled"
@@ -242,14 +262,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
                 : ""
             }
           >
-            <p
-              className="Date"
-              style={{ marginBottom: "4px" }}
-              onClick={(e) => {
-                GModal(!CurrentModal);
-                SetSlectedDate(e);
-              }}
-            >
+            <p className="Date" style={{ marginBottom: "4px" }}>
               {formattedDate}
             </p>
             {isSameMonth(day, monthStart) &&
