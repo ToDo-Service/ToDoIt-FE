@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -13,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import Priority from "@/molecules/TO-DO/Priority";
+import FindColor from "@/utils/findColor";
 
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   z-index: 3;
@@ -87,7 +87,12 @@ const TodoModal = (props: any) => {
   const [title, onChangeTitle, setTitle] = useInput("");
   const [detail, onChangeDetail, setDetail] = useInput("");
   const [prioirty, setPriority] = useState("높음");
-  const [project, setProject] = useState({ id: null, title: "" });
+  const [project, setProject] = useState({
+    id: null,
+    title: "선택 안함",
+    color: "#FBD580",
+    bgColor: "rgba(251, 213, 128, 0.15)",
+  });
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const JWT = useRecoilValue(jwtToken);
@@ -195,14 +200,21 @@ const TodoModal = (props: any) => {
       setPriority(UData[0].priority);
       setProject({
         id: UData[0]?.project?.id,
-        title: UData[0]?.project?.description,
+        title: UData[0]?.project?.title,
+        color: UData[0]?.project?.color,
+        bgColor: FindColor(UData[0]?.project?.color)[0].backgroundColor,
       });
     } else {
       setEndDate(dayjs().format("YYYY.MM.DD"));
       setTitle("");
       setDetail("");
       setPriority("높음");
-      setProject({ id: null, title: "" });
+      setProject({
+        id: null,
+        title: "선택 안함",
+        color: "#FBD580",
+        bgColor: "rgba(251, 213, 128, 0.15)",
+      });
     }
   }, [modal.toggle, postSuccess]);
 

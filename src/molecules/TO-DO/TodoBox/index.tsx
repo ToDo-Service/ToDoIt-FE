@@ -194,7 +194,7 @@ const TodoBox = ({ Data, category }: any) => {
         useToast(`일정 추가`, true);
         mutate("https://laoh.site/api/todos/today");
       })
-      .catch((err) => {
+      .catch(() => {
         useToast("실패", false);
       });
   };
