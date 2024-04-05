@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import NextPlanCalendarMonth from "../NextPlanCalendarMonth";
 import uuid from "react-uuid";
-import { format, addMonths, startOfWeek, addDays } from "date-fns";
+import { format, addMonths, startOfWeek, addDays, getDay } from "date-fns";
 import { endOfWeek, isSameDay, isSameMonth } from "date-fns";
 import { startOfMonth, endOfMonth } from "date-fns";
 import styled from "styled-components";
@@ -96,6 +96,14 @@ const CalenderBodyRow = styled.div`
   & .disabled {
     color: rgba(37, 37, 48, 0.4);
   }
+
+  & .sunday {
+    color: #ff6262;
+  }
+
+  & .saturday {
+    color: #7777ff;
+  }
 `;
 
 const CalenderItem = styled.div`
@@ -125,14 +133,6 @@ const CalenderData = styled.div<{ Bgcolor: string }>`
 `;
 
 const CalenderCell = styled.div`
-  /* & span p:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.05);
-    transition: 0.4s ease-in-out;
-    border-radius: 6px;
-    padding: 0 5px;
-    height: max-content;
-  } */
   & span div:not(:last-child) {
     margin-bottom: 3px;
   }
@@ -207,6 +207,11 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
 
+  const isWeekend = (date: Date) => {
+    const dayOfWeek = getDay(date);
+    return (dayOfWeek === 0 && "sunday") || (dayOfWeek === 6 && "saturday");
+  };
+
   const SetSlectedDate = (e: React.MouseEvent<HTMLDivElement>) => {
     const selectedDateInfo = `${dayjs(
       e.currentTarget.getAttribute("data-date")
@@ -220,6 +225,15 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
+      const isCurrentMonth = isSameMonth(day, monthStart);
+      const isCurrentDay = isSameDay(day, selectedDate);
+      const isWeekendDay = isWeekend(day);
+      // const isHolidayDay = ixsHoliday(day);
+
+      const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""}${
+        isCurrentDay ? "selected" : ""
+      }${isCurrentMonth && isWeekendDay ? isWeekendDay : isWeekendDay} `;
+
       Data?.map((item: any) => {
         `${Number(item.date[2] - 0) - 1}` === formattedDate.toString() &&
           CurrentDateData.push(
@@ -244,24 +258,10 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
             SetSlectedDate(e);
           }}
           data-date={day}
-          className={`col cell ${
-            !isSameMonth(day, monthStart)
-              ? "disabled"
-              : isSameDay(day, selectedDate)
-              ? "selected"
-              : "not-valid"
-          }`}
+          className={cellClassName}
           key={uuid()}
         >
-          <span
-            className={
-              format(currentMonth, "M") !== format(day, "M")
-                ? "text not-valid"
-                : isSameMonth(day, monthStart) && isSameDay(day, selectedDate)
-                ? "texttoday"
-                : ""
-            }
-          >
+          <span className={cellClassName}>
             <p className="Date" style={{ marginBottom: "4px" }}>
               {formattedDate}
             </p>
