@@ -12,6 +12,7 @@ import { GlobalModal, jwtToken, NextPlanCalender } from "@/reocoil";
 import FindColor from "@/utils/findColor";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { useHoliday } from "@/hooks/useHoliday";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -206,6 +207,15 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const CurrentModal = useRecoilValue(GlobalModal);
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
+  let params = {
+    solYear: "2020",
+    solMonth: "03",
+    _type: "json",
+    ServiceKey:
+      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
+  };
+  // const test = useHoliday(params);
+  // console.log(test);
 
   const isWeekend = (date: Date) => {
     const dayOfWeek = getDay(date);

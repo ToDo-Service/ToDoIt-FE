@@ -6,7 +6,7 @@ import MyAnaylytics from "@/molecules/ANAYLYTICS/MyAnaylytics";
 import SidebarHeader from "@/organisms/SidebarHeader";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -14,12 +14,14 @@ import { SidebarLayout, jwtToken } from "@/reocoil";
 import BurgerIcon from "@/atoms/BurgerIcon";
 import type { ProejectProps } from "@/types/tb";
 
-const S_Background = styled.div<{ Open: boolean }>`
+const S_Background = styled.div<{ open: boolean | null }>`
   z-index: 99;
   height: 100vh;
   width: 264px;
   display: flex;
-  animation: 0.7s ${(props) => (props.Open ? "PopUp" : "PopOut")} forwards;
+  animation: 0.7s
+    ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
+    forwards;
 
   @keyframes PopUp {
     0% {
@@ -42,7 +44,7 @@ const S_Background = styled.div<{ Open: boolean }>`
   }
 `;
 
-const S_Content = styled.nav<{ Open: boolean }>`
+const S_Content = styled.nav<{ open: boolean | null }>`
   height: 100%;
   width: 100%;
   background-color: #f7f8f9;
@@ -51,7 +53,9 @@ const S_Content = styled.nav<{ Open: boolean }>`
   font-weight: 350;
   z-index: 99;
   min-width: 220px;
-  animation: 0.7s ${(props) => (props.Open ? "PopUp" : "PopOut")} forwards;
+  animation: 0.7s
+    ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
+    forwards;
 
   & ul {
     list-style: none;
@@ -177,8 +181,11 @@ const Sidebar: FC = () => {
   const SToggle = useSetRecoilState(SidebarLayout);
   const SidePop = useRecoilValue(SidebarLayout);
   const jwt = useRecoilValue(jwtToken);
+  const [sidePop, setSidePop] = useState(false);
 
-  console.log(SidePop.sidebartoggle);
+  useEffect(() => {
+    setSidePop(SidePop.sidebartoggle);
+  }, [SidePop]);
 
   const { data } = useSWR(
     jwt.token !== "" && "https://laoh.site/api/project",
@@ -192,17 +199,14 @@ const Sidebar: FC = () => {
     SToggle({ sidebartoggle: false, HeaderAnimaion: null });
   };
 
-  // console.log(SidePop ? SidePop.sidebartoggle : "false");
-
   return (
-    <S_Background Open={SidePop.sidebartoggle}>
-      <S_Content Open={SidePop.sidebartoggle}>
+    <S_Background open={sidePop}>
+      <S_Content open={sidePop}>
         <SidebarHeader />
         <h3
           className={
             active === "today" || active === "nextplan" ? "active" : ""
           }
-          onClick={() => setActive("project")}
         >
           TO-DO
         </h3>

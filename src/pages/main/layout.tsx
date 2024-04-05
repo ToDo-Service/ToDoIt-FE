@@ -2,9 +2,11 @@ import Sidebar from "@/organisms/Sidebar";
 import { useRouter } from "next/router";
 import Header from "@/organisms/Header";
 import styled from "styled-components";
-import { FunctionComponent } from "react";
+import { FunctionComponent, Suspense } from "react";
 import type { LayoutProps } from "@/types/tb";
 import { HeaderData } from "@/data/Headet";
+import { SWRConfig } from "swr";
+import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const LayouyMainbox = styled.section`
   display: flex;
@@ -29,6 +31,7 @@ const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
     <LayouyMainbox>
       <LayouyHeader>
         <Sidebar />
+
         {HeaderData.map((item) => {
           return (
             router.asPath.includes(item.path) && (
@@ -37,7 +40,11 @@ const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
           );
         })}
       </LayouyHeader>
-      {children}
+      <SWRConfig value={{ suspense: true }}>
+        <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+          {children}
+        </Suspense>
+      </SWRConfig>
     </LayouyMainbox>
   );
 };

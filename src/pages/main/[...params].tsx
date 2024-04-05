@@ -45,13 +45,9 @@ export default function Home() {
 
       <main>
         <Layout>
-          <SWRConfig value={{ suspense: true }}>
-            <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
-              {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
-              {router.asPath === "/main/project" && <ProjectPageLayout />}
-              {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
-            </Suspense>
-          </SWRConfig>
+          {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
+          {router.asPath === "/main/project" && <ProjectPageLayout />}
+          {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
         </Layout>
       </main>
     </>

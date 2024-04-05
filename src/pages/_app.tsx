@@ -8,6 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Layout from "./main/layout";
+import { SWRConfig } from "swr";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 
 const WrapStyled = styled.div`
   position: fixed;
@@ -52,9 +55,7 @@ export default function App({
                 //@ts-ignore
                 exit={animate.exit}
               >
-                {/* <Layout> */}
                 <Component {...pageProps} />
-                {/* </Layout> */}
               </motion.div>
             </AnimatePresence>
           </WrapStyled>
