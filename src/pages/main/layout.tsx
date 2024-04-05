@@ -35,7 +35,7 @@ const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
         {HeaderData.map((item) => {
           return (
             router.asPath.includes(item.path) && (
-              <Header key={item.id} icon={item.Icon} title={item.title} />
+              <Header key={item.id} title={item.title} />
             )
           );
         })}

@@ -65,10 +65,9 @@ const HeaderTextIcon = styled.div`
 
 interface Props {
   title: string;
-  icon: string;
 }
 
-const Header = ({ title, icon }: Props) => {
+const Header = ({ title }: Props) => {
   const SToogleState = useRecoilValue(SidebarLayout);
 
   return (

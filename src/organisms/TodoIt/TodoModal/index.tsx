@@ -58,7 +58,8 @@ const AddTodo = styled.div`
   display: flex;
   padding-left: 24px;
   align-items: center;
-  font-family: "Pretendard";
+  font-family: "PretendardVariable";
+  font-weight: 250;
   font-size: 15px;
   color: rgba(37, 37, 48, 0.6);
 
@@ -82,7 +83,6 @@ export const ModalView = styled.div.attrs((props) => ({
 
 const TodoModal = (props: any) => {
   const [method, setMethod] = useState(props.method);
-  const [isaddopen, setIsaddopen] = useState(false);
   const [endDate, setEndDate] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [detail, onChangeDetail, setDetail] = useInput("");
@@ -322,7 +322,7 @@ const TodoModal = (props: any) => {
                 method={modal.method === "update" ? "update" : "post"}
               />
               <Project
-                onChange={setProject}
+                setProject={setProject}
                 value={project}
                 method={modal.method === "update" ? "update" : "post"}
               />

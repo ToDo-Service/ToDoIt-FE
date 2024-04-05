@@ -7,22 +7,20 @@ import { jwtToken, SidebarLayout } from "@/reocoil";
 import useSWR, { SWRConfig } from "swr";
 import fetcher from "@/utils/fetcher";
 import Head from "next/head";
-import { Suspense } from "react";
-import { LoadingSpinner } from "@/atoms/LoadingSpinner";
+import dynamic from "next/dynamic";
 
 //스플리팅
 
-const ToDoItLayout = React.lazy(() => import("@/templates/ToDoItLayout"));
-const ProjectPageLayout = React.lazy(
+const ToDoItLayout = dynamic(() => import("@/templates/ToDoItLayout"));
+const ProjectPageLayout = dynamic(
   () => import("@/templates/ProjectPageLayout")
 );
-const NextPlanPageLayout = React.lazy(
+const NextPlanPageLayout = dynamic(
   () => import("@/templates/NextPlanPageLayout")
 );
 
 export default function Home() {
   const router = useRouter();
-
   const { data: session, status } = useSession();
   const setToken = useSetRecoilState(jwtToken);
 
@@ -31,7 +29,7 @@ export default function Home() {
   }
 
   const { data } = useSWR(
-    status === "authenticated" ? "https://laoh.site/api/todos/today" : null,
+    status === "authenticated" && "https://laoh.site/api/todos/today",
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 

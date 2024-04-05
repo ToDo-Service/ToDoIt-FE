@@ -1,10 +1,6 @@
-import { Modal, UpdateData } from "@/reocoil";
-import { copyFileSync } from "fs";
-import { useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 
-// const CalendarWrapper = styled("div")<{ isOpen: boolean }>`
+import styled from "styled-components";
 
 const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   width: 110px;
@@ -14,7 +10,8 @@ const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  font-family: "Pretendard";
+  font-family: "PretendardVariable";
+  font-weight: 250;
   position: relative;
   cursor: pointer;
 
@@ -69,28 +66,30 @@ const PriorityData = [
   {
     id: 1,
     text: "높음",
+    img: "/Icon/Prority/높음.png",
     color: "#ff8080",
     bgcolor: "rgba(255, 190, 190, 0.27)",
   },
   {
     id: 2,
     text: "보통",
+    img: "/Icon/Prority/보통.png",
     color: "#FB9A09",
     bgcolor: "rgba(255, 191, 133, 0.27)",
   },
   {
     id: 3,
     text: "낮음",
+    img: "",
     color: "#5B9970",
     bgcolor: "rgba(190, 231, 194, 0.27)",
   },
 ];
 
 const Priority = (props: any) => {
-  // const toggle = useRecoilValue(UpdateData);
-
   const [color, setColor] = useState("#ff8080");
   const [bgcolor, setBgcolor] = useState("rgba(255, 190, 190, 0.27)");
+  const [img, setImg] = useState("/Icon/Prority/높음.png");
   const [priorityopen, setPrioirtyOpen] = useState(false);
   const modalpriorityOpen = () => {
     setPrioirtyOpen(!priorityopen);
@@ -103,6 +102,7 @@ const Priority = (props: any) => {
         props.setPriority(p.text);
         setColor(p.color);
         setBgcolor(p.bgcolor);
+        setImg(p.img);
       }
     });
   };
@@ -122,7 +122,17 @@ const Priority = (props: any) => {
       bgcolor={bgcolor}
     >
       <span>우선 순위</span>
-      <span>{props.value}</span>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "27.69px",
+          justifyContent: "space-between",
+        }}
+      >
+        {props.value}
+        <img width="8.69px" height="10px" src={`${img}`} alt="불이모지" />
+      </span>
       <PriorityWrapper priorityisopen={priorityopen ? 1 : 0}>
         <Prioritylist>
           {PriorityData.map((e) => {
