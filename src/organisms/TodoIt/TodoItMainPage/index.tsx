@@ -7,12 +7,12 @@ import { DndProvider } from "react-dnd";
 
 const TodoPageMainBox = styled.div`
   display: flex;
-  margin-left: 220px;
+  margin-left: 297px;
   margin-top: 110px;
 
-  & section:first-child {
+  /* & section:first-child {
     margin-left: 67px;
-  }
+  } */
 
   & section:last-child {
     margin-left: 48px;

@@ -8,6 +8,9 @@ const HeaderContainer = styled.div<{
   nullCheck: boolean | null;
 }>`
   width: calc(100vw - 230px);
+
+  transition: 0.7s ease-out;
+  margin-left: ${(props) => (props.open ? "39px" : "0")};
   height: 110px;
   display: flex;
   align-items: center;
@@ -16,10 +19,10 @@ const HeaderContainer = styled.div<{
 
   animation: 0.7s
     ${(prop) =>
-      prop.open !== null && prop.open ? "PopUpHeader" : "PopOutHeader"}
+      prop.open !== null && prop.open ? "PopUpheader" : "PopOutheader"}
     forwards;
   z-index: 2;
-  @keyframes PopUpHeader {
+  @keyframes PopUpheader {
     0% {
       transform: translate(-10%, 0);
     }
@@ -29,7 +32,7 @@ const HeaderContainer = styled.div<{
     }
   }
 
-  @keyframes PopOutHeader {
+  @keyframes PopOutheader {
     0% {
       transform: translate(0, 0);
     }
@@ -45,7 +48,6 @@ const HeaderTest = styled.p`
   font-weight: 300;
   font-size: 24px;
   margin-top: 7px;
-  margin-left: 12px;
 `;
 
 const HeaderLogin = styled.div`

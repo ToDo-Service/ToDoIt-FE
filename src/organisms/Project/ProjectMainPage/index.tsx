@@ -4,7 +4,7 @@ import ProjectInputbox from "@/molecules/PROJECT/ProjectInput";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import ProjectModal from "@/organisms/Project/ProjectModal";
 import { useSession } from "next-auth/react";
-import { FC, HtmlHTMLAttributes, useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
@@ -15,7 +15,7 @@ const ProjectPageMainBox = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  padding-left: 310px;
+  padding-left: 294px;
   padding-top: 170px;
   flex-direction: column;
 `;
@@ -38,7 +38,6 @@ const ProjectList = styled.div`
 const ProjectUserName = styled.p`
   font-family: "Pretendard-Bold";
   font-weight: 300;
-
   font-size: 20px;
   margin-top: 69px;
 `;

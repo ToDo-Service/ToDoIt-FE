@@ -4,10 +4,9 @@ import styled from "styled-components";
 
 const NextPlanMainBox = styled.div`
   display: flex;
-  margin-left: 270px;
+  margin-left: 273px;
   margin-top: 110px;
   position: relative;
-  
 `;
 
 const NextPlanMainPage = () => {

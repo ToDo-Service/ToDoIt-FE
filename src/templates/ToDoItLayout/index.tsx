@@ -12,11 +12,10 @@ const MainLayout = styled.div<{ open: boolean | null }>`
   height: 100vh;
   position: fixed;
   animation: 0.7s
-    ${(prop) =>
-      prop.open !== null && prop.open ? "PopUpHeader" : "PopOutHeader"}
+    ${(prop) => (prop.open !== null && prop.open ? "PopUpTodo" : "PopOutTodo")}
     forwards;
   z-index: 2;
-  @keyframes PopUpHeader {
+  @keyframes PopUpTodo {
     0% {
       transform: translate(-10%, 0);
     }
@@ -26,7 +25,7 @@ const MainLayout = styled.div<{ open: boolean | null }>`
     }
   }
 
-  @keyframes PopOutHeader {
+  @keyframes PopOutTodo {
     0% {
       transform: translate(0, 0);
     }
