@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 import ProejctAddRepeat from "@/molecules/PROJECT/ProjectAddrepeat";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { jwtToken } from "@/reocoil";
 import { useCallback, useRef, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
+import { mutate } from "swr";
 
 const ModalBackdrop = styled.div`
   z-index: 4;
@@ -90,12 +91,11 @@ const ProejectModal = (props: any) => {
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
   const [prioirty, setPriority] = useState("높음");
   const [title, onChangeTitle, setTitle] = useInput("");
+  const [detail, onChangeDetail, setDetail] = useInput("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
-  const [detail, onChangeDetail, setDetail] = useInput("");
   const ref = useRef<HTMLInputElement>(null);
   const [repeat, setRepaet] = useState<string>("월요일마다");
-  // console.log(props.projectId); 추가 보낼때 디폴트로 프로젝트 ID 담아서 생성
 
   const JWT = useRecoilValue(jwtToken);
 
@@ -112,6 +112,52 @@ const ProejectModal = (props: any) => {
       ref.current.style.height = "60px";
     }
   }, [ref]);
+
+  const onSubmit = useCallback(
+    (e: any) => {
+      //서버 전송
+      e.preventDefault();
+      setPostError("");
+      if (title === "") {
+        alert("제목을 입력하세요");
+        e.preventDefault();
+        return;
+      }
+      if (detail === "") {
+        alert("내용을 입력하세요");
+        e.preventDefault();
+        return;
+      }
+      axios
+        .post(
+          "https://laoh.site/api/todos",
+          {
+            title: title,
+            content: detail,
+            end_date: endDate,
+            project_id: props.projectId,
+            priority: prioirty,
+            push_status: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JWT}`,
+            },
+          }
+        )
+        .then(() => {
+          mutate("https://laoh.site/api/todos/today");
+          setPostSuccess(!postSuccess);
+          props.onclose(!props.modalstate);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setPostError(err.response);
+        })
+        .finally(() => {});
+    },
+    [title, detail, prioirty, endDate]
+  );
 
   return (
     <>
@@ -153,7 +199,7 @@ const ProejectModal = (props: any) => {
           <ProjectDetailboxMainbox
             placeholder="설명"
             maxLength={20}
-            onChange={onChangeTitle}
+            onChange={onChangeDetail}
             onInput={handleResizeHeight}
             value={detail}
             ref={ref}
@@ -169,7 +215,12 @@ const ProejectModal = (props: any) => {
               position: "relative",
             }}
           >
-            <Calendar setDate={setEndDate} width="128px" name="오늘" />
+            <Calendar
+              value={endDate}
+              setDate={setEndDate}
+              width="128px"
+              name="오늘"
+            />
             <Priority
               method="post"
               setPriority={setPriority}
@@ -193,6 +244,7 @@ const ProejectModal = (props: any) => {
               justifyContent: "center",
               alignItems: "center",
             }}
+            onClick={onSubmit}
           >
             추가하기
           </div>

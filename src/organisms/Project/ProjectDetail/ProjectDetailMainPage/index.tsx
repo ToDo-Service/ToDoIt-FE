@@ -65,7 +65,13 @@ const ProjectDeatailMainPage = () => {
         minwidth="320px"
         onclick={openAddModal}
       />
-      {modal && <ProjectTodoAdd projectId={ProjectId} onclose={openAddModal} />}
+      {modal && (
+        <ProjectTodoAdd
+          projectId={ProjectId}
+          onclose={openAddModal}
+          modalstate={modal}
+        />
+      )}
     </ProjectDetailMainPageBox>
   );
 };
