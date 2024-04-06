@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
-
-import { useRecoilState, useRecoilValue } from "recoil";
-import { NextPlanCalender, jwtToken } from "@/reocoil";
-import { useCallback, useEffect, useState } from "react";
+import ProejctAddRepeat from "@/molecules/PROJECT/ProjectAddrepeat";
+import { useRecoilValue } from "recoil";
+import { jwtToken } from "@/reocoil";
+import { useCallback, useRef, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
-import { mutate } from "swr";
 
 const ModalBackdrop = styled.div`
   z-index: 4;
@@ -37,7 +36,7 @@ const ModalBackdrop = styled.div`
 `;
 
 const ProjectInputboxMainbox = styled.input`
-  width: 269px;
+  width: 418px;
   height: 37px;
   border-radius: 8px;
   padding-left: 10px;
@@ -50,27 +49,20 @@ const ProjectInputboxMainbox = styled.input`
     color: #8f8f8f;
   }
 `;
-const ProjectCateogry = styled.div`
-  position: relative;
-  cursor: pointer;
-  width: 269px;
+
+const ProjectDetailboxMainbox = styled.input`
+  width: 418px;
   height: 37px;
   border-radius: 8px;
   padding-left: 10px;
-  padding-right: 15.8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   border: 1px solid rgba(12, 0, 24, 0.1);
   margin-top: 11px;
 
-  & div {
+  &::placeholder {
     color: #8f8f8f;
-  }
-
-  & img {
-    width: 9.25px;
-    height: 5.25px;
   }
 `;
 
@@ -78,7 +70,7 @@ const ExitBtn = styled.img`
   width: 16px;
   height: 16px;
   margin-top: 34px;
-  margin-left: 370px;
+  margin-left: 468px;
   cursor: pointer;
 `;
 
@@ -90,7 +82,7 @@ export const ModalView = styled.div.attrs((props) => ({
   flex-direction: column;
   border-radius: 20px;
   height: 406px;
-  width: 454px;
+  width: 598px;
   background-color: #ffffff;
 `;
 
@@ -100,10 +92,26 @@ const ProejectModal = (props: any) => {
   const [title, onChangeTitle, setTitle] = useInput("");
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
-  const SelectedDate = useRecoilValue(NextPlanCalender);
-  console.log(props.projectId);
+  const [detail, onChangeDetail, setDetail] = useInput("");
+  const ref = useRef<HTMLInputElement>(null);
+  const [repeat, setRepaet] = useState<string>("월요일마다");
+  // console.log(props.projectId); 추가 보낼때 디폴트로 프로젝트 ID 담아서 생성
 
   const JWT = useRecoilValue(jwtToken);
+
+  const handleResizeHeight = useCallback(() => {
+    if (ref === null || ref.current === null) {
+      return;
+    }
+    ref.current.style.height = "37px";
+    if (ref.current.scrollHeight <= 60) {
+      ref.current.style.height = "37px";
+      ref.current.style.height = ref.current.scrollHeight + "px";
+    } else {
+      ref.current.style.height = "37px";
+      ref.current.style.height = "60px";
+    }
+  }, [ref]);
 
   return (
     <>
@@ -136,11 +144,24 @@ const ProejectModal = (props: any) => {
               </div>
             </div>
           </div>
-          <ProjectInputboxMainbox placeholder="제목" onChange={onChangeTitle} />
+
+          <ProjectInputboxMainbox
+            placeholder="제목"
+            maxLength={10}
+            onChange={onChangeTitle}
+          />
+          <ProjectDetailboxMainbox
+            placeholder="설명"
+            maxLength={20}
+            onChange={onChangeTitle}
+            onInput={handleResizeHeight}
+            value={detail}
+            ref={ref}
+          />
 
           <div
             style={{
-              width: "269px",
+              width: "418px",
               marginTop: "11px",
               height: "37px",
               display: "flex",
@@ -149,17 +170,17 @@ const ProejectModal = (props: any) => {
             }}
           >
             <Calendar setDate={setEndDate} width="128px" name="오늘" />
-
             <Priority
               method="post"
               setPriority={setPriority}
               value={prioirty}
             />
+            <ProejctAddRepeat onChange={setRepaet} value={repeat} />
           </div>
           <div
             // onClick={}
             style={{
-              width: "269px",
+              width: "418px",
               height: "37px",
               backgroundColor: "#862DDF",
               marginTop: "11px",

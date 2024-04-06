@@ -7,7 +7,7 @@ import Fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import { useState } from "react";
-import ProjectTodoAdd from "@/molecules/PROJECT/ProjectTodoAdd";
+import ProjectTodoAdd from "@/organisms/ProjectTodoAdd";
 
 interface TodoItem {
   content: string;
