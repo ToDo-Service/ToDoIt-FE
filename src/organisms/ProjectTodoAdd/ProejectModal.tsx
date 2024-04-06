@@ -1,93 +1,22 @@
-import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 import ProejctAddRepeat from "@/molecules/PROJECT/ProjectAddrepeat";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { Modal, UpdateData, jwtToken } from "@/reocoil";
+import { Modal, jwtToken } from "@/reocoil";
 import { useCallback, useRef, useState } from "react";
 import axios from "axios";
 import Priority from "@/molecules/TO-DO/Priority";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
+import {
+  ModalBackdrop,
+  ModalView,
+  ExitBtn,
+  ProjectInputboxMainbox,
+  ProjectDetailboxMainbox,
+} from ".";
 
-const ModalBackdrop = styled.div`
-  z-index: 4;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(3px 3px rgba(12, 0, 24, 0.1));
-  border-radius: 10px;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  animation: fadeIn 0.5s;
-`;
-
-const ProjectInputboxMainbox = styled.input`
-  width: 418px;
-  height: 37px;
-  border-radius: 8px;
-  padding-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  border: 1px solid rgba(12, 0, 24, 0.1);
-
-  &::placeholder {
-    color: #8f8f8f;
-  }
-`;
-
-const ProjectDetailboxMainbox = styled.input`
-  width: 418px;
-  height: 37px;
-  border-radius: 8px;
-  padding-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  border: 1px solid rgba(12, 0, 24, 0.1);
-  margin-top: 11px;
-
-  &::placeholder {
-    color: #8f8f8f;
-  }
-`;
-
-const ExitBtn = styled.img`
-  width: 16px;
-  height: 16px;
-  margin-top: 34px;
-  margin-left: 468px;
-  cursor: pointer;
-`;
-
-export const ModalView = styled.div.attrs((props) => ({
-  role: "dialog",
-}))`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 20px;
-  height: 406px;
-  width: 598px;
-  background-color: #ffffff;
-`;
-
-const ProejectModal = (props: any) => {
+export const ProejectModal = (props: any) => {
   const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
   const [prioirty, setPriority] = useState("높음");
   const [title, onChangeTitle, setTitle] = useInput("");
@@ -160,6 +89,19 @@ const ProejectModal = (props: any) => {
     },
     [title, detail, prioirty, endDate]
   );
+
+  const RewriteModal = () => {
+    setUData({
+      id: Data.id,
+      title: Data.title,
+      content: Data.content,
+      end_date: Data.end_date,
+      status: Data.status,
+      priority: Data.priority,
+      project: Data.project,
+    });
+    setModal({ id: Data.id, method: "update", toggle: true });
+  };
 
   return (
     <>
@@ -255,5 +197,3 @@ const ProejectModal = (props: any) => {
     </>
   );
 };
-
-export default ProejectModal;

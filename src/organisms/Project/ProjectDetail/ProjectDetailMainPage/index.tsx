@@ -7,7 +7,7 @@ import Fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import { useState } from "react";
-import ProjectTodoAdd from "@/organisms/ProjectTodoAdd";
+import ProjectAddTodo from "@/molecules/PROJECT/ProjectAdd";
 
 interface TodoItem {
   content: string;
@@ -31,7 +31,10 @@ const ProjectDetailHeaderText = styled.h3`
   margin-bottom: 40px;
 `;
 
-const ProjectDetailList = styled.section``;
+const ProjectDetailList = styled.section`
+  height: 90%;
+  overflow-y: scroll;
+`;
 
 const ProjectDeatailMainPage = () => {
   const router = useRouter();
@@ -57,16 +60,17 @@ const ProjectDeatailMainPage = () => {
           TodoList.map((item: TodoItem) => {
             return <ProjectTodoBox todolist={item} />;
           })}
+        <ProjectAdd
+          width="22.2222vw"
+          comment="+ 할 일을 추가하세요"
+          maxwidth="320px"
+          minwidth="320px"
+          onclick={openAddModal}
+        />
       </ProjectDetailList>
-      <ProjectAdd
-        width="22.2222vw"
-        comment="+ 할 일을 추가하세요"
-        maxwidth="320px"
-        minwidth="320px"
-        onclick={openAddModal}
-      />
+
       {modal && (
-        <ProjectTodoAdd
+        <ProjectAddTodo
           projectId={ProjectId}
           onclose={openAddModal}
           modalstate={modal}

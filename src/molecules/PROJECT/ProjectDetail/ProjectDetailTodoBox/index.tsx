@@ -34,22 +34,6 @@ const TodoMainBox = styled.div`
   border: 0.5px solid #c8c5cb;
 
   transition: 0.3s ease-in-out;
-  & .MoveIcon {
-    display: none;
-    position: absolute;
-    left: 23px;
-    top: 50px;
-    transition: 0.5s ease-in-out;
-    border-radius: 5px;
-  }
-
-  & .MoveIcon:hover {
-    background-color: #d2d2d2;
-  }
-
-  & .MoveIcon:active {
-    background-color: #d2d2d2;
-  }
 
   &:hover .MoveIcon {
     display: block;
@@ -60,7 +44,7 @@ const TodoMainBox = styled.div`
     display: none;
     position: absolute;
     left: 23px;
-    top: 73px;
+    top: 50px;
     transition: 0.5s ease-in-out;
   }
 
@@ -212,7 +196,6 @@ const ProjectDetailTodoBox: React.FC<Props> = ({ todolist }) => {
     <>
       <TodoContainer>
         <TodoMainBox>
-          <Icon.Activity className="MoveIcon" />
           <Icon.Pencil className="PencilIcon" />
           <TodoBoxHeader>
             <div style={{ display: "flex", alignItems: "center" }}>
