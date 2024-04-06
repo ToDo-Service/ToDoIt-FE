@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import ProjectTodoBox from "@/molecules/PROJECT/ProjectDetail/ProjectDetailTodoBox";
 import { useRouter } from "next/router";
-import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { Modal, jwtToken } from "@/reocoil";
 import Fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
+import { useState } from "react";
+import ProjectTodoAdd from "@/molecules/PROJECT/ProjectTodoAdd";
 
 interface TodoItem {
   content: string;
@@ -41,6 +43,11 @@ const ProjectDeatailMainPage = () => {
   );
   const HeaderText: string = data?.body.project_info.title;
   const TodoList: Array<TodoItem> = data?.body.todo_list;
+  const [modal, setModal] = useState(false);
+
+  const openAddModal = () => {
+    setModal(!modal);
+  };
 
   return (
     <ProjectDetailMainPageBox>
@@ -56,7 +63,9 @@ const ProjectDeatailMainPage = () => {
         comment="+ 할 일을 추가하세요"
         maxwidth="320px"
         minwidth="320px"
+        onclick={openAddModal}
       />
+      {modal && <ProjectTodoAdd projectId={ProjectId} onclose={openAddModal} />}
     </ProjectDetailMainPageBox>
   );
 };

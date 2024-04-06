@@ -216,22 +216,13 @@ const CalendarWrapper = styled("div")<{ $iscalopen: number }>`
 
 const calendar = (props: any) => {
   dayjs.locale("ko"); // 한국어 세팅
-  const toggle = useRecoilValue(UpdateData);
   const [isCalOpen, setIsCalOpen] = useState(false);
-  const [value, setValue] = useState(new Date());
-
-  useEffect(() => {
-    props.method === "update"
-      ? setValue(new Date(dayjs(toggle.end_date).format("YYYY-MM-DD")))
-      : new Date();
-  }, [props.method]);
 
   const handleToggleCalendar = () => {
     setIsCalOpen(!isCalOpen);
   };
 
   const handleDateChange = (selectedDate: any) => {
-    setValue(selectedDate);
     setIsCalOpen(false);
     props.setDate(dayjs(selectedDate).format("YYYY.MM.DD"));
   };
@@ -247,7 +238,7 @@ const calendar = (props: any) => {
       <CalendarWrapper $iscalopen={isCalOpen ? 1 : 0}>
         <Calendar
           onChange={handleDateChange}
-          value={value}
+          value={props.value}
           formatDay={(locale, date: any) => dayjs(date).format("DD")}
         />
       </CalendarWrapper>

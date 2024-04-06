@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import Priority from "@/molecules/TO-DO/Priority";
@@ -198,11 +198,12 @@ const TodoModal = (props: any) => {
       setDetail(UData[0].content);
       setEndDate(dayjs(UData[0].end_date).format("YYYY.MM.DD"));
       setPriority(UData[0].priority);
+
       setProject({
         id: UData[0]?.project?.id,
         title: UData[0]?.project?.title,
         color: UData[0]?.project?.color,
-        bgColor: FindColor(UData[0]?.project?.color)[0].backgroundColor,
+        bgColor: FindColor(UData[0]?.project?.color)[0]?.backgroundColor,
       });
     } else {
       setEndDate(dayjs().format("YYYY.MM.DD"));
@@ -222,14 +223,17 @@ const TodoModal = (props: any) => {
     if (ref === null || ref.current === null) {
       return;
     }
+    ref.current.style.height = "37px";
+
     if (ref.current.scrollHeight <= 60) {
       ref.current.style.height = "37px";
-      // ref.current.style.height = ref.current.scrollHeight + "px";
+      ref.current.style.height = ref.current.scrollHeight + "px";
     } else {
       ref.current.style.height = "37px";
-      // ref.current.style.height = "60px";
+      ref.current.style.height = "60px";
     }
-  }, [ref]);
+    console.log("ref!", ref.current.style.height);
+  }, [ref, modal.toggle]);
 
   return (
     <AnimatePresence>
@@ -295,7 +299,7 @@ const TodoModal = (props: any) => {
                     ref={ref}
                     value={detail}
                     onInput={handleResizeHeight}
-                    style={{ resize: "none" }}
+                    style={{ resize: "none", height: "37px" }}
                     onChange={onChangeDetail}
                   />
                 </Form.Group>
