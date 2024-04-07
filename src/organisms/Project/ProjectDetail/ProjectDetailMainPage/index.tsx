@@ -7,7 +7,7 @@ import Fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import { useState } from "react";
-import ProjectAddTodo from "@/molecules/PROJECT/ProjectAdd";
+import { ProejectTodoAdd } from "@/organisms/Project/ProjectDetail/ProjectTodoAddModal";
 
 interface TodoItem {
   content: string;
@@ -52,6 +52,8 @@ const ProjectDeatailMainPage = () => {
     setModal(!modal);
   };
 
+  console.log(TodoList);
+
   return (
     <ProjectDetailMainPageBox>
       <ProjectDetailHeaderText>{HeaderText}</ProjectDetailHeaderText>
@@ -68,13 +70,8 @@ const ProjectDeatailMainPage = () => {
           onclick={openAddModal}
         />
       </ProjectDetailList>
-
       {modal && (
-        <ProjectAddTodo
-          projectId={ProjectId}
-          onclose={openAddModal}
-          modalstate={modal}
-        />
+        <ProejectTodoAdd projectId={ProjectId} onclose={openAddModal} />
       )}
     </ProjectDetailMainPageBox>
   );
