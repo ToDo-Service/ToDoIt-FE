@@ -34,6 +34,13 @@ const ProjectDetailHeaderText = styled.h3`
 const ProjectDetailList = styled.section`
   height: 90%;
   overflow-y: scroll;
+  & {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ProjectDeatailMainPage = () => {
@@ -52,8 +59,6 @@ const ProjectDeatailMainPage = () => {
     setModal(!modal);
   };
 
-  console.log(TodoList);
-
   return (
     <ProjectDetailMainPageBox>
       <ProjectDetailHeaderText>{HeaderText}</ProjectDetailHeaderText>
@@ -70,7 +75,7 @@ const ProjectDeatailMainPage = () => {
           onclick={openAddModal}
         />
       </ProjectDetailList>
-      {modal && (
+      {modal && ProjectId && openAddModal && (
         <ProejectTodoAdd projectId={ProjectId} onclose={openAddModal} />
       )}
     </ProjectDetailMainPageBox>

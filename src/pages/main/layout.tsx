@@ -41,9 +41,7 @@ const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
         })}
       </LayouyHeader>
       <SWRConfig value={{ suspense: true }}>
-        <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
-          {children}
-        </Suspense>
+        <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
       </SWRConfig>
     </LayouyMainbox>
   );
