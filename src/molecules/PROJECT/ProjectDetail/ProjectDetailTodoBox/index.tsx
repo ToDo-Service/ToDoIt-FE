@@ -155,8 +155,6 @@ interface Props {
 const ProjectDetailTodoBox: React.FC<Props> = ({ todolist }) => {
   const JwtToken = useRecoilValue(jwtToken);
 
-  console.log(todolist);
-
   const CompleteTodo = async () => {
     await axios
       .patch(`https://laoh.site/api/todos/status/${todolist.id}`, null, {

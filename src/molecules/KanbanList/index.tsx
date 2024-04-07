@@ -4,6 +4,7 @@ import TodoModal from "@/organisms/TodoIt/TodoModal";
 import { useDrop } from "react-dnd";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { media } from "@/styles/media";
 
 const TodoListMainBox = styled.section`
   width: 320px;
@@ -21,21 +22,27 @@ const TodoListMainBox = styled.section`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  /* ${media.phone`
+      
+  `} */
 `;
 
 const TodoHeader = styled("div")<{ interval: string }>`
   z-index: 2;
   width: 320px;
   background-color: white;
+  height: max-content;
   opacity: 1;
   font-family: "Pretendard";
   font-weight: bold;
-  font-size: 20px;
   margin-bottom: 19px;
   display: flex;
+  font-size: 20px;
   position: sticky;
   top: 0;
-
+  padding-left: 5px;
+  padding-top: 5px;
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-between" : "space-between"};
 

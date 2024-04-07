@@ -4,19 +4,24 @@ import { FC, ReactElement } from "react";
 import styled from "styled-components";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import { media } from "@/styles/media";
 
 const TodoPageMainBox = styled.div`
   display: flex;
   margin-left: 297px;
   margin-top: 110px;
 
-  /* & section:first-child {
-    margin-left: 67px;
-  } */
-
   & section:last-child {
     margin-left: 48px;
   }
+
+  ${media.phone`
+
+    flex-direction: column;
+    margin-left:80px;
+    margin-top: 50px;
+
+  `}
 `;
 
 interface PriorityList {

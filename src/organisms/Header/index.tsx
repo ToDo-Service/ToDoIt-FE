@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { signOut } from "next-auth/react";
 import { useRecoilValue } from "recoil";
 import { SidebarLayout } from "@/reocoil";
+import { media } from "@/styles/media";
 
 const HeaderContainer = styled.div<{
   open: boolean | null;
   nullCheck: boolean | null;
 }>`
   width: calc(100vw - 230px);
-
   transition: 0.7s ease-out;
   margin-left: ${(props) => (props.open ? "39px" : "0")};
   height: 110px;
@@ -17,9 +17,16 @@ const HeaderContainer = styled.div<{
   justify-content: space-between;
   position: fixed;
 
+  //모바일 사이즈
+  ${media.phone`
+      height:80px;          
+      opacity: ${(props: { open: null }) =>
+        props.open !== null && props.open ? "0" : "1"}
+  `}
+
   animation: 0.7s
-    ${(prop) =>
-      prop.open !== null && prop.open ? "PopUpheader" : "PopOutheader"}
+    ${(props) =>
+    props.open !== null && props.open ? "PopUpheader" : "PopOutheader"}
     forwards;
   z-index: 2;
   @keyframes PopUpheader {
@@ -48,18 +55,24 @@ const HeaderTest = styled.p`
   font-weight: 300;
   font-size: 24px;
   margin-top: 7px;
+
+  ${media.phone`
+    font-size: 15px;    
+  `}
 `;
 
 const HeaderLogin = styled.div`
   width: 130px;
   cursor: pointer;
+  ${media.phone`
+    display:none;    
+  `}
 `;
 
 const HeaderTextIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   width: max-content;
 `;
 

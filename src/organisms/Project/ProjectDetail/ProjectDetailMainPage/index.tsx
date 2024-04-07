@@ -28,12 +28,18 @@ const ProjectDetailMainPageBox = styled.div`
 
 const ProjectDetailHeaderText = styled.h3`
   font-size: 20px;
+  position: sticky;
+  height: max-content;
+  top: 0;
+  padding-left: 5px;
+  padding-top: 5px;
   margin-bottom: 40px;
 `;
 
 const ProjectDetailList = styled.section`
   height: 90%;
   overflow-y: scroll;
+  border-radius: 12px;
   & {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -61,8 +67,8 @@ const ProjectDeatailMainPage = () => {
 
   return (
     <ProjectDetailMainPageBox>
-      <ProjectDetailHeaderText>{HeaderText}</ProjectDetailHeaderText>
       <ProjectDetailList>
+        <ProjectDetailHeaderText>{HeaderText}</ProjectDetailHeaderText>
         {TodoList &&
           TodoList.map((item: TodoItem) => {
             return <ProjectTodoBox todolist={item} />;

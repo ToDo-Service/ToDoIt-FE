@@ -7,6 +7,7 @@ import type { LayoutProps } from "@/types/tb";
 import { HeaderData } from "@/data/Headet";
 import { SWRConfig } from "swr";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
+import { media } from "@/styles/media";
 
 const LayouyMainbox = styled.section`
   display: flex;
@@ -22,6 +23,9 @@ const LayouyHeader = styled.header`
   height: 110px;
   z-index: 99;
   border-bottom: solid 0.02px #c8c5cb;
+  ${media.phone`
+     height:80px;
+  `}
 `;
 
 const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
@@ -31,7 +35,6 @@ const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
     <LayouyMainbox>
       <LayouyHeader>
         <Sidebar />
-
         {HeaderData.map((item) => {
           return (
             router.asPath.includes(item.path) && (

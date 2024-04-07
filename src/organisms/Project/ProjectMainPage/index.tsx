@@ -10,6 +10,7 @@ import fetcher from "@/utils/fetcher";
 import { useRecoilValue } from "recoil";
 import { jwtToken } from "@/reocoil";
 import type { ProejectT } from "@/types/tb";
+import { media } from "@/styles/media";
 
 const ProjectPageMainBox = styled.div`
   display: flex;
@@ -18,6 +19,15 @@ const ProjectPageMainBox = styled.div`
   padding-left: 294px;
   padding-top: 170px;
   flex-direction: column;
+
+  ${media.phone`
+    padding-left:100px;
+    padding-top: 140px;  
+    align-items: center;
+    width:100vw;
+    height:100vh;
+    margin: 0;
+  `}
 `;
 const ProjectList = styled.div`
   overflow-y: scroll;
