@@ -34,7 +34,7 @@ export const jwtToken = atom<any>({
   },
 });
 
-export const Modal = atom<ModalTp>({
+export const Modal = atom<any>({
   key: `Modal${v1}`,
   default: {
     id: 1,
@@ -43,7 +43,7 @@ export const Modal = atom<ModalTp>({
   },
 });
 
-export const UpdateData = atom<UpdateDataTp>({
+export const UpdateData = atom<any>({
   key: `UData${v1}`,
   default: {
     id: 0,
