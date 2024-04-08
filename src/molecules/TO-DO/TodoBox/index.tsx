@@ -21,6 +21,7 @@ const TodoContainer = styled.article`
   cursor: pointer;
   width: 100%;
   position: relative;
+  z-index: -1;
 `;
 
 const TodoMainBox = styled.div<DargProps>`

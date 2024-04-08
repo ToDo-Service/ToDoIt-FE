@@ -32,7 +32,7 @@ const LoginModalContainer = styled.div`
 
   ${media.phone`
   width: 350px;
-  height: 450px;
+  height: 300px;
  `}
 `;
 
