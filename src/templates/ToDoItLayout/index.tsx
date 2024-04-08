@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { SidebarLayout } from "@/reocoil";
 import { FC } from "react";
 import type { TodayData } from "@/types/tb";
+import { media } from "@/styles/media";
 
 const MainLayout = styled.div<{ open: boolean | null }>`
   width: 100vw;
@@ -15,6 +16,7 @@ const MainLayout = styled.div<{ open: boolean | null }>`
     ${(prop) => (prop.open !== null && prop.open ? "PopUpTodo" : "PopOutTodo")}
     forwards;
   z-index: 2;
+
   @keyframes PopUpTodo {
     0% {
       transform: translate(-10%, 0);
@@ -34,6 +36,12 @@ const MainLayout = styled.div<{ open: boolean | null }>`
       transform: translate(-10%, 0);
     }
   }
+
+  ${media.phone`      
+  transition: 0.7s ease-in-out;
+      opacity: ${(props: { open: null }) =>
+        props.open !== null && props.open ? "0" : "1"}      
+  `}
 `;
 
 const MainLayouts: FC<TodayData> = ({ Data }) => {

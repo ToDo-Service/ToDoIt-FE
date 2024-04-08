@@ -23,9 +23,9 @@ const TodoListMainBox = styled.section`
     display: none;
   }
 
-  /* ${media.phone`
-      
-  `} */
+  ${media.phone`
+      height: 40vh;    
+  `}
 `;
 
 const TodoHeader = styled("div")<{ interval: string }>`

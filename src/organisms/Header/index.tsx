@@ -15,13 +15,13 @@ const HeaderContainer = styled.div<{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
 
   //모바일 사이즈
   ${media.phone`
       height:80px;          
+      width: 300px;
       opacity: ${(props: { open: null }) =>
-        props.open !== null && props.open ? "0" : "1"}
+        props.open !== null && props.open ? "0" : "1"}      
   `}
 
   animation: 0.7s
@@ -57,7 +57,8 @@ const HeaderTest = styled.p`
   margin-top: 7px;
 
   ${media.phone`
-    font-size: 15px;    
+    font-size: 13px; 
+    
   `}
 `;
 

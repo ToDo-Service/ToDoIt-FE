@@ -63,7 +63,9 @@ const HashtagPriority = ({ priority }: any) => {
 
         <Degree color={e.color}>
           {priority}
-          <img width="8.69px" height="10px" src={`${e.img}`} alt="불이모지" />
+          {e.img && (
+            <img width="8.69px" height="10px" src={`${e.img}`} alt="불이모지" />
+          )}
         </Degree>
       </Hasttag>
     ) : null;

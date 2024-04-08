@@ -19,12 +19,12 @@ const LayouyMainbox = styled.section`
 
 const LayouyHeader = styled.header`
   display: flex;
-  width: 100%;
+  /* width: 100%; */
   height: 110px;
   z-index: 99;
   border-bottom: solid 0.02px #c8c5cb;
   ${media.phone`
-     height:80px;
+     height:80px;     
   `}
 `;
 

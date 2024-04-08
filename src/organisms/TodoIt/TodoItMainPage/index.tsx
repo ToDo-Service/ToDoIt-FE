@@ -16,11 +16,13 @@ const TodoPageMainBox = styled.div`
   }
 
   ${media.phone`
-
-    flex-direction: column;
-    margin-left:80px;
-    margin-top: 50px;
-
+    flex-direction: column;  
+    width: 100vw;
+    margin-left:20%;
+    margin-top:20%;
+    & section:last-child {
+    margin-left: 0;
+  }
   `}
 `;
 
