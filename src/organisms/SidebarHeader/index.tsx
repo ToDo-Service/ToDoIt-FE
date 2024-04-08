@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { UserIcon } from "@/atoms/UserIcon";
 import React from "react";
 import { media } from "@/styles/media";
@@ -31,7 +31,7 @@ const LogOut = styled.div`
   font-family: "Pretendard";
   font-weight: 300;
   font-size: 10px;
-  margin-left: 40px;
+  margin-left: 20px;
 
   ${media.phone`
   display:block;
@@ -50,7 +50,9 @@ const SidebarHeader = ({ children }: Props) => {
     <SidebarHeaderContainer>
       <UserIcon Img={session?.user?.image} email={session?.user?.email} />
       <UserNickName>{session?.user?.name}</UserNickName>
-      <LogOut>로그아웃</LogOut>
+      <LogOut onClick={() => signOut({ redirect: true, callbackUrl: "/" })}>
+        로그아웃
+      </LogOut>
       {children}
     </SidebarHeaderContainer>
   );

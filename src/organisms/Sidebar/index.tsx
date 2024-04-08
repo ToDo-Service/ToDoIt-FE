@@ -24,7 +24,7 @@ const S_Background = styled.div<{ open: boolean | null }>`
     ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
     forwards;
   ${media.phone`
-  width: 340px;
+  width: 270px;
   `}
   @keyframes PopUp {
     0% {

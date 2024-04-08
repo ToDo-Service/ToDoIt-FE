@@ -1,6 +1,7 @@
 import NaverLoginBtn from "@/atoms/LOGIN/NaverLogin";
 import styled from "styled-components";
 import { onSocialLogin } from "@/hooks/onSocialLogin";
+import { media } from "@/styles/media";
 
 const NaverLoginBar = styled.button`
   width: 300px;
@@ -9,16 +10,21 @@ const NaverLoginBar = styled.button`
   border-radius: 6px;
   display: flex;
   align-items: center;
-  color: white;
+
   border: none;
   padding-left: 14px;
+
   & span {
     margin-left: 30px;
+    color: white;
   }
 
   &:hover {
     background-color: #039a42;
   }
+  ${media.phone`
+  width: 250px;  
+ `}
 `;
 
 const Naver = () => {
