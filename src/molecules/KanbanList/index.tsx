@@ -24,12 +24,11 @@ const TodoListMainBox = styled.section`
   }
 
   ${media.phone`
-      height: 40vh;    
+      height: 300px;    
   `}
 `;
 
 const TodoHeader = styled("div")<{ interval: string }>`
-  z-index: 2;
   width: 320px;
   background-color: white;
   height: max-content;

@@ -19,7 +19,7 @@ const HeaderContainer = styled.div<{
   //모바일 사이즈
   ${media.phone`
       height:80px;          
-      width: 300px;
+      width:100vw;
       opacity: ${(props: { open: null }) =>
         props.open !== null && props.open ? "0" : "1"}      
   `}
@@ -58,7 +58,7 @@ const HeaderTest = styled.p`
 
   ${media.phone`
     font-size: 13px; 
-    
+    margin-left: 60px;
   `}
 `;
 

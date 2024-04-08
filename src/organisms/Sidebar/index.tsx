@@ -16,10 +16,10 @@ import type { ProejectProps } from "@/types/tb";
 import { media } from "@/styles/media";
 
 const S_Background = styled.div<{ open: boolean | null }>`
-  z-index: 99;
-  height: 100vh;
+  height: ${(props) => (props.open !== null && props.open ? "100vh" : "10vh")};
   width: 264px;
   display: flex;
+
   animation: 0.7s
     ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
     forwards;
@@ -54,7 +54,7 @@ const S_Content = styled.nav<{ open: boolean | null }>`
   border-radius: 6px;
   font-family: "PretendardVariable";
   font-weight: 350;
-  z-index: 99;
+
   min-width: 220px;
   animation: 0.7s
     ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}

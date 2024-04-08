@@ -11,6 +11,7 @@ import * as Icon from "react-bootstrap-icons";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { useToast } from "@/hooks/useToast";
+import { media } from "@/styles/media";
 
 interface DargProps {
   isdragging: any;
@@ -21,7 +22,6 @@ const TodoContainer = styled.article`
   cursor: pointer;
   width: 100%;
   position: relative;
-  z-index: -1;
 `;
 
 const TodoMainBox = styled.div<DargProps>`
@@ -34,6 +34,12 @@ const TodoMainBox = styled.div<DargProps>`
   border-radius: 16px;
   border: ${(props) => (props.isdragging ? "none" : "0.5px solid #c8c5cb")};
   transition: 0.3s ease-in-out;
+
+  ${media.phone`
+      height:75px;
+      padding-top:15px;
+      
+  `}
 
   & .PencilIcon {
     border-radius: 5px;
@@ -66,6 +72,7 @@ const CheckBox = styled.input`
   height: 18px;
   border: 0.7px solid black;
   border-radius: 50%;
+  z-index: 99;
 
   &:checked {
     border-color: transparent;
@@ -135,6 +142,10 @@ const TodoBoxHashTagBox = styled.div`
   & > div {
     margin-right: 10px;
   }
+
+  ${media.phone`
+      display:none;
+  `}
 `;
 
 const ExitBtn = styled.img`
