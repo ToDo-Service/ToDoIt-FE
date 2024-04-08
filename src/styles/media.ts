@@ -5,7 +5,7 @@ type DeviceType = "desktop" | "tablet" | "phone";
 const sizes: Record<DeviceType, number> = {
   desktop: 1440,
   tablet: 1024,
-  phone: 390,
+  phone: 400,
 };
 
 const media = Object.entries(sizes).reduce((acc, [key, value]) => {
