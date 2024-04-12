@@ -13,6 +13,7 @@ import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import Priority from "@/molecules/TO-DO/Priority";
 import FindColor from "@/utils/findColor";
+import { closeSync } from "fs";
 
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   z-index: 3;
@@ -83,7 +84,7 @@ export const ModalView = styled.div.attrs((props) => ({
 
 const TodoModal = (props: any) => {
   const [method, setMethod] = useState(props.method);
-  const [endDate, setEndDate] = useState("");
+  const [endDate, setEndDate] = useState(new Date());
   const [title, onChangeTitle, setTitle] = useInput("");
   const [detail, onChangeDetail, setDetail] = useInput("");
   const [prioirty, setPriority] = useState("높음");
@@ -122,7 +123,7 @@ const TodoModal = (props: any) => {
           {
             title: title,
             content: detail,
-            end_date: endDate,
+            end_date: dayjs(endDate).format("YYYY.MM.DD"),
             project_id: project.id,
             priority: prioirty,
             push_status: false,
@@ -196,7 +197,7 @@ const TodoModal = (props: any) => {
     if (modal.method === "update") {
       setTitle(UData[0].title);
       setDetail(UData[0].content);
-      setEndDate(dayjs(UData[0].end_date).format("YYYY.MM.DD"));
+      setEndDate(new Date(UData[0].end_date));
       setPriority(UData[0].priority);
 
       setProject({
@@ -206,7 +207,7 @@ const TodoModal = (props: any) => {
         bgColor: FindColor(UData[0]?.project?.color)[0]?.backgroundColor,
       });
     } else {
-      setEndDate(dayjs().format("YYYY.MM.DD"));
+      setEndDate(new Date());
       setTitle("");
       setDetail("");
       setPriority("높음");

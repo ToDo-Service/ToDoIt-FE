@@ -4,8 +4,6 @@ import "react-calendar/dist/Calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { UpdateData } from "@/reocoil";
 
 const CalendarContainer = styled.div`
   position: relative;
@@ -223,8 +221,8 @@ const calendar = (props: any) => {
   };
 
   const handleDateChange = (selectedDate: any) => {
-    setIsCalOpen(false);
     props.setDate(dayjs(selectedDate).format("YYYY.MM.DD"));
+    setIsCalOpen(false);
   };
 
   return (
@@ -237,8 +235,9 @@ const calendar = (props: any) => {
       </DropdownButton>
       <CalendarWrapper $iscalopen={isCalOpen ? 1 : 0}>
         <Calendar
-          onChange={handleDateChange}
+          onChange={() => setIsCalOpen(false)}
           value={props.value}
+          onClickDay={props.setDate}
           formatDay={(locale, date: any) => dayjs(date).format("DD")}
         />
       </CalendarWrapper>

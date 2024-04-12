@@ -6,7 +6,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Modal, UpdateData, jwtToken } from "@/reocoil";
 import { DragSourceMonitor } from "react-dnd";
 import axios from "axios";
-import useSWR, { mutate } from "swr";
+import { mutate } from "swr";
 import * as Icon from "react-bootstrap-icons";
 import { useState } from "react";
 import dayjs from "dayjs";

@@ -32,7 +32,7 @@ interface PriorityList {
 
 const PageTemp: FC<any> = ({ Data }) => {
   const cardDataHandlertest = (cardTitle: string) => {
-    const todoBoxes: Array<ReactElement> = [];
+    const TodoBoxes: Array<ReactElement> = [];
     const PriorityList: PriorityList = { 높음: 1, 보통: 2, 낮음: 3 };
     Data &&
       Object.keys(Data.body).forEach((key) => {
@@ -40,7 +40,7 @@ const PageTemp: FC<any> = ({ Data }) => {
           Data.body[key].map((item: any, index: number) => {
             Object.keys(PriorityList).forEach((e: string) => {
               item.priority === e &&
-                todoBoxes.push(
+                TodoBoxes.push(
                   <TodoBox
                     key={item.id}
                     Data={item}
@@ -52,9 +52,9 @@ const PageTemp: FC<any> = ({ Data }) => {
           });
       });
 
-    todoBoxes.sort((a, b) => a.props.rank - b.props.rank);
+    TodoBoxes.sort((a, b) => a.props.rank - b.props.rank);
 
-    return todoBoxes;
+    return TodoBoxes;
   };
 
   return (
