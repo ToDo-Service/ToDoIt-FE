@@ -31,21 +31,24 @@ const MainLayout: FunctionComponent<LayoutProps> = ({ children }) => {
   const router = useRouter();
 
   return (
-    <LayouyMainbox>
-      <LayouyHeader>
-        <Sidebar />
-        {HeaderData.map((item) => {
-          return (
-            router.asPath.includes(item.path) && (
-              <Header key={item.id} title={item.title} />
-            )
-          );
-        })}
-      </LayouyHeader>
-      <SWRConfig value={{ suspense: true }}>
-        <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
-      </SWRConfig>
-    </LayouyMainbox>
+    <SWRConfig value={{ suspense: true }}>
+      <Suspense fallback={<LoadingSpinner />}>
+        <LayouyMainbox>
+          <LayouyHeader>
+            <Sidebar />
+            {HeaderData.map((item) => {
+              return (
+                router.asPath.includes(item.path) && (
+                  <Header key={item.id} title={item.title} />
+                )
+              );
+            })}
+          </LayouyHeader>
+
+          {children}
+        </LayouyMainbox>
+      </Suspense>
+    </SWRConfig>
   );
 };
 
