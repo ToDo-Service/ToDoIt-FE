@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use, useLayoutEffect } from "react";
 import NextPlanCalendarMonth from "../NextPlanCalendarMonth";
 import uuid from "react-uuid";
 import { format, addMonths, startOfWeek, addDays, getDay } from "date-fns";
@@ -13,6 +13,7 @@ import FindColor from "@/utils/findColor";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { useHoliday } from "@/hooks/useHoliday";
+import React from "react";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -22,7 +23,6 @@ const ScheduleCalendar = styled.div`
   margin-top: 28px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
-
   position: relative;
 `;
 
@@ -32,8 +32,15 @@ const TextToday = styled.div`
   font-size: 0.5rem;
   font-family: "Pretendard-Bold";
   font-weight: 300;
+  display: flex;
 
   & p {
+    font-size: 22px;
+    margin-top: 30px;
+    margin-left: 35px;
+  }
+
+  & div {
     font-size: 22px;
     margin-top: 30px;
     margin-left: 35px;
@@ -48,15 +55,15 @@ const CalenderList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  scroll-behavior: smooth;
+  display: flex;
   font-family: "PretendardVariable";
   font-weight: 250;
   width: 100%;
+  max-width: 940px;
   height: 65.918vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  & > div:not(:first-child) {
-    margin-top: 200px;
-  }
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const DateCol = styled.div`
@@ -84,6 +91,7 @@ const CalenderBodyRow = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 940px;
   height: 12.8906vh;
 
   & hr {
@@ -95,7 +103,7 @@ const CalenderBodyRow = styled.div`
   }
 
   & .disabled {
-    color: rgba(37, 37, 48, 0.4);
+    opacity: 0.5;
   }
 
   & .sunday {
@@ -109,6 +117,7 @@ const CalenderBodyRow = styled.div`
 
 const CalenderItem = styled.div`
   height: 100%;
+  width: 65.2778vw;
   &:not(:first-child) {
     margin-top: 37px;
   }
@@ -207,13 +216,13 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const CurrentModal = useRecoilValue(GlobalModal);
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
-  let params = {
-    solYear: "2020",
-    solMonth: "03",
-    _type: "json",
-    ServiceKey:
-      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
-  };
+  // let params = {
+  //   solYear: "2020",
+  //   solMonth: "03",
+  //   _type: "json",
+  //   ServiceKey:
+  //     "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
+  // };
   // const test = useHoliday(params);
   // console.log(test);
 
@@ -240,7 +249,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
       const isWeekendDay = isWeekend(day);
       // const isHolidayDay = ixsHoliday(day);
 
-      const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""}${
+      const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""} ${
         isCurrentDay ? "selected" : ""
       }${isCurrentMonth && isWeekendDay ? isWeekendDay : isWeekendDay} `;
 
@@ -297,7 +306,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
 const Calender = () => {
   const currentDate = new Date();
   const selectedDate = new Date();
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
   const today = new Date();
   const [month, setMonth] = useState<number>(today.getMonth() + 1);
   const jwt = useRecoilValue(jwtToken);
@@ -305,13 +314,14 @@ const Calender = () => {
   const cureentYear = today.getFullYear();
   const months: any[] = [];
   const monthRef = useRef<HTMLDivElement>(null);
-  const { data, error } = useSWR(
+  const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
+  let monthScrollPosition: number | undefined = 0;
+  const { data } = useSWR(
     () =>
       jwt &&
       `https://laoh.site/api/todos/month?year=${cureentYear}&month=${month}`,
     (uri: string) => Fetcher(uri, jwt)
   );
-  if (error) return <div>캘린더 데이터 패칭 에러입니다.</div>;
 
   const MonthData = data?.body.map((item: any, index: any) => {
     return {
@@ -347,32 +357,31 @@ const Calender = () => {
     currentMonth = addMonths(currentMonth, 1);
   }
 
+  //컴포넌트 마운트 시 ref 초기화
   useEffect(() => {
-    if (monthRef.current !== null) {
-      monthRef.current.scrollIntoView({ behavior: "auto" });
-    }
+    CalendarScrollRef.current?.scrollTo({
+      top: 0,
+      left: scrollRef.current[month - 1]?.current?.offsetLeft,
+      behavior: "smooth",
+    });
   }, []);
 
-  // 스크롤 감지
+  useLayoutEffect(() => {
+    scrollRef.current = Array(months.length)
+      .fill(null)
+      .map(() => React.createRef<HTMLDivElement>());
+
+    console.log(scrollRef.current[month - 1]);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (scrollRef.current) {
-        const position = scrollRef.current.scrollTop;
-        setMonth(Number((position / 772).toFixed(0)) + 1);
-      }
-    };
-
-    if (scrollRef.current) {
-      scrollRef.current.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      if (scrollRef.current) {
-        scrollRef.current.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, []);
+    monthScrollPosition = scrollRef.current[month - 1]?.current?.offsetLeft;
+    CalendarScrollRef.current?.scrollTo({
+      top: 0,
+      left: monthScrollPosition,
+      behavior: "smooth",
+    });
+  }, [month]);
 
   return (
     <ScheduleCalendar>
@@ -381,12 +390,14 @@ const Calender = () => {
           currentDate,
           "yyyy"
         )}년 ${month}월`}</p>
+        <div onClick={() => setMonth(month - 1)}>이전버튼</div>
+        <div onClick={() => setMonth(month + 1)}>다음버튼</div>
       </TextToday>
       <RenderDays />
-      <CalenderList ref={scrollRef}>
+      <CalenderList ref={CalendarScrollRef}>
         {months.map((item: any, index: number) => {
           return (
-            <div>
+            <div ref={scrollRef.current[index]}>
               <NextPlanCalendarMonth month={item} index={index} />
             </div>
           );

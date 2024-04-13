@@ -110,13 +110,13 @@ const NextPlanModal = () => {
         {TestData.map((item) => (
           <NextPlanTodobox item={item} />
         ))}
+        <ProjectAdd
+          width="345px"
+          comment="+ 할 일을 추가하세요"
+          maxwidth="345x"
+          minwidth="345px"
+        />
       </ProjectList>
-      <ProjectAdd
-        width="345px"
-        comment="+ 할 일을 추가하세요"
-        maxwidth="345x"
-        minwidth="345px"
-      />
     </NextPlanModalLayout>
   );
 };
