@@ -202,10 +202,12 @@ const CalenderCell = styled.div`
 const LeftArrow = styled.img`
   width: 16px;
   height: 16px;
+  cursor: pointer;
 `;
 const RightArrow = styled.img`
   width: 16px;
   height: 16px;
+  cursor: pointer;
 `;
 
 const RenderHeader = ({ currentMonth }: any) => {

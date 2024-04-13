@@ -64,6 +64,10 @@ const NextPlanModalHeader = styled.header`
 const ProjectList = styled.section`
   height: 80.4688vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   & article:not(:first-child) {
     margin-top: 15px;
   }
