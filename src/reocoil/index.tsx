@@ -92,7 +92,7 @@ export const NextPlanCalender = atom<{
 });
 
 export const NextPlanCalenderScrollPosition = atom<{
-  position: number;
+  position: number | undefined;
 }>({
   key: `ScrollPosition${v1}`,
   default: {

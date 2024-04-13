@@ -8,7 +8,12 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { GlobalModal, jwtToken, NextPlanCalender } from "@/reocoil";
+import {
+  GlobalModal,
+  jwtToken,
+  NextPlanCalender,
+  NextPlanCalenderScrollPosition,
+} from "@/reocoil";
 import FindColor from "@/utils/findColor";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -28,22 +33,27 @@ const ScheduleCalendar = styled.div`
 
 const TextToday = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 7.6172vh;
+  justify-content: space-between;
+  max-height: 78px;
   font-size: 0.5rem;
   font-family: "Pretendard-Bold";
   font-weight: 300;
   display: flex;
+  align-items: center;
+  padding-left: 35px;
+  padding-right: 68px;
 
   & p {
     font-size: 22px;
-    margin-top: 30px;
-    margin-left: 35px;
+    margin-bottom: 0;
   }
 
   & div {
-    font-size: 22px;
-    margin-top: 30px;
-    margin-left: 35px;
+    width: 60px;
+    height: 16px;
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -189,6 +199,15 @@ const CalenderCell = styled.div`
   }
 `;
 
+const LeftArrow = styled.img`
+  width: 16px;
+  height: 16px;
+`;
+const RightArrow = styled.img`
+  width: 16px;
+  height: 16px;
+`;
+
 const RenderHeader = ({ currentMonth }: any) => {
   return <div className="header row"></div>;
 };
@@ -316,6 +335,8 @@ const Calender = () => {
   const monthRef = useRef<HTMLDivElement>(null);
   const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
   let monthScrollPosition: number | undefined = 0;
+  const ScrollPosition = useRecoilValue(NextPlanCalenderScrollPosition);
+  const setScrollPosition = useSetRecoilState(NextPlanCalenderScrollPosition);
   const { data } = useSWR(
     () =>
       jwt &&
@@ -358,30 +379,24 @@ const Calender = () => {
   }
 
   //컴포넌트 마운트 시 ref 초기화
-  useEffect(() => {
-    CalendarScrollRef.current?.scrollTo({
-      top: 0,
-      left: scrollRef.current[month - 1]?.current?.offsetLeft,
-      behavior: "smooth",
-    });
-  }, []);
 
   useLayoutEffect(() => {
     scrollRef.current = Array(months.length)
       .fill(null)
       .map(() => React.createRef<HTMLDivElement>());
-
-    console.log(scrollRef.current[month - 1]);
   }, []);
 
   useEffect(() => {
     monthScrollPosition = scrollRef.current[month - 1]?.current?.offsetLeft;
+    setScrollPosition({ position: monthScrollPosition });
     CalendarScrollRef.current?.scrollTo({
       top: 0,
       left: monthScrollPosition,
       behavior: "smooth",
     });
   }, [month]);
+
+  // ScrollPosition
 
   return (
     <ScheduleCalendar>
@@ -390,8 +405,18 @@ const Calender = () => {
           currentDate,
           "yyyy"
         )}년 ${month}월`}</p>
-        <div onClick={() => setMonth(month - 1)}>이전버튼</div>
-        <div onClick={() => setMonth(month + 1)}>다음버튼</div>
+        <div>
+          <LeftArrow
+            src="/Icon/Arrow/leftArrow.png"
+            alt="/"
+            onClick={() => setMonth(month - 1)}
+          />
+          <RightArrow
+            src="/Icon/Arrow/rightArrow.png"
+            alt="/"
+            onClick={() => setMonth(month + 1)}
+          />
+        </div>
       </TextToday>
       <RenderDays />
       <CalenderList ref={CalendarScrollRef}>
