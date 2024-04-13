@@ -5,6 +5,7 @@ import styled from "styled-components";
 import NextPlanTodobox from "@/atoms/NextPlan/NextPlanTodobox";
 import { useRecoilCallback } from "recoil";
 import { useEffect, useLayoutEffect } from "react";
+import dayjs from "dayjs";
 
 const NextPlanModalLayout = styled.div<{ open: boolean }>`
   width: 26.4583vw;
@@ -51,14 +52,16 @@ const NextPlanModalLayout = styled.div<{ open: boolean }>`
 
 const NextPlanModalHeader = styled.header`
   font-size: 20px;
+  height: fit-content;
   color: rgba(37, 37, 48, 0.8);
   width: 90%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   margin-left: 1.25vw;
-  margin-top: 1.7578vh;
-  margin-bottom: 3.8086vh;
+  /* margin-top: 1.7578vh;
+  margin-bottom: 3.8086vh; */
+  margin-top: 36px;
 `;
 
 const ProjectList = styled.section`
@@ -75,8 +78,13 @@ const ProjectList = styled.section`
 const ExitBtn = styled.img`
   width: 14px;
   height: 14px;
-
   cursor: pointer;
+  margin-top: 4px;
+`;
+
+const CurrentDate = styled.p`
+  font-size: 12px;
+  color: rgba(37, 37, 48, 0.4);
 `;
 
 const NextPlanModal = () => {
@@ -84,11 +92,11 @@ const NextPlanModal = () => {
   const SetModal = useSetRecoilState(GlobalModal);
   const SelectedDate = useRecoilValue(NextPlanCalender)?.date;
 
+  console.log(dayjs().format("M월 DD일 dd") === SelectedDate);
+
   const resetModalState = useRecoilCallback(({ reset }) => () => {
     reset(Modal);
   });
-
-  console.log(Modal.toggle);
 
   //페이지 전환시 toglle 상태 null 로 초기화
   useEffect(() => {
@@ -103,7 +111,12 @@ const NextPlanModal = () => {
   return (
     <NextPlanModalLayout open={Modal.toggle === null ? null : Modal}>
       <NextPlanModalHeader>
-        <span>{SelectedDate}</span>
+        <div>
+          <span>{SelectedDate}</span>
+          {dayjs().format("M월 DD일 dd") === SelectedDate && (
+            <CurrentDate>오늘</CurrentDate>
+          )}
+        </div>
         <ExitBtn
           src="/Icon/Modal/ModalExit.png"
           alt="/"
