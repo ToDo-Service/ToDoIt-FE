@@ -263,16 +263,19 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
     });
   };
 
+  console.log(isSameDay(new Date(), day));
+
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       const isCurrentMonth = isSameMonth(day, monthStart);
       const isCurrentDay = isSameDay(day, selectedDate);
       const isWeekendDay = isWeekend(day);
+
       // const isHolidayDay = ixsHoliday(day);
 
       const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""} ${
-        isCurrentDay ? "selected" : ""
-      }${isCurrentMonth && isWeekendDay ? isWeekendDay : isWeekendDay} `;
+        isCurrentDay ? "texttoday Date" : ""
+      } ${isCurrentMonth && isWeekendDay ? isWeekendDay : isWeekendDay} `;
 
       Data?.map((item: any) => {
         `${Number(item.date[2] - 0) - 1}` === formattedDate.toString() &&
@@ -410,12 +413,12 @@ const Calender = () => {
         <div>
           <LeftArrow
             src="/Icon/Arrow/leftArrow.png"
-            alt="/"
+            alt="왼쪽 화살표"
             onClick={() => setMonth(month - 1)}
           />
           <RightArrow
             src="/Icon/Arrow/rightArrow.png"
-            alt="/"
+            alt="오른쪽 화살표"
             onClick={() => setMonth(month + 1)}
           />
         </div>
