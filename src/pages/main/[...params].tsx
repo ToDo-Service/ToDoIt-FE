@@ -35,7 +35,6 @@ export default function Home() {
   );
 
   const ProjectId: string = router.asPath.substring(14, 16);
-  // console.log(ProjectId);
 
   return (
     <>

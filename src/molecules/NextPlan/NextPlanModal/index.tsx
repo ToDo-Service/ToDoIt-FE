@@ -1,4 +1,4 @@
-import { GlobalModal, NextPlanCalender } from "@/reocoil";
+import { GlobalModal, NextPlanCalender, jwtToken } from "@/reocoil";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import styled from "styled-components";
@@ -6,6 +6,8 @@ import NextPlanTodobox from "@/atoms/NextPlan/NextPlanTodobox";
 import { useRecoilCallback } from "recoil";
 import { useEffect, useLayoutEffect } from "react";
 import dayjs from "dayjs";
+import useSWR from "swr";
+import Fetcher from "@/utils/fetcher";
 
 const NextPlanModalLayout = styled.div<{ open: boolean }>`
   width: 26.4583vw;
@@ -87,12 +89,32 @@ const CurrentDate = styled.p`
   color: rgba(37, 37, 48, 0.4);
 `;
 
+interface TodoProps {
+  id: number;
+  title: string;
+  content: string;
+}
+
 const NextPlanModal = () => {
   const Modal = useRecoilValue(GlobalModal);
   const SetModal = useSetRecoilState(GlobalModal);
   const SelectedDate = useRecoilValue(NextPlanCalender)?.date;
+  const jwt = useRecoilValue(jwtToken);
+  const HeaderDate = dayjs(SelectedDate).format("M월 D일 (dd)");
 
-  console.log(dayjs().format("M월 DD일 dd") === SelectedDate);
+  const { data } = useSWR(
+    jwt &&
+      SelectedDate &&
+      `https://laoh.site/api/todos/day?date=${SelectedDate}`,
+    (uri: string) => Fetcher(uri, jwt)
+  );
+  const DayTodoList: Array<TodoProps> = data.body.map((item: TodoProps) => {
+    return {
+      id: item.id,
+      title: item.title,
+      content: item.content,
+    };
+  });
 
   const resetModalState = useRecoilCallback(({ reset }) => () => {
     reset(Modal);
@@ -106,14 +128,12 @@ const NextPlanModal = () => {
     };
   }, []);
 
-  const TestData = [1, 2, 3, 4, 5];
-
   return (
     <NextPlanModalLayout open={Modal.toggle === null ? null : Modal}>
       <NextPlanModalHeader>
         <div>
-          <span>{SelectedDate}</span>
-          {dayjs().format("M월 DD일 dd") === SelectedDate && (
+          <span>{HeaderDate}</span>
+          {dayjs().format("M월 D일 (dd)") === HeaderDate && (
             <CurrentDate>오늘</CurrentDate>
           )}
         </div>
@@ -124,7 +144,7 @@ const NextPlanModal = () => {
         />
       </NextPlanModalHeader>
       <ProjectList>
-        {TestData.map((item) => (
+        {DayTodoList.map((item) => (
           <NextPlanTodobox item={item} />
         ))}
         <ProjectAdd

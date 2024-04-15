@@ -255,7 +255,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const SetSlectedDate = (e: React.MouseEvent<HTMLDivElement>) => {
     const selectedDateInfo = `${dayjs(
       e.currentTarget.getAttribute("data-date")
-    ).format("M월 DD일 dd")}`;
+    ).format("YYYY-MM-DD")}`;
 
     CurrentSelectedDate({
       id: 0,
@@ -312,7 +312,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
               CurrentDateData.map((item: any, index: number) => {
                 return index <= 2 && item;
               })}
-            {/* {CurrentDateData.length > 2 && <p>...</p>} */}
+            {CurrentDateData.length > 1 && <p>...</p>}
           </span>
         </CalenderCell>
       );
@@ -342,10 +342,9 @@ const Calender = () => {
   let monthScrollPosition: number | undefined = 0;
   const ScrollPosition = useRecoilValue(NextPlanCalenderScrollPosition);
   const setScrollPosition = useSetRecoilState(NextPlanCalenderScrollPosition);
+  console.log(cureentYear);
   const { data } = useSWR(
-    () =>
-      jwt &&
-      `https://laoh.site/api/todos/month?year=${cureentYear}&month=${month}`,
+    jwt && `https://laoh.site/api/todos/year?year=${cureentYear}`,
     (uri: string) => Fetcher(uri, jwt)
   );
 
