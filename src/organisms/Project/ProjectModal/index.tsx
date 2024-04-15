@@ -96,7 +96,7 @@ export const ModalView = styled.div.attrs((props) => ({
 `;
 
 const ProejectModal = (props: any) => {
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY.MM.DD"));
+  const [endDate, setEndDate] = useState(new Date());
   const [color, setColor] = useState<string>("#EA98AE");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [category, setCategory] = useState<string>("카테고리");
@@ -107,6 +107,8 @@ const ProejectModal = (props: any) => {
 
   console.log(SelectedDate);
   const JWT = useRecoilValue(jwtToken);
+
+  console.log(endDate);
 
   const onSubmit = useCallback(
     (e: any) => {
@@ -125,7 +127,7 @@ const ProejectModal = (props: any) => {
             title: title,
             color: color,
             description: "일단 보류",
-            end_date: endDate,
+            end_date: dayjs(endDate).format("YYYY.MM.DD"),
             category: category,
           },
           {
@@ -152,7 +154,7 @@ const ProejectModal = (props: any) => {
     setTitle("");
     setCategory("카테고리");
     setColor("#EA98AE");
-    setEndDate(dayjs().format("YYYY.MM.DD"));
+    setEndDate(new Date());
   }, [postSuccess]);
 
   const PopupCategory = () => {
@@ -206,7 +208,12 @@ const ProejectModal = (props: any) => {
               position: "relative",
             }}
           >
-            <Calendar setDate={setEndDate} width="128px" name="종료일" />
+            <Calendar
+              setDate={setEndDate}
+              value={endDate}
+              width="128px"
+              name="종료일"
+            />
             <ColorSelect onChangeColor={setColor} />
           </div>
           <div
