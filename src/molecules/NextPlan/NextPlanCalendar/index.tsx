@@ -263,8 +263,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
     });
   };
 
-  console.log(isSameDay(new Date(), day));
-
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       const isCurrentMonth = isSameMonth(day, monthStart);
@@ -335,17 +333,18 @@ const Calender = () => {
   const [month, setMonth] = useState<number>(today.getMonth() + 1);
   const jwt = useRecoilValue(jwtToken);
   let currentMonth = new Date(format(currentDate, "yyyy"));
-  const cureentYear = today.getFullYear();
+  const [cureentYear, setCurrentYear] = useState(today.getFullYear());
   const months: any[] = [];
   const monthRef = useRef<HTMLDivElement>(null);
   const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
   let monthScrollPosition: number | undefined = 0;
   const ScrollPosition = useRecoilValue(NextPlanCalenderScrollPosition);
   const setScrollPosition = useSetRecoilState(NextPlanCalenderScrollPosition);
-  console.log(cureentYear);
+
   const { data } = useSWR(
     jwt && `https://laoh.site/api/todos/year?year=${cureentYear}`,
-    (uri: string) => Fetcher(uri, jwt)
+    (uri: string) => Fetcher(uri, jwt),
+    { refreshInterval: 1000 }
   );
 
   const MonthData = data?.body.map((item: any, index: any) => {
@@ -405,20 +404,25 @@ const Calender = () => {
   return (
     <ScheduleCalendar>
       <TextToday>
-        <p className="text-year">{`${format(
-          currentDate,
-          "yyyy"
-        )}년 ${month}월`}</p>
+        <p className="text-year">{`${cureentYear}년 ${month}월`}</p>
         <div>
           <LeftArrow
             src="/Icon/Arrow/leftArrow.png"
             alt="왼쪽 화살표"
-            onClick={() => setMonth(month - 1)}
+            onClick={() =>
+              month == 1
+                ? (setMonth(12), setCurrentYear(cureentYear - 1))
+                : setMonth(month - 1)
+            }
           />
           <RightArrow
             src="/Icon/Arrow/rightArrow.png"
             alt="오른쪽 화살표"
-            onClick={() => setMonth(month + 1)}
+            onClick={() =>
+              month == 12
+                ? (setMonth(1), setCurrentYear(cureentYear + 1))
+                : setMonth(month + 1)
+            }
           />
         </div>
       </TextToday>
