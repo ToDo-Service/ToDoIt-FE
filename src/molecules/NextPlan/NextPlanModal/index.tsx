@@ -108,7 +108,7 @@ const NextPlanModal = () => {
       `https://laoh.site/api/todos/day?date=${SelectedDate}`,
     (uri: string) => Fetcher(uri, jwt)
   );
-  const DayTodoList: Array<TodoProps> = data.body.map((item: TodoProps) => {
+  const DayTodoList: Array<TodoProps> = data?.body.map((item: TodoProps) => {
     return {
       id: item.id,
       title: item.title,
@@ -144,9 +144,7 @@ const NextPlanModal = () => {
         />
       </NextPlanModalHeader>
       <ProjectList>
-        {DayTodoList.map((item) => (
-          <NextPlanTodobox item={item} />
-        ))}
+        {DayTodoList?.map((item) => <NextPlanTodobox item={item} />)}
         <ProjectAdd
           width="345px"
           comment="+ 할 일을 추가하세요"

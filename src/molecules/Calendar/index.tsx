@@ -238,6 +238,7 @@ const calendar = (props: any) => {
           onChange={() => setIsCalOpen(false)}
           value={props.value}
           onClickDay={props.setDate}
+          minDate={new Date()}
           formatDay={(locale, date: any) => dayjs(date).format("DD")}
         />
       </CalendarWrapper>
