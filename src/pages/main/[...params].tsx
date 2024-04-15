@@ -8,6 +8,7 @@ import useSWR, { SWRConfig } from "swr";
 import fetcher from "@/utils/fetcher";
 import Head from "next/head";
 import dynamic from "next/dynamic";
+import ProjectDetailLayout from "@/templates/ProjectDetailLayout";
 
 //스플리팅
 
@@ -33,6 +34,9 @@ export default function Home() {
     (url) => fetcher(url, session?.user.accessToken as string)
   );
 
+  const ProjectId: string = router.asPath.substring(14, 16);
+  // console.log(ProjectId);
+
   return (
     <>
       <Head>
@@ -44,8 +48,11 @@ export default function Home() {
       <main>
         <Layout>
           {router.asPath === "/main/today" && <ToDoItLayout Data={data} />}
-          {router.asPath === "/main/project" && <ProjectPageLayout />}
           {router.asPath === "/main/nextplan" && <NextPlanPageLayout />}
+          {router.asPath === "/main/project" && <ProjectPageLayout />}
+          {router.asPath === `/main/project/${ProjectId}` && (
+            <ProjectDetailLayout ProjectId={ProjectId} />
+          )}
         </Layout>
       </main>
     </>

@@ -6,7 +6,7 @@ import { Modal, jwtToken } from "@/reocoil";
 import Fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { ProejectTodoAdd } from "@/organisms/Project/ProjectDetail/ProjectTodoAddModal";
 
 interface TodoItem {
@@ -48,15 +48,19 @@ const ProjectDetailList = styled.section`
     display: none;
   }
 `;
+interface ProjectDetailProps {
+  ProjectId: string;
+}
 
-const ProjectDeatailMainPage = () => {
-  const router = useRouter();
-  const ProjectId = router.asPath.substring(14, 16);
+const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
   const JwtToken = useRecoilValue(jwtToken);
+  console.log(props);
   const { data } = useSWR(
-    ProjectId && `https://laoh.site/api/project/${ProjectId}`,
+    props.ProjectId && `https://laoh.site/api/project/${props.ProjectId}`,
     (url: string) => Fetcher(url, JwtToken)
   );
+
+  console.log(data);
   const HeaderText: string = data?.body.project_info.title;
   const TodoList: Array<TodoItem> = data?.body.todo_list;
   const [modal, setModal] = useState(false);
@@ -81,8 +85,8 @@ const ProjectDeatailMainPage = () => {
           onclick={openAddModal}
         />
       </ProjectDetailList>
-      {modal && ProjectId && openAddModal && (
-        <ProejectTodoAdd projectId={ProjectId} onclose={openAddModal} />
+      {modal && props.ProjectId && openAddModal && (
+        <ProejectTodoAdd projectId={props.ProjectId} onclose={openAddModal} />
       )}
     </ProjectDetailMainPageBox>
   );
