@@ -25,7 +25,13 @@ interface jwtTp {
   token: string;
 }
 
-const { persistAtom } = recoilPersist();
+const sessionStorage =
+  typeof window !== "undefined" ? window.sessionStorage : undefined;
+
+const { persistAtom } = recoilPersist({
+  key: "deafult",
+  storage: sessionStorage,
+});
 
 export const jwtToken = atom<any>({
   key: `JWT${v1}`,
@@ -98,4 +104,5 @@ export const NextPlanCalenderScrollPosition = atom<{
   default: {
     position: 0,
   },
+  effects_UNSTABLE: [persistAtom],
 });

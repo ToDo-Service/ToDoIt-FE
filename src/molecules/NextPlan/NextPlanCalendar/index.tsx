@@ -72,7 +72,7 @@ const CalenderList = styled.div`
   width: 100%;
   max-width: 940px;
   height: 65.918vh;
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
 `;
 
@@ -381,25 +381,31 @@ const Calender = () => {
     currentMonth = addMonths(currentMonth, 1);
   }
 
-  //컴포넌트 마운트 시 ref 초기화
+  useEffect(() => {
+    monthScrollPosition = scrollRef.current[month - 1]?.current?.offsetLeft;
+    CalendarScrollRef.current?.scrollTo({
+      top: 0,
+      left: monthScrollPosition,
+      behavior: "smooth",
+    });
+    setScrollPosition({ position: monthScrollPosition });
+  }, [month]);
+
+  useEffect(() => {
+    if (ScrollPosition) {
+      CalendarScrollRef.current?.scrollTo({
+        top: 0,
+        left: ScrollPosition?.position,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   useLayoutEffect(() => {
     scrollRef.current = Array(months.length)
       .fill(null)
       .map(() => React.createRef<HTMLDivElement>());
   }, []);
-
-  useEffect(() => {
-    monthScrollPosition = scrollRef.current[month - 1]?.current?.offsetLeft;
-    setScrollPosition({ position: monthScrollPosition });
-    CalendarScrollRef.current?.scrollTo({
-      top: 0,
-      left: monthScrollPosition,
-      behavior: "smooth",
-    });
-  }, [month]);
-
-  // ScrollPosition
 
   return (
     <ScheduleCalendar>

@@ -76,6 +76,14 @@ const ProjectList = styled.section`
   & article:not(:first-child) {
     margin-top: 15px;
   }
+
+  & article:first-child {
+    margin-top: 21px;
+  }
+
+  & > div:last-child {
+    margin-top: 15px;
+  }
 `;
 const ExitBtn = styled.img`
   width: 14px;

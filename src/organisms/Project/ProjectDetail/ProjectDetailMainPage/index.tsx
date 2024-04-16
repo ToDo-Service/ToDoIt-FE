@@ -54,7 +54,6 @@ interface ProjectDetailProps {
 
 const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
   const JwtToken = useRecoilValue(jwtToken);
-  console.log(props);
   const { data } = useSWR(
     props.ProjectId && `https://laoh.site/api/project/${props.ProjectId}`,
     (url: string) => Fetcher(url, JwtToken)
