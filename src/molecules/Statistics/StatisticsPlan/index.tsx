@@ -14,6 +14,9 @@ const StatisticsPlanLayout = styled.div`
   border: 1px solid rgba(12, 0, 24, 0.1);
   padding: 25px 25px;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px 25px;
 `;
 
 const StatisticsPlanText = styled.h3`
@@ -23,11 +26,18 @@ const StatisticsPlanText = styled.h3`
   color: rgba(119, 119, 255, 0.8);
 `;
 
+const StatisticsPlanCount = styled.h3`
+  font-size: 20px;
+  font-family: "PretendardVariable";
+  font-weight: 400;
+  color: rgba(37, 37, 48, 0.8);
+`;
+
 const StatisticsPlan: FC<CompleteProps> = ({ planCount }) => {
   return (
     <StatisticsPlanLayout>
       <StatisticsPlanText>계획된 일정</StatisticsPlanText>
-      <div>{planCount}</div>
+      <StatisticsPlanCount>{planCount}개</StatisticsPlanCount>
     </StatisticsPlanLayout>
   );
 };

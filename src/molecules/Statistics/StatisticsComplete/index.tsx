@@ -1,8 +1,10 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export interface CompleteProps {
-  planCount: number;
+  planPercent: number;
 }
 
 const StatisticsCompleteLayout = styled.div`
@@ -21,13 +23,33 @@ const StatisticsCompleteText = styled.h3`
   font-family: "PretendardVariable";
   font-weight: 400;
   color: rgba(119, 119, 255, 0.8);
+  margin-right: 39px;
 `;
 
-const StatisticsComplete: FC<CompleteProps> = ({ planCount }) => {
+const StatisticsComplete: FC<CompleteProps> = ({ planPercent }) => {
+  console.log(planPercent);
   return (
     <StatisticsCompleteLayout>
       <StatisticsCompleteText> 완료율</StatisticsCompleteText>
-      <div>원형 그래프</div>
+      <div
+        style={{
+          width: "78.96px",
+          height: "78.96px",
+          fontFamily: "PretendardVariable",
+          fontWeight: "400",
+        }}
+      >
+        <CircularProgressbar
+          value={planPercent}
+          text={`${planPercent}%`}
+          styles={buildStyles({
+            textSize: "17px",
+            pathColor: `rgba(211, 168, 255, 1)`,
+            textColor: "rgba(37,37,48,0.8)",
+            trailColor: "#E9EDF0",
+          })}
+        />
+      </div>
     </StatisticsCompleteLayout>
   );
 };

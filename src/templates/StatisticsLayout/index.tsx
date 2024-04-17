@@ -122,6 +122,8 @@ const StatisticsLayout: FC = () => {
   let [mostProjectCount, setMostProjectCount] = useState<number>(0);
   const UserName = useSession().data?.user.name;
   let availableItem = 0;
+  let uniqueProject: Array<object> = [];
+  let ProgressPercent = 0;
 
   const { data } = useSWR(
     `https://laoh.site/api/todos/month?year=2024&month=${month}`,
@@ -132,7 +134,8 @@ const StatisticsLayout: FC = () => {
     e.status === "COMPLETE" ? (availableItem = availableItem + 1) : null;
   });
 
-  let uniqueProject: Array<object> = [];
+  ProgressPercent = Math.round((availableItem * 100) / TodoLength);
+
   const ProejctList = data?.body
     .map((item: any) => {
       return item.project !== null && item.project;
@@ -165,7 +168,7 @@ const StatisticsLayout: FC = () => {
           <h5>가장 바빴던날</h5>
           <PlanFlexbox>
             <StatisticsPlan planCount={TodoLength} />
-            <StatisticsComplete planCount={1} />
+            <StatisticsComplete planPercent={ProgressPercent} />
           </PlanFlexbox>
           <StatisticsMost date="4월 12일 " />
           <div>
