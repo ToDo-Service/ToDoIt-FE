@@ -65,6 +65,8 @@ const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
 
   & h5 {
     font-size: 15px;
+    font-family: "PretendardVariable";
+    font-weight: 400;
   }
 `;
 
@@ -95,6 +97,9 @@ const ProjectText = styled.div`
 
   & span {
     font-size: 12px;
+    margin-left: 10px;
+    font-family: "PretendardVariable";
+    font-weight: 250;
   }
 `;
 
@@ -108,14 +113,17 @@ const StatisticsLayout: FC = () => {
     `https://laoh.site/api/todos/month?year=2024&month=${month}`,
     (uri) => Fetcher(uri, jwt)
   );
-  console.log(data?.body);
+  //   console.log(data?.body);
   const ProejctList = data?.body
     .map((item: any) => {
       return item.project !== null && item.project;
     })
     .filter((e: any) => e !== false && e);
 
-  const MostProejct = FindMostProject(ProejctList);
+  const MostProejctCount = FindMostProject(ProejctList);
+  const MostProjectTodoCount = data?.body.filter((item: any) => {
+    return item.project?.title === MostProejctCount;
+  }).length;
 
   return (
     <StatisticsMainLayout open={SToogleState.sidebartoggle}>
@@ -133,8 +141,9 @@ const StatisticsLayout: FC = () => {
             <ProjectText>
               <h5>프로젝트</h5>
               <span>
-                안승찬님은 이번 달 {ProejctList.length}개의 프로젝트를 진행했고
-                {MostProejct}이 계획된 일정 ${}개로 가장 많았습니다.
+                안승찬님은 이번 달 {ProejctList.length}개의 프로젝트를 진행했고{" "}
+                {MostProejctCount}이 계획된 일정 {MostProjectTodoCount}개로 가장
+                많았습니다.
               </span>
             </ProjectText>
             <StatisticsProject project={ProejctList} />
