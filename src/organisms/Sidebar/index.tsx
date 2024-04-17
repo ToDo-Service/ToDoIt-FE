@@ -256,11 +256,26 @@ const Sidebar: FC = () => {
             </Link>
           </ul>
 
-          <h3>ANAYLYTICS</h3>
+          <h3
+            className={
+              active === "/main/statistics" || active === "nextplan"
+                ? "active"
+                : ""
+            }
+          >
+            ANAYLYTICS
+          </h3>
           <ul>
-            <li>
-              <MyAnaylytics />
-            </li>
+            <Link
+              href={{ pathname: `/main/statistics` }}
+              style={{ textDecoration: "none", color: "black" }}
+              passHref // a태그로 href 보냄, 검색엔진 최적화
+            >
+              <li className={active === "/main/statistics" ? "active" : ""}>
+                <MyAnaylytics />
+              </li>
+            </Link>
+
             <li>
               <FollowAnaylytics />
             </li>

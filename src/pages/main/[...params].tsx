@@ -12,6 +12,7 @@ import ProjectDetailLayout from "@/templates/ProjectDetailLayout";
 
 //스플리팅
 
+const StaticLayout = dynamic(() => import("@/templates/StatisticsLayout"));
 const ToDoItLayout = dynamic(() => import("@/templates/ToDoItLayout"));
 const ProjectPageLayout = dynamic(
   () => import("@/templates/ProjectPageLayout")
@@ -52,6 +53,7 @@ export default function Home() {
           {router.asPath === `/main/project/${ProjectId}` && (
             <ProjectDetailLayout ProjectId={ProjectId} />
           )}
+          {router.asPath === "/main/statistics" && <StaticLayout />}
         </Layout>
       </main>
     </>
