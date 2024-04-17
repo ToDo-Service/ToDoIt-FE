@@ -113,12 +113,18 @@ const StatisticsLayout: FC = () => {
     `https://laoh.site/api/todos/month?year=2024&month=${month}`,
     (uri) => Fetcher(uri, jwt)
   );
-  //   console.log(data?.body);
+
+  let uniqueProject: Array<object> = [];
   const ProejctList = data?.body
     .map((item: any) => {
       return item.project !== null && item.project;
     })
-    .filter((e: any) => e !== false && e);
+    .filter((e: any) => {
+      !uniqueProject.includes(e.id) && uniqueProject.push(e.id);
+
+      return e !== false && e;
+    });
+  uniqueProject = uniqueProject.filter((e: any) => e !== undefined);
 
   const MostProejctCount = FindMostProject(ProejctList);
   const MostProjectTodoCount = data?.body.filter((item: any) => {
@@ -141,9 +147,9 @@ const StatisticsLayout: FC = () => {
             <ProjectText>
               <h5>프로젝트</h5>
               <span>
-                안승찬님은 이번 달 {ProejctList.length}개의 프로젝트를 진행했고{" "}
-                {MostProejctCount}이 계획된 일정 {MostProjectTodoCount}개로 가장
-                많았습니다.
+                안승찬님은 이번 달 {uniqueProject.length}개의 프로젝트를
+                진행했고 {MostProejctCount}이 계획된 일정 {MostProjectTodoCount}
+                개로 가장 많았습니다.
               </span>
             </ProjectText>
             <StatisticsProject project={ProejctList} />
