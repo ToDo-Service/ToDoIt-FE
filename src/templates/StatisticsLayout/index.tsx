@@ -1,13 +1,25 @@
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { SidebarLayout } from "@/reocoil";
-import { FC } from "react";
+import { SidebarLayout, jwtToken } from "@/reocoil";
+import { FC, useState } from "react";
 import { media } from "@/styles/media";
 import StatisticsHeaderText from "@/atoms/Statistics/StatisticsHeaderText";
 import StatisticsComplete from "@/molecules/Statistics/StatisticsComplete";
 import StatisticsPlan from "@/molecules/Statistics/StatisticsPlan";
 import StatisticsProject from "@/molecules/Statistics/StatisticsProject";
 import StatisticsMost from "@/molecules/Statistics/StatisticsMostbusy";
+import useSWR from "swr";
+import Fetcher from "@/utils/fetcher";
+
+const FindMostProject = (ProjectList: any) => {
+  let m = new Map();
+  ProjectList.map((item: any) => {
+    m.set(item.title, (m.get(item.title) || 0) + 1);
+  });
+  const sortedMap = [...m].sort((a, b) => b[1] - a[1]);
+  m = new Map(sortedMap);
+  return sortedMap[0][0];
+};
 
 const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
   width: 100vw;
@@ -78,24 +90,54 @@ const PlanFlexbox = styled.div`
   }
 `;
 
+const ProjectText = styled.div`
+  display: flex;
+
+  & span {
+    font-size: 12px;
+  }
+`;
+
 const StatisticsLayout: FC = () => {
   const SToogleState = useRecoilValue(SidebarLayout);
+  const [month, setMonth] = useState<number>(4);
+  const jwt = useRecoilValue(jwtToken);
+  let [mostProjectCount, setMostProjectCount] = useState<number>(0);
+
+  const { data } = useSWR(
+    `https://laoh.site/api/todos/month?year=2024&month=${month}`,
+    (uri) => Fetcher(uri, jwt)
+  );
+  console.log(data?.body);
+  const ProejctList = data?.body
+    .map((item: any) => {
+      return item.project !== null && item.project;
+    })
+    .filter((e: any) => e !== false && e);
+
+  const MostProejct = FindMostProject(ProejctList);
 
   return (
     <StatisticsMainLayout open={SToogleState.sidebartoggle}>
-      <StatisticsHeaderText userName="안승찬" month={1} />
+      <StatisticsHeaderText userName="안승찬" month={month} />
       <div>
         <StatisticsGrid>
           <h5>일정완료</h5>
           <h5>가장 바빴던날</h5>
           <PlanFlexbox>
-            <StatisticsPlan planCount={1} />
+            <StatisticsPlan planCount={data.body.length} />
             <StatisticsComplete planCount={1} />
           </PlanFlexbox>
           <StatisticsMost date="4월 12일 " />
           <div>
-            <h5>프로젝트</h5>
-            <StatisticsProject project={"레이아웃"} />
+            <ProjectText>
+              <h5>프로젝트</h5>
+              <span>
+                안승찬님은 이번 달 {ProejctList.length}개의 프로젝트를 진행했고
+                {MostProejct}이 계획된 일정 ${}개로 가장 많았습니다.
+              </span>
+            </ProjectText>
+            <StatisticsProject project={ProejctList} />
           </div>
         </StatisticsGrid>
       </div>

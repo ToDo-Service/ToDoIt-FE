@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 export interface CompleteProps {
-  project: string;
+  project: any;
 }
 
 const StatisticsProjectLayout = styled.div`
@@ -24,10 +24,11 @@ const StatisticsProjectText = styled.h3`
 `;
 
 const StatisticsProject: FC<CompleteProps> = ({ project }) => {
+  console.log(project);
   return (
     <StatisticsProjectLayout>
       <StatisticsProjectText>프로젝트</StatisticsProjectText>
-      <div>{project}</div>
+      {/* <div>{project}</div> */}
     </StatisticsProjectLayout>
   );
 };
