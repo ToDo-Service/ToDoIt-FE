@@ -41,8 +41,6 @@ const ProgressBarComponent = () => {
   let availableItem: number = data.body.today_todos.length;
   const maxItem: number = data.body.today_todos.length;
 
-  console.log(availableItem);
-
   data.body.today_todos.map((e: any) => {
     e.status === "INCOMPLETE" ? null : (availableItem -= 1);
   });

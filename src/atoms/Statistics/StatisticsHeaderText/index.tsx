@@ -2,7 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 export interface StatisticsHeaderProps {
-  userName: string;
+  userName: string | null | undefined;
   month: number;
 }
 
