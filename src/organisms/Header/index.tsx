@@ -84,6 +84,7 @@ interface Props {
 const Header = ({ title }: Props) => {
   const SToogleState = useRecoilValue(SidebarLayout);
 
+  console.log(title);
   return (
     <header>
       <HeaderContainer

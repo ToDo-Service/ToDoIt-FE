@@ -8,6 +8,6 @@ export const HeaderData: Header[] = [
     Icon: "CalendarEvent",
     path: "/main/nextplan",
   },
-  { id: 3, title: "내 평균", Icon: "BookMarkCheck", path: "/main/ranking" },
+  { id: 3, title: "내 평균", Icon: "BookMarkCheck", path: "/main/statistics" },
   { id: 4, title: "프로젝트", Icon: "", path: "/main/project" },
 ];
