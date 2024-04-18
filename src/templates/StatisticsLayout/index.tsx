@@ -14,12 +14,14 @@ import { useSession } from "next-auth/react";
 
 const FindMostProject = (ProjectList: any) => {
   let m = new Map();
-  ProjectList.map((item: any) => {
+  ProjectList?.map((item: any) => {
     m.set(item.title, (m.get(item.title) || 0) + 1);
   });
   const sortedMap = [...m].sort((a, b) => b[1] - a[1]);
   m = new Map(sortedMap);
-  return sortedMap[0][0];
+  const mostCount = sortedMap[0][0];
+
+  return [sortedMap, mostCount];
 };
 
 const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
@@ -115,6 +117,25 @@ const CompleteText = styled.div`
   }
 `;
 
+const LeftArrow = styled.img`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;
+const RightArrow = styled.img`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;
+
+const StatisticsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  max-width: 216px;
+  width: 15vw;
+  justify-content: space-between;
+`;
+
 const StatisticsLayout: FC = () => {
   const SToogleState = useRecoilValue(SidebarLayout);
   const [month, setMonth] = useState<number>(4);
@@ -122,13 +143,16 @@ const StatisticsLayout: FC = () => {
   let [mostProjectCount, setMostProjectCount] = useState<number>(0);
   const UserName = useSession().data?.user.name;
   let availableItem = 0;
-  let uniqueProject: Array<object> = [];
+  let uniqueProjectID: Array<object> = [];
+  let uniqueProjectTitle: { title: string; color: string }[] = [];
   let ProgressPercent = 0;
 
-  const { data } = useSWR(
+  console.log(month);
+  const { data, error } = useSWR(
     `https://laoh.site/api/todos/month?year=2024&month=${month}`,
     (uri) => Fetcher(uri, jwt)
   );
+
   const TodoLength = data?.body.length;
   data?.body.forEach((e: any) => {
     e.status === "COMPLETE" ? (availableItem = availableItem + 1) : null;
@@ -141,20 +165,42 @@ const StatisticsLayout: FC = () => {
       return item.project !== null && item.project;
     })
     .filter((e: any) => {
-      !uniqueProject.includes(e.id) && uniqueProject.push(e.id);
+      !uniqueProjectID.includes(e.id) &&
+        (uniqueProjectID.push(e.id),
+        uniqueProjectTitle.push({ title: e.title, color: e.color }));
 
       return e !== false && e;
     });
-  uniqueProject = uniqueProject.filter((e: any) => e !== undefined);
+  uniqueProjectID = uniqueProjectID.filter((e: any) => e !== undefined);
+  uniqueProjectTitle = uniqueProjectTitle.filter(
+    (e) => e.title !== undefined && e.color !== undefined
+  );
 
-  const MostProejctCount = FindMostProject(ProejctList);
+  const MostProejctCount =
+    ProejctList.length === 0 ? 0 : FindMostProject(ProejctList)[1];
   const MostProjectTodoCount = data?.body.filter((item: any) => {
     return item.project?.title === MostProejctCount;
   }).length;
 
+  const ProjectavaliveItem =
+    ProejctList.length === 0 ? 0 : FindMostProject(ProejctList)[0];
+
   return (
     <StatisticsMainLayout open={SToogleState.sidebartoggle}>
-      <StatisticsHeaderText userName={UserName} month={month} />
+      <StatisticsHeader>
+        <LeftArrow
+          src="/Icon/Arrow/leftArrow.png"
+          alt="왼쪽 화살표"
+          onClick={() => (month == 1 ? setMonth(12) : setMonth(month - 1))}
+        />
+        <StatisticsHeaderText userName={UserName} month={month} />
+
+        <RightArrow
+          src="/Icon/Arrow/rightArrow.png"
+          alt="오른쪽 화살표"
+          onClick={() => (month == 12 ? setMonth(1) : setMonth(month + 1))}
+        />
+      </StatisticsHeader>
       <div>
         <StatisticsGrid>
           <CompleteText>
@@ -175,12 +221,16 @@ const StatisticsLayout: FC = () => {
             <ProjectText>
               <h5>프로젝트</h5>
               <span>
-                {UserName}님은 이번 달 {uniqueProject.length}개의 프로젝트를
+                {UserName}님은 이번 달 {uniqueProjectID.length}개의 프로젝트를
                 진행했고 {MostProejctCount}이 계획된 일정 {MostProjectTodoCount}
                 개로 가장 많았습니다.
               </span>
             </ProjectText>
-            <StatisticsProject project={ProejctList} />
+            <StatisticsProject
+              project={uniqueProjectTitle}
+              maxPercent={MostProjectTodoCount}
+              availItem={ProjectavaliveItem}
+            />
           </div>
         </StatisticsGrid>
       </div>

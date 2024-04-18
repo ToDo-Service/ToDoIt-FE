@@ -10,6 +10,7 @@ const HeaderTextStyle = styled.h3`
   font-size: 20px;
   font-family: "PretendardVariable";
   font-weight: 450;
+  margin: 0;
 `;
 
 const StatisticsHeaderText: FC<StatisticsHeaderProps> = ({
