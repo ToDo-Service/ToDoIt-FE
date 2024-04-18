@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -27,7 +27,20 @@ const StatisticsCompleteText = styled.h3`
 `;
 
 const StatisticsComplete: FC<CompleteProps> = ({ planPercent }) => {
-  console.log(planPercent);
+  let [percent, setPercent] = useState(0);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+
+    for (let i = 0; i <= planPercent; i++) {
+      timeout = setTimeout(() => {
+        setPercent(i);
+      }, i * 20); // adjust delay as needed
+    }
+
+    return () => clearTimeout(timeout);
+  }, [planPercent]);
+
   return (
     <StatisticsCompleteLayout>
       <StatisticsCompleteText> 완료율</StatisticsCompleteText>
@@ -40,8 +53,8 @@ const StatisticsComplete: FC<CompleteProps> = ({ planPercent }) => {
         }}
       >
         <CircularProgressbar
-          value={planPercent}
-          text={`${planPercent}%`}
+          value={percent}
+          text={`${percent}%`}
           styles={buildStyles({
             textSize: "17px",
             pathColor: `rgba(211, 168, 255, 1)`,
