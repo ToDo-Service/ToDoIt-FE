@@ -38,6 +38,7 @@
     "react-modal": "3.16.1",
     "react-transition-group": "4.4.5",
     "react-uuid": "2.0.0",
+    "recharts": "2.12.5",
     "recoil": "0.7.7",
     "recoil-persist": "5.1.0",
     "smooth-scrollbar": "8.8.4",

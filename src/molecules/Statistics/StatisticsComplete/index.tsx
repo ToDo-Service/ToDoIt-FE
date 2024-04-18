@@ -49,7 +49,7 @@ const StatisticsComplete: FC<CompleteProps> = ({ planPercent }) => {
           width: "78.96px",
           height: "78.96px",
           fontFamily: "PretendardVariable",
-          fontWeight: "400",
+          fontWeight: "450",
         }}
       >
         <CircularProgressbar
