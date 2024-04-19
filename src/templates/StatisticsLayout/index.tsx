@@ -11,7 +11,6 @@ import StatisticsMost from "@/molecules/Statistics/StatisticsMostbusy";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useSession } from "next-auth/react";
-import dayjs from "dayjs";
 
 const FindMostProject = (ProjectList: any) => {
   let m = new Map();
@@ -86,6 +85,7 @@ const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
 `;
 
 const StatisticsGrid = styled.div`
+  max-width: 1104px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 0.0007fr 1fr 1.86fr;
@@ -152,7 +152,7 @@ const StatisticsLayout: FC = () => {
   const SToogleState = useRecoilValue(SidebarLayout);
   const [month, setMonth] = useState<number>(4);
   const jwt = useRecoilValue(jwtToken);
-  let [mostProjectCount, setMostProjectCount] = useState<number>(0);
+
   const UserName = useSession().data?.user.name;
   let availableItem = 0;
   let uniqueProjectID: Array<object> = [];
@@ -162,14 +162,16 @@ const StatisticsLayout: FC = () => {
     `https://laoh.site/api/todos/month?year=2024&month=${month}`,
     (uri) => Fetcher(uri, jwt)
   );
-  const MostbusyDate = FindMostDate(data?.body)[1];
+  const MostbusyDate =
+    data?.body.length === 0 ? 0 : FindMostDate(data?.body)[1];
 
   const TodoLength = data?.body.length;
   data?.body.forEach((e: any) => {
     e.status === "COMPLETE" ? (availableItem = availableItem + 1) : null;
   });
 
-  ProgressPercent = Math.round((availableItem * 100) / TodoLength);
+  ProgressPercent =
+    availableItem !== 0 ? Math.round((availableItem * 100) / TodoLength) : 0;
 
   const ProejctList = data?.body
     .map((item: any) => {
