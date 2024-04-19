@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, MouseEvent } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { UpdateData, jwtToken } from "@/reocoil";
@@ -74,9 +74,17 @@ const Project = ({ setProject, value }: any) => {
     jwt.token !== "" && "https://laoh.site/api/project",
     (url) => fetcher(url, jwt)
   );
-  const modalprojectOpen = () => {
+  const modalprojectOpen = (e: any) => {
+    if (data.body.length === 0) {
+      alert("등록된 프로젝트가 없습니다.");
+      e.preventDefault();
+      return;
+    }
+
     setProjectOpen(!projectopen);
   };
+
+  console.log(data.body.length);
 
   const onSelect = (e: any) => {
     setProject({
@@ -88,7 +96,10 @@ const Project = ({ setProject, value }: any) => {
   };
 
   return (
-    <ProjectContainer bgcolor={value.bgColor} onClick={modalprojectOpen}>
+    <ProjectContainer
+      bgcolor={value.bgColor}
+      onClick={(e) => modalprojectOpen(e)}
+    >
       <span>프로젝트</span>
       <SelectedProject color={value.color}>{value.title}</SelectedProject>
       <ProjectWrapper priorityisopen={projectopen ? 1 : 0}>

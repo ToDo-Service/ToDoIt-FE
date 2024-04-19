@@ -13,7 +13,6 @@ import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import Priority from "@/molecules/TO-DO/Priority";
 import FindColor from "@/utils/findColor";
-import { closeSync } from "fs";
 
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   z-index: 3;
@@ -91,8 +90,8 @@ const TodoModal = (props: any) => {
   const [project, setProject] = useState({
     id: null,
     title: "선택 안함",
-    color: "#FBD580",
-    bgColor: "rgba(251, 213, 128, 0.15)",
+    color: "#8f8f8f",
+    bgColor: "#ffffff",
   });
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
@@ -140,7 +139,6 @@ const TodoModal = (props: any) => {
           setModal({ toggle: false });
         })
         .catch((err) => {
-          console.log(err.response);
           setPostError(err.response);
         })
         .finally(() => {});
@@ -214,8 +212,8 @@ const TodoModal = (props: any) => {
       setProject({
         id: null,
         title: "선택 안함",
-        color: "#FBD580",
-        bgColor: "rgba(251, 213, 128, 0.15)",
+        color: "#8f8f8f",
+        bgColor: "#ffffff",
       });
     }
   }, [modal.toggle, postSuccess]);
