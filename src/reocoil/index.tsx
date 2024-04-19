@@ -96,13 +96,3 @@ export const NextPlanCalender = atom<{
     date: "",
   },
 });
-
-export const NextPlanCalenderScrollPosition = atom<{
-  position: number | undefined;
-}>({
-  key: `ScrollPosition${v1}`,
-  default: {
-    position: 0,
-  },
-  effects_UNSTABLE: [persistAtom],
-});

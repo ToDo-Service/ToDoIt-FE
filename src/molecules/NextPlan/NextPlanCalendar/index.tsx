@@ -8,12 +8,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  GlobalModal,
-  jwtToken,
-  NextPlanCalender,
-  NextPlanCalenderScrollPosition,
-} from "@/reocoil";
+import { GlobalModal, jwtToken, NextPlanCalender } from "@/reocoil";
 import FindColor from "@/utils/findColor";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -309,14 +304,16 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
             <p className="Date" style={{ marginBottom: "4px" }}>
               {formattedDate}
             </p>
+
             {isSameMonth(day, monthStart) &&
               CurrentDateData.map((item: any, index: number) => {
-                return index <= 2 && item;
+                return index < 2 && item;
               })}
-            {CurrentDateData.length > 1 && <p>...</p>}
+            {CurrentDateData.length > 2 && <p>...</p>}
           </span>
         </CalenderCell>
       );
+
       CurrentDateData = [];
 
       day = addDays(day, 1);
@@ -340,9 +337,7 @@ const Calender = () => {
   const months: any[] = [];
   const monthRef = useRef<HTMLDivElement>(null);
   const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
-  let monthScrollPosition: number | undefined = 0;
-  const ScrollPosition = useRecoilValue(NextPlanCalenderScrollPosition);
-  const setScrollPosition = useSetRecoilState(NextPlanCalenderScrollPosition);
+  const [monthScrollPosition, setMonthScrollPosition] = useState<any>(0);
 
   const { data } = useSWR(
     jwt && `https://laoh.site/api/todos/year?year=${cureentYear}`,
@@ -384,25 +379,15 @@ const Calender = () => {
     currentMonth = addMonths(currentMonth, 1);
   }
 
+  console.log(month);
   useEffect(() => {
-    monthScrollPosition = scrollRef.current[month - 1]?.current?.offsetLeft;
+    setMonthScrollPosition(scrollRef.current[month - 1]?.current?.offsetLeft);
     CalendarScrollRef.current?.scrollTo({
       top: 0,
       left: monthScrollPosition,
       behavior: "smooth",
     });
-    setScrollPosition({ position: monthScrollPosition });
-  }, [month]);
-
-  useEffect(() => {
-    if (ScrollPosition) {
-      CalendarScrollRef.current?.scrollTo({
-        top: 0,
-        left: ScrollPosition?.position,
-        behavior: "smooth",
-      });
-    }
-  }, []);
+  }, [month, scrollRef, monthScrollPosition]);
 
   useLayoutEffect(() => {
     scrollRef.current = Array(months.length)
