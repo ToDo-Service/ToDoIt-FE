@@ -237,6 +237,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const CurrentModal = useRecoilValue(GlobalModal);
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
+
   // let params = {
   //   solYear: "2020",
   //   solMonth: "03",
@@ -295,7 +296,9 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
       days.push(
         <CalenderCell
           onClick={(e) => {
-            GModal(!CurrentModal);
+            GModal(
+              CurrentModal.toggle === "null" ? true : !CurrentModal.toggle
+            );
             SetSlectedDate(e);
           }}
           data-date={day}
