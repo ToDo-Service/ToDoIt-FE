@@ -11,11 +11,23 @@ import StatisticsMost from "@/molecules/Statistics/StatisticsMostbusy";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useSession } from "next-auth/react";
+import dayjs from "dayjs";
 
 const FindMostProject = (ProjectList: any) => {
   let m = new Map();
   ProjectList?.map((item: any) => {
     m.set(item.title, (m.get(item.title) || 0) + 1);
+  });
+  const sortedMap = [...m].sort((a, b) => b[1] - a[1]);
+  m = new Map(sortedMap);
+  const mostCount = sortedMap[0][0];
+
+  return [sortedMap, mostCount];
+};
+const FindMostDate = (TodoList: any) => {
+  let m = new Map();
+  TodoList?.map((item: any) => {
+    m.set(item.end_date, (m.get(item.end_date) || 0) + 1);
   });
   const sortedMap = [...m].sort((a, b) => b[1] - a[1]);
   m = new Map(sortedMap);
@@ -146,12 +158,11 @@ const StatisticsLayout: FC = () => {
   let uniqueProjectID: Array<object> = [];
   let uniqueProjectTitle: { title: string; color: string }[] = [];
   let ProgressPercent = 0;
-
-  console.log(month);
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     `https://laoh.site/api/todos/month?year=2024&month=${month}`,
     (uri) => Fetcher(uri, jwt)
   );
+  const MostbusyDate = FindMostDate(data?.body)[1];
 
   const TodoLength = data?.body.length;
   data?.body.forEach((e: any) => {
@@ -216,7 +227,7 @@ const StatisticsLayout: FC = () => {
             <StatisticsPlan planCount={TodoLength} />
             <StatisticsComplete planPercent={ProgressPercent} />
           </PlanFlexbox>
-          <StatisticsMost date="4월 12일 " />
+          <StatisticsMost date={MostbusyDate} />
           <div>
             <ProjectText>
               <h5>프로젝트</h5>
