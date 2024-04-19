@@ -9,6 +9,7 @@ import * as Icon from "react-bootstrap-icons";
 
 import { useToast } from "@/hooks/useToast";
 import HashtagProjectEndDate from "@/atoms/Hashtag/H_ProejctEndDate";
+import { useState } from "react";
 
 interface DargProps {
   isdragging: any;
@@ -154,8 +155,15 @@ interface Props {
 
 const ProjectDetailTodoBox: React.FC<Props> = ({ todolist }) => {
   const JwtToken = useRecoilValue(jwtToken);
+  const setModal = useSetRecoilState(Modal);
+  const setUData = useSetRecoilState(UpdateData);
+  const [check, setCheck] = useState(
+    todolist.status === "COMPLETE" ? true : false
+  );
 
-  const CompleteTodo = async () => {
+  const CompleteTodo = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCheck(!check);
     await axios
       .patch(`https://laoh.site/api/todos/status/${todolist.id}`, null, {
         headers: {
@@ -164,56 +172,55 @@ const ProjectDetailTodoBox: React.FC<Props> = ({ todolist }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log();
+        mutate(`https://laoh.site/api/project/${todolist.id}`);
         res.data.body === "complete"
           ? useToast(`${todolist.title} 완료 하셨군요`, true)
           : useToast(`${todolist.title} 취소 하였습니다.`, true);
-
-        mutate("https://laoh.site/api/todos/today");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         useToast("실패", false);
       });
   };
 
-  const deleteItem = () => {
+  const deleteItem = (e: React.MouseEvent) => {
+    e.stopPropagation();
     axios
       .delete(`https://laoh.site/api/todos/${todolist.id}`, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${JwtToken}` },
       })
       .then(() => {
-        mutate("https://laoh.site/api/todos/today");
+        mutate(`https://laoh.site/api/project/${todolist.id}`);
         useToast(`${todolist.title} 삭제 하겠습니다`, true);
       })
-      .catch((err) => useToast("실패", false));
+      .catch(() => useToast("실패", false));
+  };
+
+  const RewriteModal = () => {
+    setUData({
+      id: todolist.id,
+      title: todolist.title,
+      content: todolist.content,
+      end_date: todolist.end_date,
+      status: todolist.status,
+      priority: todolist.priority,
+    });
+    setModal({ id: todolist.id, method: "update", toggle: true });
   };
 
   return (
     <>
-      <TodoContainer>
+      <TodoContainer onClick={RewriteModal}>
         <TodoMainBox>
           <Icon.Pencil className="PencilIcon" />
           <TodoBoxHeader>
             <div style={{ display: "flex", alignItems: "center" }}>
               <TodoLabel htmlFor="check">
-                {todolist ? (
-                  todolist.status === "INCOMPLETE" ? (
-                    <CheckBox
-                      type="checkbox"
-                      name="check"
-                      onClick={CompleteTodo}
-                    />
-                  ) : (
-                    <CheckBox
-                      type="checkbox"
-                      name="check"
-                      checked
-                      onClick={CompleteTodo}
-                    />
-                  )
-                ) : null}
+                <CheckBox
+                  type="checkbox"
+                  onClick={(e) => CompleteTodo(e)}
+                  checked={check}
+                />
               </TodoLabel>
               <TodoBoxName>{todolist.title}</TodoBoxName>
               <TodoBoxDate>{todolist.end_date}</TodoBoxDate>
@@ -221,7 +228,7 @@ const ProjectDetailTodoBox: React.FC<Props> = ({ todolist }) => {
             <ExitBtn
               src="/Icon/Modal/ModalExit.png"
               alt="/"
-              onClick={deleteItem}
+              onClick={(e) => deleteItem(e)}
             />
           </TodoBoxHeader>
           <TodoBoxDetail>{todolist.content}</TodoBoxDetail>

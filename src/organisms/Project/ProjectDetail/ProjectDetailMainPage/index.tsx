@@ -8,6 +8,7 @@ import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import { FC, useState } from "react";
 import { ProejectTodoAdd } from "@/organisms/Project/ProjectDetail/ProjectTodoAddModal";
+import { method } from "lodash";
 
 interface TodoItem {
   content: string;
@@ -59,13 +60,14 @@ const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
     (url: string) => Fetcher(url, JwtToken)
   );
 
-  console.log(data);
   const HeaderText: string = data?.body.project_info.title;
   const TodoList: Array<TodoItem> = data?.body.todo_list;
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
+  const setModal = useSetRecoilState(Modal);
+  const modal = useRecoilValue(Modal);
 
   const openAddModal = () => {
-    setModal(!modal);
+    setModal({ method: "post", toggle: true });
   };
 
   return (
