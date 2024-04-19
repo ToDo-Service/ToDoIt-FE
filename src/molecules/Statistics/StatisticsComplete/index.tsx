@@ -43,7 +43,7 @@ const StatisticsComplete: FC<CompleteProps> = ({ planPercent }) => {
 
   return (
     <StatisticsCompleteLayout>
-      <StatisticsCompleteText> 완료율</StatisticsCompleteText>
+      <StatisticsCompleteText>완료율</StatisticsCompleteText>
       <div
         style={{
           width: "78.96px",
