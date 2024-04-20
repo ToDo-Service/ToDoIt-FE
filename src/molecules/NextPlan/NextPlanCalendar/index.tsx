@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { useHoliday } from "@/hooks/useHoliday";
 import React from "react";
+import { media } from "@/styles/media";
 
 const ScheduleCalendar = styled.div`
   width: 65.2778vw;
@@ -24,10 +25,15 @@ const ScheduleCalendar = styled.div`
   border: 1px solid rgba(12, 0, 24, 0.1);
   border-radius: 16px;
   position: relative;
+
+  ${media.phone`
+      width:95vw;
+      border: none;      
+  `}
 `;
 
 const TextToday = styled.div`
-  width: 100%;
+  width: 95%;
   height: 7.6172vh;
   justify-content: space-between;
   max-height: 78px;
@@ -126,6 +132,10 @@ const CalenderItem = styled.div`
   &:not(:first-child) {
     margin-top: 37px;
   }
+
+  ${media.phone`
+    width: 95vw;
+  `}
 `;
 
 const CalenderData = styled.div<{ Bgcolor: string }>`
