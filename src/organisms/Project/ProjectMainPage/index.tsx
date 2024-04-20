@@ -54,11 +54,14 @@ const ProjectList = styled.div`
 
 const ProjectUserName = styled.span`
   font-family: "Pretendard-Bold";
-
   font-weight: 300;
   font-size: 20px;
   margin-top: 69px;
   margin-right: 34vw;
+
+  ${media.phone`
+  margin-right: 45vw;
+  `}
 `;
 
 const ProjectMainPage: FC = () => {

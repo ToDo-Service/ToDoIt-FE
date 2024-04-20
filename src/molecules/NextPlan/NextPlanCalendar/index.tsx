@@ -155,6 +155,10 @@ const CalenderData = styled.div<{ Bgcolor: string }>`
   border-radius: 4px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   color: rgba(37, 37, 48, 0.6);
+
+  ${media.phone`
+  max-width: 32.25px; 
+  `}
 `;
 
 const CalenderCell = styled.div`

@@ -26,7 +26,7 @@ const ProjectboxMainbox = styled.div<{
   height: 5.3711vh;
   max-width: 790px;
   max-height: 55px;
-  min-width: 270px;
+  min-width: 320px;
   border-radius: 12px;
   padding-left: 25px;
   padding-right: 25px;
@@ -152,7 +152,6 @@ const Projectbox = ({
         <SelectPickRound />
         <SelectPickRound />
         <SelectPickRound />
-
         <SelectModal className="modal" display={modal ? "flex" : "none"}>
           <div onClick={Rewrite}>프로젝트 수정</div>
           {rewrite && (
