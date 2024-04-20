@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import useSWR from "swr";
 import StatisticsMostbusyBox from "../StatisticsMostbusyBox";
+import { media } from "@/styles/media";
 
 export interface CompleteProps {
   date: string;
@@ -22,6 +23,13 @@ const StatisticsMostLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+
+  ${media.phone`       
+     margin-left: 17vw;
+     width: 350px;
+     height: 300px;
+     margin-top: 10vh;
+  `}
 `;
 
 const StatisticsMostText = styled.h3`

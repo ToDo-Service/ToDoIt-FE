@@ -1,3 +1,4 @@
+import { media } from "@/styles/media";
 import { FC } from "react";
 import styled from "styled-components";
 
@@ -17,6 +18,13 @@ const StatisticsMostbusyMainbox = styled.li<{ bgColor: string }>`
   justify-content: start;
   align-items: center;
   padding-left: 29px;
+  overflow-y: scroll;
+
+  ${media.phone`       
+     
+     width: 300px;
+     height: 50px;
+  `}
 `;
 
 const StatisticsMostbusyTitle = styled.h3`

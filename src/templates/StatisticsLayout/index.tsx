@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { SidebarLayout, jwtToken } from "@/reocoil";
 import { FC, useState } from "react";
-import { media } from "@/styles/media";
 import StatisticsHeaderText from "@/atoms/Statistics/StatisticsHeaderText";
 import StatisticsComplete from "@/molecules/Statistics/StatisticsComplete";
 import StatisticsPlan from "@/molecules/Statistics/StatisticsPlan";
@@ -11,6 +10,7 @@ import StatisticsMost from "@/molecules/Statistics/StatisticsMostbusy";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useSession } from "next-auth/react";
+import { media } from "@/styles/media";
 
 const FindMostProject = (ProjectList: any) => {
   let m = new Map();
@@ -46,7 +46,6 @@ const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
     ${(prop) => (prop.open !== null && prop.open ? "PopUpTodo" : "PopOutTodo")}
     forwards;
   z-index: 2;
-
   & > div:not(:last-child) {
     margin-right: 22px;
   }
@@ -74,7 +73,11 @@ const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
   ${media.phone`      
   transition: 0.7s ease-in-out;
       opacity: ${(props: { open: null }) =>
-        props.open !== null && props.open ? "0" : "1"}      
+        props.open !== null && props.open ? "0" : "1"}   ;  
+        padding-left: 0;
+        width:120%;
+  padding-top: 80px;   
+  overflow-y: scroll;
   `}
 
   & h5 {
@@ -96,7 +99,17 @@ const StatisticsGrid = styled.div`
   & div:nth-child(4) {
     grid-column: 2/3;
     grid-row: 2/4;
+
+    ${media.phone`
+    grid-column: auto;
+    grid-row: auto;
+    `}
   }
+
+  ${media.phone`
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  `}
 `;
 
 const PlanFlexbox = styled.div`
@@ -104,7 +117,15 @@ const PlanFlexbox = styled.div`
   width: 100%;
   & div:first-child {
     margin-right: 22px;
+    ${media.phone`
+     margin-right:0;     
+     margin-bottom : 10px;
+  `}
   }
+  ${media.phone`
+     flex-direction: column;     
+     margin-left: 20vw;
+  `}
 `;
 
 const ProjectText = styled.div`
@@ -116,10 +137,19 @@ const ProjectText = styled.div`
     font-family: "PretendardVariable";
     font-weight: 250;
   }
+
+  ${media.phone`
+    margin-top:10vh
+
+  `}
 `;
 
 const CompleteText = styled.div`
   display: flex;
+
+  ${media.phone`
+      margin-top: 5vh;
+  `}
 
   & span {
     font-size: 12px;
@@ -127,6 +157,21 @@ const CompleteText = styled.div`
     font-family: "PretendardVariable";
     font-weight: 250;
   }
+
+  ${media.phone`
+      margin-left: 12.5vw;      
+    
+
+  
+      padding: 0 10px;
+      width:100vw;
+      justify-content: space-between;
+      
+      & span{
+        font-size:10px;
+      }
+
+    `}
 `;
 
 const LeftArrow = styled.img`
@@ -146,6 +191,12 @@ const StatisticsHeader = styled.div`
   max-width: 216px;
   width: 15vw;
   justify-content: space-between;
+
+  ${media.phone`
+     width:90vw;
+     max-width: 390px;
+     margin-left:17vw;
+  `}
 `;
 
 const StatisticsLayout: FC = () => {

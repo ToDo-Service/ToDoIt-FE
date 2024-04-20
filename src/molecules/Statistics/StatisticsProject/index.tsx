@@ -1,3 +1,4 @@
+import { media } from "@/styles/media";
 import { Hash } from "crypto";
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -21,6 +22,14 @@ const StatisticsProjectLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+
+  ${media.phone`
+  margin-lefT: 17vw;
+  width: 90vw;
+  height: 40vh;
+  max-height: 50vh;
+  margin-bottom: 10vh;
+  `}
 `;
 
 const StatisticsProjectText = styled.h3`
