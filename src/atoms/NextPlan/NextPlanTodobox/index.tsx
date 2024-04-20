@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { mutate } from "swr";
+import { media } from "@/styles/media";
 
 const NextPlanTodoboxMainbox = styled.article<{ bgColor: string }>`
   margin: 0 auto;
@@ -21,6 +22,10 @@ const NextPlanTodoboxMainbox = styled.article<{ bgColor: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${media.phone`
+  widtH: 270px;
+  `}
 `;
 
 const NextPlanTodoboxHeader = styled.header`
@@ -34,6 +39,11 @@ const NextPlanTodoboxHeader = styled.header`
   & h6 {
     font-size: 15px;
   }
+
+  ${media.phone`
+    width: 90%;
+    
+  `}
 `;
 
 const CheckBox = styled.input`
@@ -63,6 +73,10 @@ const NextPlanTodoboxContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   line-height: 1;
+
+  ${media.phone`
+    width: 250px;
+  `}
 `;
 
 const NextPlanTodoboxText = styled.span`

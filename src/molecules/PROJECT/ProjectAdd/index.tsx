@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from "@/styles/media";
 
 const ProjectboxAddMainbox = styled("div")<{
   width: string;
@@ -26,6 +27,13 @@ const ProjectboxAddMainbox = styled("div")<{
     color: rgba(37, 37, 48, 0.6);
     font-size: 15px;
   }
+
+  ${media.phone`
+
+  width:270px;
+  min-width: 270px;
+
+  `}
 `;
 
 interface Props {

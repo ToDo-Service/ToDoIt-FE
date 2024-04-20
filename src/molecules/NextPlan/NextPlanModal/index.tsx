@@ -8,6 +8,7 @@ import { useEffect, useLayoutEffect } from "react";
 import dayjs from "dayjs";
 import useSWR from "swr";
 import Fetcher from "@/utils/fetcher";
+import { media } from "@/styles/media";
 
 const NextPlanModalLayout = styled.div<{ open: boolean }>`
   width: 26.4583vw;
@@ -29,6 +30,13 @@ const NextPlanModalLayout = styled.div<{ open: boolean }>`
     forwards;
   flex-direction: column;
   align-items: center;
+
+  ${media.phone`
+  left: 150px;
+  z-index: 1;
+  width:80vw;
+  `}
+
   @keyframes fadeInLeft {
     0% {
       opacity: 0;
@@ -64,6 +72,11 @@ const NextPlanModalHeader = styled.header`
   /* margin-top: 1.7578vh;
   margin-bottom: 3.8086vh; */
   margin-top: 36px;
+
+  ${media.phone`
+    width:90%;
+    margin-left:4vw;
+  `}
 `;
 
 const ProjectList = styled.section`
