@@ -8,7 +8,7 @@ import useSWR from "swr";
 import ProjectAdd from "@/molecules/PROJECT/ProjectAdd";
 import { FC, useState } from "react";
 import { ProejectTodoAdd } from "@/organisms/Project/ProjectDetail/ProjectTodoAddModal";
-import { method } from "lodash";
+import { media } from "@/styles/media";
 
 interface TodoItem {
   content: string;

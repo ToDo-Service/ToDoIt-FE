@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { SidebarLayout } from "@/reocoil";
+import { media } from "@/styles/media";
 
 const ProjectPageLayoutBox = styled.div<{ open: boolean | null }>`
   width: 100vw;
@@ -32,6 +33,12 @@ const ProjectPageLayoutBox = styled.div<{ open: boolean | null }>`
       transform: translate(-10%, 0);
     }
   }
+
+  ${media.phone`
+  transition: 0.7s ease-in-out;
+      opacity: ${(props: { open: null }) =>
+        props.open !== null && props.open ? "0" : "1"} 
+  `}
 `;
 
 const ProjectPageLayout: FC = () => {

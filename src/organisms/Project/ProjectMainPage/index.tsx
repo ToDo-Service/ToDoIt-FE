@@ -21,11 +21,11 @@ const ProjectPageMainBox = styled.div`
   flex-direction: column;
 
   ${media.phone`
-    padding-left:100px;
-    padding-top: 140px;  
+    padding-left:0;
+    padding-top: 120px;  
     align-items: center;
-    width:100vw;
-    height:100vh;
+    width:125%;
+    height:100%;
     margin: 0;
   `}
 `;
@@ -43,13 +43,22 @@ const ProjectList = styled.div`
   & > div:not(:first-child) {
     margin-top: 12px;
   }
+
+  ${media.phone`
+      width:100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  `}
 `;
 
-const ProjectUserName = styled.p`
+const ProjectUserName = styled.span`
   font-family: "Pretendard-Bold";
+
   font-weight: 300;
   font-size: 20px;
   margin-top: 69px;
+  margin-right: 34vw;
 `;
 
 const ProjectMainPage: FC = () => {

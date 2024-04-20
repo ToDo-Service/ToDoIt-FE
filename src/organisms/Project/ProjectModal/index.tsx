@@ -10,7 +10,7 @@ import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
 import Category from "@/molecules/PROJECT/ProjectModal/Category";
-import { ColumnsGap } from "react-bootstrap-icons";
+import { media } from "@/styles/media";
 
 const ModalBackdrop = styled.div`
   z-index: 4;
@@ -36,6 +36,11 @@ const ModalBackdrop = styled.div`
     }
   }
   animation: fadeIn 0.5s;
+
+  ${media.phone`
+      width:120%;
+      
+  `}
 `;
 
 const ProjectInputboxMainbox = styled.input`
@@ -82,6 +87,10 @@ const ExitBtn = styled.img`
   margin-top: 34px;
   margin-left: 370px;
   cursor: pointer;
+  ${media.phone`
+    margin-left:300px;
+      
+  `}
 `;
 
 export const ModalView = styled.div.attrs((props) => ({
@@ -94,6 +103,9 @@ export const ModalView = styled.div.attrs((props) => ({
   height: 406px;
   width: 454px;
   background-color: #ffffff;
+  ${media.phone`
+    width:380px;
+  `}
 `;
 
 const ProejectModal = (props: any) => {
@@ -105,8 +117,6 @@ const ProejectModal = (props: any) => {
   const [postSuccess, setPostSuccess] = useState(false);
   const [categoryPopup, setCategoryPopup] = useState(false);
   const RewirteData = useRecoilValue(RewriteProejct);
-
-  console.log(RewirteData);
 
   const JWT = useRecoilValue(jwtToken);
 

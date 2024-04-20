@@ -7,6 +7,7 @@ import { Modal, RewriteProejct, jwtToken } from "@/reocoil";
 import { ColorData } from "@/data/Color";
 import { useState } from "react";
 import ProejectModal from "@/organisms/Project/ProjectModal";
+import { media } from "@/styles/media";
 
 interface ProjectData {
   title: string;
@@ -25,6 +26,7 @@ const ProjectboxMainbox = styled.div<{
   height: 5.3711vh;
   max-width: 790px;
   max-height: 55px;
+  min-width: 270px;
   border-radius: 12px;
   padding-left: 25px;
   padding-right: 25px;
@@ -59,7 +61,6 @@ const SelectPickBox = styled.div`
   height: 3px;
   margin: 0;
   padding: 0;
-
   cursor: pointer;
   position: relative;
 
@@ -78,7 +79,6 @@ const SelectModal = styled.div<{ display: string }>`
   position: absolute;
   left: 50px;
   top: -25px;
-
   flex-direction: column;
   justify-content: space-evenly;
   padding-left: 14px;
@@ -92,6 +92,11 @@ const SelectModal = styled.div<{ display: string }>`
     color: #4e4e4e;
     transition: 0.2s ease-in-out;
   }
+
+  /* ${media.phone`
+  left: 0px;
+  top: -25px;
+  `} */
 `;
 
 const Projectbox = ({
