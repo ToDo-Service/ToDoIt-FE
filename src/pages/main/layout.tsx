@@ -23,7 +23,8 @@ const LayouyHeader = styled.header`
   z-index: 99;
   border-bottom: solid 0.02px #c8c5cb;
   ${media.phone`
-     height:80px;     
+     height:80px;         
+     background-Color: white; 
   `}
 `;
 

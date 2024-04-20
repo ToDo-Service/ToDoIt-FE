@@ -19,16 +19,16 @@ const HeaderContainer = styled.div<{
   //모바일 사이즈
   ${media.phone`
       height:80px;          
-      width:100vw;
+      width:100vw;      
       opacity: ${(props: { open: null }) =>
-        props.open !== null && props.open ? "0" : "1"}      
+        props.open !== null && props.open ? "0" : "1"}            
   `}
 
   animation: 0.7s
     ${(props) =>
     props.open !== null && props.open ? "PopUpheader" : "PopOutheader"}
     forwards;
-  z-index: 2;
+  z-index: 1;
   @keyframes PopUpheader {
     0% {
       transform: translate(-10%, 0);

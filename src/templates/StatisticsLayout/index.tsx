@@ -75,15 +75,19 @@ const StatisticsMainLayout = styled.div<{ open: boolean | null }>`
       opacity: ${(props: { open: null }) =>
         props.open !== null && props.open ? "0" : "1"}   ;  
         padding-left: 0;
-        width:120%;
-  padding-top: 80px;   
-  overflow-y: scroll;
+        width:125%;
+        padding-top: 80px;   
+        overflow-y: scroll;
+        
   `}
 
   & h5 {
     font-size: 15px;
     font-family: "PretendardVariable";
     font-weight: 400;
+    ${media.phone`
+          display:none;
+      `}
   }
 `;
 
@@ -103,18 +107,22 @@ const StatisticsGrid = styled.div`
     ${media.phone`
     grid-column: auto;
     grid-row: auto;
+
     `}
   }
 
   ${media.phone`
   grid-template-rows: auto;
   grid-template-columns: 1fr;
+  place-items: center;
+  
   `}
 `;
 
 const PlanFlexbox = styled.div`
   display: flex;
   width: 100%;
+
   & div:first-child {
     margin-right: 22px;
     ${media.phone`
@@ -124,7 +132,9 @@ const PlanFlexbox = styled.div`
   }
   ${media.phone`
      flex-direction: column;     
-     margin-left: 20vw;
+     align-items: center;
+     justify-content: center;
+     
   `}
 `;
 
@@ -140,16 +150,18 @@ const ProjectText = styled.div`
 
   ${media.phone`
     margin-top:10vh
-
+    justify-content: center;
+     
+    & span{
+      font-size: 12px;
+      width: 300px;
+      margin-top:10vh;
+    }
   `}
 `;
 
 const CompleteText = styled.div`
   display: flex;
-
-  ${media.phone`
-      margin-top: 5vh;
-  `}
 
   & span {
     font-size: 12px;
@@ -159,16 +171,14 @@ const CompleteText = styled.div`
   }
 
   ${media.phone`
-      margin-left: 12.5vw;      
-    
-
-  
-      padding: 0 10px;
+           
       width:100vw;
-      justify-content: space-between;
+      justify-content: center;
       
       & span{
         font-size:10px;
+        margin-bottom: 5vh;
+        
       }
 
     `}
@@ -196,7 +206,20 @@ const StatisticsHeader = styled.div`
      width:90vw;
      max-width: 390px;
      margin-left:17vw;
+     margin-top : 7vh;
   `}
+`;
+
+const ProjectBox = styled.div`
+  ${media.phone`
+          display: flex;
+          flex-direction: column; 
+          align-items: center;
+           width:100%;
+           justify-content: center;
+       
+     
+         `}
 `;
 
 const StatisticsLayout: FC = () => {
@@ -281,7 +304,7 @@ const StatisticsLayout: FC = () => {
             <StatisticsComplete planPercent={ProgressPercent} />
           </PlanFlexbox>
           <StatisticsMost date={MostbusyDate} />
-          <div>
+          <ProjectBox>
             <ProjectText>
               <h5>프로젝트</h5>
               <span>
@@ -295,7 +318,7 @@ const StatisticsLayout: FC = () => {
               maxPercent={MostProjectTodoCount}
               availItem={ProjectavaliveItem}
             />
-          </div>
+          </ProjectBox>
         </StatisticsGrid>
       </div>
     </StatisticsMainLayout>

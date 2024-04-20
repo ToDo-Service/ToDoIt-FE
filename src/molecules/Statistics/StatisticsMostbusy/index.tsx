@@ -25,7 +25,8 @@ const StatisticsMostLayout = styled.div`
   align-items: start;
 
   ${media.phone`       
-     margin-left: 17vw;
+     /* margin-left: 17vw; */
+     
      width: 350px;
      height: 300px;
      margin-top: 10vh;

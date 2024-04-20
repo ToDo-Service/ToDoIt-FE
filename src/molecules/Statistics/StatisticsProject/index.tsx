@@ -1,7 +1,6 @@
-import { media } from "@/styles/media";
-import { Hash } from "crypto";
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
+import { media } from "@/styles/media";
 
 export interface CompleteProps {
   project: any;
@@ -24,11 +23,12 @@ const StatisticsProjectLayout = styled.div`
   align-items: start;
 
   ${media.phone`
-  margin-lefT: 17vw;
+  
   width: 90vw;
   height: 40vh;
   max-height: 50vh;
-  margin-bottom: 10vh;
+  
+  margin: 3vh 0;
   `}
 `;
 
