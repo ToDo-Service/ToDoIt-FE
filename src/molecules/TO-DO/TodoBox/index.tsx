@@ -264,13 +264,11 @@ const TodoBox = ({ Data, category }: any) => {
           <TodoBoxHeader>
             <div style={{ display: "flex", alignItems: "center" }}>
               <TodoLabel htmlFor="check">
-                {
-                  <CheckBox
-                    type="checkbox"
-                    onClick={(e) => CompleteTodo(e)}
-                    checked={check}
-                  />
-                }
+                <CheckBox
+                  type="checkbox"
+                  onClick={(e) => CompleteTodo(e)}
+                  checked={check}
+                />
               </TodoLabel>
               <TodoBoxName>{Data.title}</TodoBoxName>
               <TodoBoxDate>

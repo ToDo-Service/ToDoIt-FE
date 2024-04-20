@@ -101,6 +101,7 @@ interface TodoProps {
   id: number;
   title: string;
   content: string;
+  status: string;
 }
 
 const NextPlanModal = () => {
@@ -121,6 +122,7 @@ const NextPlanModal = () => {
       id: item.id,
       title: item.title,
       content: item.content,
+      status: item.status,
     };
   });
 

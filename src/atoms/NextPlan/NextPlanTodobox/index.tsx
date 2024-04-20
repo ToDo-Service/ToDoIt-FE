@@ -1,5 +1,10 @@
-import { FC } from "react";
+import { useToast } from "@/hooks/useToast";
+import { jwtToken } from "@/reocoil";
+import axios from "axios";
+import { FC, useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { mutate } from "swr";
 
 const NextPlanTodoboxMainbox = styled.article<{ bgColor: string }>`
   margin: 0 auto;
@@ -74,6 +79,7 @@ const NextPlanTodoboxHeaderText = styled.div`
 
 interface TodoProps {
   item: {
+    status: string;
     id: number;
     title: string;
     content: string;
@@ -81,6 +87,33 @@ interface TodoProps {
 }
 
 const NextPlanTodobox: FC<TodoProps> = (props) => {
+  const [check, setCheck] = useState(
+    props.item.status === "COMPLETE" ? true : false
+  );
+  const JwtToken = useRecoilValue(jwtToken);
+
+  const CompleteTodo = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCheck(!check);
+    await axios
+      .patch(`https://laoh.site/api/todos/status/${props.item.id}`, null, {
+        headers: {
+          Authorization: `Bearer ${JwtToken}`,
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        res.data.body === "complete"
+          ? useToast(`${props.item.title} 완료 하셨군요`, true)
+          : useToast(`${props.item.title} 취소 하였습니다.`, true);
+        mutate("https://laoh.site/api/todos/today");
+      })
+      .catch((err) => {
+        console.log(err);
+        useToast("실패", false);
+      });
+  };
+
   return (
     <NextPlanTodoboxMainbox bgColor="rgba(255,189,62,0.15)">
       <NextPlanTodoboxContent>
@@ -88,7 +121,11 @@ const NextPlanTodobox: FC<TodoProps> = (props) => {
           <NextPlanTodoboxHeaderText>
             {props.item.title}
           </NextPlanTodoboxHeaderText>
-          <CheckBox type="checkbox" role="checkbox" />
+          <CheckBox
+            type="checkbox"
+            onClick={(e) => CompleteTodo(e)}
+            checked={check}
+          />
         </NextPlanTodoboxHeader>
         <NextPlanTodoboxText>{props.item.content}</NextPlanTodoboxText>
       </NextPlanTodoboxContent>
