@@ -71,7 +71,6 @@ const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
 
   const HeaderText: string = data?.body.project_info.title;
   const TodoList: Array<TodoItem> = data?.body.todo_list;
-  // const [modal, setModal] = useState(false);
   const setModal = useSetRecoilState(Modal);
   const modal = useRecoilValue(Modal);
 

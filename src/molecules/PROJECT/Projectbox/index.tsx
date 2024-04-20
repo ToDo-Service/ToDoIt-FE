@@ -93,10 +93,10 @@ const SelectModal = styled.div<{ display: string }>`
     transition: 0.2s ease-in-out;
   }
 
-  /* ${media.phone`
-  left: 0px;
-  top: -25px;
-  `} */
+  ${media.phone`
+  left: -130px;
+  top: 0px;
+  `}
 `;
 
 const Projectbox = ({
@@ -111,7 +111,6 @@ const Projectbox = ({
   const JwtToken = useRecoilValue(jwtToken);
   const [modal, setModal] = useState<boolean>(false);
   const [rewrite, setRewrite] = useState<boolean>(false);
-  const RewriteProjectData = useRecoilValue(RewriteProejct);
   const setRewriteProjectData = useSetRecoilState(RewriteProejct);
 
   const onDelete = () => {

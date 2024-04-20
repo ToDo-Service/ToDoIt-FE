@@ -96,6 +96,10 @@ const ProjectList = styled.section`
 
   & > div:last-child {
     margin-top: 15px;
+
+    ${media.phone`
+    display:none;
+    `}
   }
 `;
 const ExitBtn = styled.img`
