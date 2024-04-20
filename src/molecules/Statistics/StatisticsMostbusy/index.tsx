@@ -15,7 +15,7 @@ const StatisticsMostLayout = styled.div`
   width: 395px;
   height: 502px;
   background-color: white;
-  /* filter: drop-shadow(1px 1px 1px rgba(12, 0, 24, 0.1)); */
+
   border-radius: 12px;
   border: 1px solid rgba(12, 0, 24, 0.1);
   padding: 25px 25px;

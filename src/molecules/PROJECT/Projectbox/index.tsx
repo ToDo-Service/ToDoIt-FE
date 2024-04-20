@@ -2,8 +2,16 @@ import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
 import { mutate } from "swr";
-import { useRecoilValue } from "recoil";
-import { jwtToken } from "@/reocoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { Modal, jwtToken } from "@/reocoil";
+import { ColorData } from "@/data/Color";
+
+interface ProjectData {
+  title: string;
+  description: string;
+  color: string;
+  id: number;
+}
 
 const ProjectboxMainbox = styled.div<{
   color: string;
@@ -31,39 +39,32 @@ const ExitBtn = styled.img`
   cursor: pointer;
 `;
 
-interface ProjectData {
-  title: string;
-  description: string;
-  color: string;
-  id: number;
-}
+const SelectPickRound = styled.p`
+  width: 3px;
+  height: 3px;
+  background-color: black;
+  border-radius: 50%;
+`;
 
-const ColorData = [
-  {
-    color: "#EA98AE",
-    backgroundColor: "rgba(234, 152, 174, 0.15)",
-  },
-  {
-    color: "#FBD580",
-    backgroundColor: "rgba(251, 213, 128, 0.15)",
-  },
-  {
-    color: "#9ECAFB",
-    backgroundColor: "rgba(158, 202, 251, 0.15)",
-  },
-  {
-    color: "#CCBAF8",
-    backgroundColor: "rgba(204, 186, 248, 0.15)",
-  },
-  {
-    color: "#9F9EA4",
-    backgroundColor: "rgba(159, 158, 164, 0.15)",
-  },
-];
+const SelectPickBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 15px;
+  height: 3px;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  cursor: pointer;
+`;
 
 const Projectbox = ({ title, description, color, id }: ProjectData) => {
   const SelectedColor = ColorData.find((item) => item.color === color);
   const JwtToken = useRecoilValue(jwtToken);
+  const modal = useRecoilValue(Modal);
+  const setModal = useSetRecoilState(Modal);
+
+  console.log(modal);
 
   const onDelete = () => {
     axios
@@ -86,7 +87,13 @@ const Projectbox = ({ title, description, color, id }: ProjectData) => {
       >
         <span>{title}</span>
       </Link>
-      <ExitBtn src="/Icon/Modal/ModalExit.png" alt="/" onClick={onDelete} />
+
+      <SelectPickBox onClick={() => setModal({ toggle: !modal.toggle })}>
+        <SelectPickRound />
+        <SelectPickRound />
+        <SelectPickRound />
+      </SelectPickBox>
+      {modal.toggle && <div>팝업창</div>}
     </ProjectboxMainbox>
   );
 };
