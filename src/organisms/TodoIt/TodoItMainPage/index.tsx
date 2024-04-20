@@ -13,6 +13,17 @@ const TodoPageMainBox = styled.div`
 
   & section:last-child {
     margin-left: 48px;
+    ${media.phone`
+        order:1;
+        margin-left: 0;
+    `}
+  }
+  & section:first-child {
+    margin-left: 48px;
+    ${media.phone`
+        order:2;
+        margin-left: 0;
+    `}
   }
 
   ${media.phone`

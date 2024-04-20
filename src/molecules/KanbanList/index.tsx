@@ -10,7 +10,7 @@ const TodoListMainBox = styled.section`
   width: 320px;
   height: 80vh;
   margin-top: 57px;
-  z-index: 1;
+
   overflow-y: scroll;
   & article:not(:first-child) {
     margin-top: 21px;
@@ -44,7 +44,7 @@ const TodoHeader = styled("div")<{ interval: string }>`
   padding-top: 5px;
   justify-content: ${(props) =>
     props.interval !== "past_todos" ? "space-between" : "space-between"};
-
+  z-index: -1;
   & p {
     display: flex;
     align-items: center;
@@ -65,7 +65,7 @@ const KanbanList = ({ title, children }: any) => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
       //drag 진행동안 canDrop true,
-      //drop할 영역 접근시 isOver : true
+      //drop할 영역 접근시 isOvz-indexer : true
     }),
   });
 

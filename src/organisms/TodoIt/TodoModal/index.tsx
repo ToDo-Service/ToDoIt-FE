@@ -16,7 +16,7 @@ import FindColor from "@/utils/findColor";
 import { media } from "@/styles/media";
 
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
-  z-index: 3;
+  z-index: 99;
   position: fixed;
   display: ${(props) => (props.ontoggle ? "flex" : "none")};
   justify-content: center;
@@ -31,8 +31,7 @@ const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   right: 0;
   bottom: 0;
   ${media.phone`
-      width:120%;
-      
+      width:120%;      
   `}
 
   @keyframes fadeIn {
@@ -53,8 +52,7 @@ const ExitBtn = styled.img`
   margin-left: 537px;
   cursor: pointer;
   ${media.phone`
-    margin-left:300px;
-      
+    margin-left:300px;      
   `}
 `;
 
@@ -90,7 +88,7 @@ export const ModalView = styled.div.attrs((props) => ({
   width: 598px;
   background-color: #ffffff;
   ${media.phone`
-      width:380px;
+      width:380px;      
   `}
 `;
 
@@ -121,6 +119,7 @@ const HastTagBox = styled.div`
 
   ${media.phone`
     width: 300px;      
+      
   `}
 `;
 
