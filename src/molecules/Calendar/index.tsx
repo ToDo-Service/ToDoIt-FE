@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import styled from "styled-components";
+import { media } from "@/styles/media";
 
 const CalendarContainer = styled.div`
   position: relative;
@@ -202,6 +203,11 @@ const DropdownButton = styled.button<{ width: string }>`
   background-color: #f6f6f6;
   background-position: right 12px center;
   background-size: 12px;
+
+  ${media.phone`
+    font-size:8px;
+    width:100px;
+  `}
 `;
 
 const CalendarWrapper = styled("div")<{ $iscalopen: number }>`

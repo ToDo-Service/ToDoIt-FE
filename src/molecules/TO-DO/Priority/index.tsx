@@ -21,7 +21,7 @@ const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
     font-size: 14px;
     cursor: pointer;
     ${media.phone`
-    font-size: 10px;
+    font-size: 8px;
     `}
   }
 

@@ -94,8 +94,6 @@ const Project = ({ setProject, value }: any) => {
     setProjectOpen(!projectopen);
   };
 
-  console.log(data.body.length);
-
   const onSelect = (e: any) => {
     setProject({
       title: e.target.innerHTML,

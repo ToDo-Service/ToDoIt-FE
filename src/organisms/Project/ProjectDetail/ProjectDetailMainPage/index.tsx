@@ -25,6 +25,15 @@ const ProjectDetailMainPageBox = styled.div`
   padding-left: 345px;
   padding-top: 163px;
   font-family: "Pretendard";
+
+  ${media.phone`
+  padding-left: 0;
+  padding-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  `}
 `;
 
 const ProjectDetailHeaderText = styled.h3`

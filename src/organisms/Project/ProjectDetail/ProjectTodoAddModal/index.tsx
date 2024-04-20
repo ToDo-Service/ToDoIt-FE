@@ -9,6 +9,7 @@ import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
 import styled from "styled-components";
+import { media } from "@/styles/media";
 
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   z-index: 3;
@@ -33,6 +34,10 @@ const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
       opacity: 1;
     }
   }
+  ${media.phone`
+      width:100%;    
+        
+  `}
   animation: fadeIn 0.5s;
 `;
 
@@ -50,6 +55,9 @@ const ProjectInputboxMainbox = styled.input`
   &::placeholder {
     color: #8f8f8f;
   }
+  ${media.phone`
+     width:300px;
+  `}
 `;
 const ProjectDetailboxMainbox = styled.input`
   width: 418px;
@@ -64,6 +72,9 @@ const ProjectDetailboxMainbox = styled.input`
   &::placeholder {
     color: #8f8f8f;
   }
+  ${media.phone`
+     width:300px;
+  `}
 `;
 
 const ExitBtn = styled.img`
@@ -72,6 +83,28 @@ const ExitBtn = styled.img`
   margin-top: 34px;
   margin-left: 370px;
   cursor: pointer;
+  ${media.phone`
+    margin-left:300px;      
+  `}
+`;
+
+const SubmitButton = styled.button`
+  width: 418px;
+  height: 37px;
+  background-color: #862ddf;
+  margin-top: 11px;
+  border-radius: 8px;
+  font-family: Pretendard;
+  font-weight: 200;
+  color: white;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  ${media.phone`
+    width: 300px;      
+  `}
 `;
 
 export const ModalView = styled.div.attrs((props) => ({
@@ -84,6 +117,21 @@ export const ModalView = styled.div.attrs((props) => ({
   height: 408px;
   width: 598px;
   background-color: #ffffff;
+  ${media.phone`
+      width:380px;
+  `}
+`;
+
+const HastTagBox = styled.div`
+  width: 418px;
+  height: 37px;
+  display: flex;
+  justify-content: space-between;
+
+  ${media.phone`
+    width: 300px;   
+      
+  `}
 `;
 
 export const ProejectTodoAdd = (props: any) => {
@@ -270,16 +318,7 @@ export const ProejectTodoAdd = (props: any) => {
               ref={ref}
             />
 
-            <div
-              style={{
-                width: "418px",
-                marginTop: "11px",
-                height: "37px",
-                display: "flex",
-                justifyContent: "space-between",
-                position: "relative",
-              }}
-            >
+            <HastTagBox>
               <Calendar
                 method={modal.method === "update" ? "update" : "post"}
                 value={endDate}
@@ -293,26 +332,12 @@ export const ProejectTodoAdd = (props: any) => {
                 value={prioirty}
               />
               <ProejctAddRepeat onChange={setRepaet} value={repeat} />
-            </div>
-            <div
-              style={{
-                width: "418px",
-                height: "37px",
-                backgroundColor: "#862DDF",
-                marginTop: "11px",
-                borderRadius: "8px",
-                fontFamily: "Pretendard",
-                fontWeight: "200",
-                color: "white",
-                fontSize: "17px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+            </HastTagBox>
+            <SubmitButton
               onClick={modal.method === "update" ? onRewrite : onSubmit}
             >
               {modal.method === "update" ? "수정" : "추가"}
-            </div>
+            </SubmitButton>
           </ModalView>
         </ModalBackdrop>
       )}
