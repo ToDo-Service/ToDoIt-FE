@@ -3,15 +3,18 @@ import Link from "next/link";
 import axios from "axios";
 import { mutate } from "swr";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { Modal, jwtToken } from "@/reocoil";
+import { Modal, RewriteProejct, jwtToken } from "@/reocoil";
 import { ColorData } from "@/data/Color";
 import { useState } from "react";
+import ProejectModal from "@/organisms/Project/ProjectModal";
 
 interface ProjectData {
   title: string;
   description: string;
   color: string;
   id: number;
+  enddate: string;
+  category: string;
 }
 
 const ProjectboxMainbox = styled.div<{
@@ -56,15 +59,11 @@ const SelectPickBox = styled.div`
   height: 3px;
   margin: 0;
   padding: 0;
-  z-index: 1;
+
   cursor: pointer;
   position: relative;
 
   &:hover .modal {
-    display: flex;
-  }
-
-  &:active .modal {
     display: flex;
   }
 `;
@@ -84,21 +83,31 @@ const SelectModal = styled.div<{ display: string }>`
   justify-content: space-evenly;
   padding-left: 14px;
 
-  & div {
+  & > div {
     cursor: pointer;
     color: #8f8f8f;
     font-size: 13px;
   }
-  & div:hover {
+  & > div:hover {
     color: #4e4e4e;
-    transition: 0.5s ease-in-out;
+    transition: 0.2s ease-in-out;
   }
 `;
 
-const Projectbox = ({ title, description, color, id }: ProjectData) => {
+const Projectbox = ({
+  title,
+  description,
+  color,
+  id,
+  enddate,
+  category,
+}: ProjectData) => {
   const SelectedColor = ColorData.find((item) => item.color === color);
   const JwtToken = useRecoilValue(jwtToken);
   const [modal, setModal] = useState<boolean>(false);
+  const [rewrite, setRewrite] = useState<boolean>(false);
+  const RewriteProjectData = useRecoilValue(RewriteProejct);
+  const setRewriteProjectData = useSetRecoilState(RewriteProejct);
 
   const onDelete = () => {
     axios
@@ -108,6 +117,18 @@ const Projectbox = ({ title, description, color, id }: ProjectData) => {
       })
       .then(() => mutate("https://laoh.site/api/project"))
       .catch((err) => console.log(err));
+  };
+
+  const Rewrite = () => {
+    setRewriteProjectData({
+      id: id,
+      title: title,
+      content: description,
+      category: category,
+      color: color,
+      enddate: enddate,
+    });
+    setRewrite(!rewrite);
   };
 
   return (
@@ -128,7 +149,13 @@ const Projectbox = ({ title, description, color, id }: ProjectData) => {
         <SelectPickRound />
 
         <SelectModal className="modal" display={modal ? "flex" : "none"}>
-          <div>프로젝트 수정</div>
+          <div onClick={Rewrite}>프로젝트 수정</div>
+          {rewrite && (
+            <ProejectModal
+              onclose={() => setRewrite(!rewrite)}
+              method="rewrite"
+            />
+          )}
           <div onClick={() => onDelete()}>프로젝트 삭제</div>
         </SelectModal>
       </SelectPickBox>

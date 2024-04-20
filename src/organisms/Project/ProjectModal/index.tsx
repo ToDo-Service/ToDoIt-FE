@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Calendar from "@/molecules/Calendar";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { NextPlanCalender, jwtToken } from "@/reocoil";
+import { NextPlanCalender, RewriteProejct, jwtToken } from "@/reocoil";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import ColorSelect from "@/molecules/PROJECT/ProjectModal/Color";
@@ -10,6 +10,7 @@ import { useInput } from "@/hooks/useInput";
 import dayjs from "dayjs";
 import { mutate } from "swr";
 import Category from "@/molecules/PROJECT/ProjectModal/Category";
+import { ColumnsGap } from "react-bootstrap-icons";
 
 const ModalBackdrop = styled.div`
   z-index: 4;
@@ -103,12 +104,11 @@ const ProejectModal = (props: any) => {
   const [postError, setPostError] = useState("");
   const [postSuccess, setPostSuccess] = useState(false);
   const [categoryPopup, setCategoryPopup] = useState(false);
-  const SelectedDate = useRecoilValue(NextPlanCalender);
+  const RewirteData = useRecoilValue(RewriteProejct);
 
-  console.log(SelectedDate);
+  console.log(RewirteData);
+
   const JWT = useRecoilValue(jwtToken);
-
-  console.log(endDate);
 
   const onSubmit = useCallback(
     (e: any) => {
@@ -150,11 +150,56 @@ const ProejectModal = (props: any) => {
     [title, color, endDate]
   );
 
+  const onRewrite = useCallback(
+    (e: any) => {
+      //서버 전송
+      e.preventDefault();
+      setPostError("");
+      if (title === "") {
+        alert("제목을 입력하세요");
+        e.preventDefault();
+        return;
+      }
+      console.log(title, color);
+      axios
+        .patch(
+          `https://laoh.site/api/project/${RewirteData?.id}`,
+          {
+            title: title,
+            color: color,
+            description: "일단 보류",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JWT}`,
+            },
+            withCredentials: true,
+          }
+        )
+        .then(() => {
+          setPostSuccess(!postSuccess);
+          mutate("https://laoh.site/api/project");
+          props.onclose();
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setPostError(err.response);
+        })
+        .finally(() => {});
+    },
+    [title, color, endDate]
+  );
+
   useEffect(() => {
-    setTitle("");
-    setCategory("카테고리");
-    setColor("#EA98AE");
-    setEndDate(new Date());
+    props.method === "rewrite"
+      ? (setTitle(RewirteData.title),
+        setCategory(RewirteData?.category),
+        setColor(RewirteData?.color),
+        setEndDate(new Date()))
+      : (setTitle(""),
+        setCategory("카테고리"),
+        setColor("#EA98AE"),
+        setEndDate(new Date()));
   }, [postSuccess]);
 
   const PopupCategory = () => {
@@ -179,7 +224,7 @@ const ProejectModal = (props: any) => {
                   marginBottom: "15px",
                 }}
               >
-                프로젝트 추가
+                {props.method === "post" ? "프로젝트 추가" : "프로젝트 수정"}
               </h1>
               <div
                 style={{
@@ -192,7 +237,11 @@ const ProejectModal = (props: any) => {
               </div>
             </div>
           </div>
-          <ProjectInputboxMainbox placeholder="이름" onChange={onChangeTitle} />
+          <ProjectInputboxMainbox
+            placeholder="이름"
+            onChange={onChangeTitle}
+            value={title}
+          />
           <ProjectCateogry onClick={PopupCategory}>
             <div>{category}</div>
             <img src="/Icon/Project/Stroke.png" alt="/" />
@@ -214,10 +263,10 @@ const ProejectModal = (props: any) => {
               width="128px"
               name="종료일"
             />
-            <ColorSelect onChangeColor={setColor} />
+            <ColorSelect onChangeColor={setColor} value={color} />
           </div>
           <div
-            onClick={onSubmit}
+            onClick={props.method === "post" ? onSubmit : onRewrite}
             style={{
               width: "269px",
               height: "37px",
@@ -233,7 +282,7 @@ const ProejectModal = (props: any) => {
               alignItems: "center",
             }}
           >
-            추가하기
+            {props.method === "post" ? "추가하기" : "수정하기"}
           </div>
         </ModalView>
       </ModalBackdrop>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ProjectColorMainbox = styled("div")<{ bgcolor: string }>`
@@ -121,9 +121,9 @@ const ColorData = [
   },
 ];
 
-const ProjectColor = ({ onChangeColor }: any) => {
+const ProjectColor = ({ onChangeColor, value }: any) => {
   const [text, setText] = useState<string | undefined>("핑크");
-  const [color, setColor] = useState<string>("#EA98AE");
+
   const [Bgcolor, setBgColor] = useState<string>("rgba(234, 152, 174, 0.15)");
   const [img, setImg] = useState<string>("/Icon/Color/pink.png");
   const [istoggle, setIstoggle] = useState(false);
@@ -137,13 +137,21 @@ const ProjectColor = ({ onChangeColor }: any) => {
     const SelectedColor = ColorData.find(
       (color) => color.text == target.innerHTML
     );
-    setColor(SelectedColor?.color as string);
+
     setBgColor(SelectedColor?.backgroundColor as string);
     setText(SelectedColor?.text as string);
     setImg(SelectedColor?.img as string);
     onChangeColor(SelectedColor?.color as string);
     onToogle();
   };
+
+  useEffect(() => {
+    const Selected = ColorData.find((color) => color.color == value);
+    setBgColor(Selected?.backgroundColor as string);
+    setText(Selected?.text as string);
+    setImg(Selected?.img as string);
+    onChangeColor(Selected?.color as string);
+  }, [value]);
 
   return (
     <>
@@ -152,7 +160,7 @@ const ProjectColor = ({ onChangeColor }: any) => {
           <div>색상</div>
           <SelectedColor>
             <SelectedColorIcon src={`${img}`} alt="색상 아이콘" />
-            <SelectedColorText color={color}>{text}</SelectedColorText>
+            <SelectedColorText color={value}>{text}</SelectedColorText>
           </SelectedColor>
         </ProjectColorTextBox>
       </ProjectColorMainbox>

@@ -94,6 +94,8 @@ const ProjectMainPage: FC = () => {
                   title={e.title}
                   color={e.color}
                   id={e.id}
+                  enddate={e.end_date}
+                  category={e.category}
                 />
               );
             })
@@ -104,6 +106,8 @@ const ProjectMainPage: FC = () => {
                   title={e.title}
                   color={e.color}
                   id={e.id}
+                  enddate={e.end_date}
+                  category={e.category}
                 />
               );
             })}
@@ -114,7 +118,7 @@ const ProjectMainPage: FC = () => {
           maxwidth="791px"
         />
       </ProjectList>
-      {modal && <ProjectModal onclose={openModal} />}
+      {modal && <ProjectModal onclose={openModal} method="post" />}
     </ProjectPageMainBox>
   );
 };

@@ -96,3 +96,15 @@ export const NextPlanCalender = atom<{
     date: "",
   },
 });
+
+export const RewriteProejct = atom<any>({
+  key: `RewriteProejct${v1}`,
+  default: {
+    id: 0,
+    ttile: "",
+    content: "",
+    category: "",
+    color: "",
+    enddate: "",
+  },
+});
