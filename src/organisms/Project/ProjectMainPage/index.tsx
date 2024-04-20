@@ -40,7 +40,7 @@ const ProjectList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  & div:not(:first-child) {
+  & > div:not(:first-child) {
     margin-top: 12px;
   }
 `;

@@ -5,6 +5,7 @@ import { mutate } from "swr";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Modal, jwtToken } from "@/reocoil";
 import { ColorData } from "@/data/Color";
+import { useState } from "react";
 
 interface ProjectData {
   title: string;
@@ -44,6 +45,7 @@ const SelectPickRound = styled.p`
   height: 3px;
   background-color: black;
   border-radius: 50%;
+  margin-bottom: 0;
 `;
 
 const SelectPickBox = styled.div`
@@ -56,15 +58,47 @@ const SelectPickBox = styled.div`
   padding: 0;
   z-index: 1;
   cursor: pointer;
+  position: relative;
+
+  &:hover .modal {
+    display: flex;
+  }
+
+  &:active .modal {
+    display: flex;
+  }
+`;
+
+const SelectModal = styled.div<{ display: string }>`
+  display: ${(props) => props.display};
+  border: 1px solid rgba(12, 0, 24, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  width: 139px;
+  height: 65px;
+  position: absolute;
+  left: 50px;
+  top: -25px;
+
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 14px;
+
+  & div {
+    cursor: pointer;
+    color: #8f8f8f;
+    font-size: 13px;
+  }
+  & div:hover {
+    color: #4e4e4e;
+    transition: 0.5s ease-in-out;
+  }
 `;
 
 const Projectbox = ({ title, description, color, id }: ProjectData) => {
   const SelectedColor = ColorData.find((item) => item.color === color);
   const JwtToken = useRecoilValue(jwtToken);
-  const modal = useRecoilValue(Modal);
-  const setModal = useSetRecoilState(Modal);
-
-  console.log(modal);
+  const [modal, setModal] = useState<boolean>(false);
 
   const onDelete = () => {
     axios
@@ -88,12 +122,16 @@ const Projectbox = ({ title, description, color, id }: ProjectData) => {
         <span>{title}</span>
       </Link>
 
-      <SelectPickBox onClick={() => setModal({ toggle: !modal.toggle })}>
+      <SelectPickBox onClick={() => setModal(!modal)}>
         <SelectPickRound />
         <SelectPickRound />
         <SelectPickRound />
+
+        <SelectModal className="modal" display={modal ? "flex" : "none"}>
+          <div>프로젝트 수정</div>
+          <div onClick={() => onDelete()}>프로젝트 삭제</div>
+        </SelectModal>
       </SelectPickBox>
-      {modal.toggle && <div>팝업창</div>}
     </ProjectboxMainbox>
   );
 };
