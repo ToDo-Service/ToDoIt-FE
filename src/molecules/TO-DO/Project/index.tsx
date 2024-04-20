@@ -6,6 +6,7 @@ import fetcher from "@/utils/fetcher";
 import useSWR from "swr";
 import { ColorData } from "@/data/Color";
 import FindColor from "@/utils/findColor";
+import { media } from "@/styles/media";
 
 const ProjectContainer = styled.div<{ bgcolor: string }>`
   cursor: pointer;
@@ -24,6 +25,15 @@ const ProjectContainer = styled.div<{ bgcolor: string }>`
     color: #8f8f8f;
     font-size: 14px;
   }
+
+  ${media.phone`
+    width: 144px;   
+    & span:first-child {
+    color: #8f8f8f;
+    font-size: 10px;
+  }
+    
+  `}
 `;
 const ProjectWrapper = styled("div")<{ priorityisopen: number }>`
   display: ${(props) => (props.priorityisopen ? "block" : "none")};

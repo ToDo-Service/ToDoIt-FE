@@ -1,3 +1,4 @@
+import { media } from "@/styles/media";
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
@@ -19,6 +20,9 @@ const PriorityContainer = styled("div")<{ color: string; bgcolor: string }>`
     color: #8f8f8f;
     font-size: 14px;
     cursor: pointer;
+    ${media.phone`
+    font-size: 10px;
+    `}
   }
 
   & span:nth-child(2) {
@@ -131,7 +135,9 @@ const Priority = (props: any) => {
         }}
       >
         {props.value}
-        <img width="8.69px" height="10px" src={`${img}`} alt="불이모지" />
+        {img !== "" && (
+          <img width="8.69px" height="10px" src={`${img}`} alt="불이모지" />
+        )}
       </span>
       <PriorityWrapper priorityisopen={priorityopen ? 1 : 0}>
         <Prioritylist>

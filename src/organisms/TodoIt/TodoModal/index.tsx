@@ -13,6 +13,7 @@ import Calendar from "@/molecules/Calendar";
 import Project from "@/molecules/TO-DO/Project";
 import Priority from "@/molecules/TO-DO/Priority";
 import FindColor from "@/utils/findColor";
+import { media } from "@/styles/media";
 
 const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   z-index: 3;
@@ -29,6 +30,11 @@ const ModalBackdrop = styled.div<{ ontoggle: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
+  ${media.phone`
+      width:120%;
+      
+  `}
+
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -46,6 +52,10 @@ const ExitBtn = styled.img`
   margin-top: 34px;
   margin-left: 537px;
   cursor: pointer;
+  ${media.phone`
+    margin-left:300px;
+      
+  `}
 `;
 
 const AddTodo = styled.div`
@@ -79,6 +89,47 @@ export const ModalView = styled.div.attrs((props) => ({
   height: 406px;
   width: 598px;
   background-color: #ffffff;
+  ${media.phone`
+      width:380px;
+  `}
+`;
+
+const SubmitButton = styled.button`
+  width: 418px;
+  height: 37px;
+  background-color: #862ddf;
+  margin-top: 11px;
+  border-radius: 8px;
+  font-family: Pretendard;
+  font-weight: 200;
+  color: white;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  ${media.phone`
+    width: 300px;      
+  `}
+`;
+
+const HastTagBox = styled.div`
+  width: 418px;
+  height: 37px;
+  display: flex;
+  justify-content: space-between;
+
+  ${media.phone`
+    width: 300px;      
+  `}
+`;
+
+const FormBox = styled.div`
+  width: 418px;
+
+  ${media.phone`
+    width: 300px;      
+  `}
 `;
 
 const TodoModal = (props: any) => {
@@ -251,7 +302,7 @@ const TodoModal = (props: any) => {
               alt="/"
               onClick={() => setModal({ toggle: false })}
             />
-            <div style={{ width: "418px" }}>
+            <FormBox>
               <div style={{ textAlign: "center" }}>
                 <h1
                   style={{
@@ -303,15 +354,8 @@ const TodoModal = (props: any) => {
                   />
                 </Form.Group>
               </Form>
-            </div>
-            <div
-              style={{
-                width: "418px",
-                height: "37px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
+            </FormBox>
+            <HastTagBox>
               <Calendar
                 method={modal.method === "update" ? "update" : "post"}
                 setDate={setEndDate}
@@ -329,26 +373,12 @@ const TodoModal = (props: any) => {
                 value={project}
                 method={modal.method === "update" ? "update" : "post"}
               />
-            </div>
-            <div
+            </HastTagBox>
+            <SubmitButton
               onClick={modal.method === "update" ? onRewrite : onSubmit}
-              style={{
-                width: "418px",
-                height: "37px",
-                backgroundColor: "#862DDF",
-                marginTop: "11px",
-                borderRadius: "8px",
-                fontFamily: "Pretendard",
-                fontWeight: "200",
-                color: "white",
-                fontSize: "17px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
               {modal.method === "update" ? "수정" : "추가"}
-            </div>
+            </SubmitButton>
           </ModalView>
         </ModalBackdrop>
       )}
