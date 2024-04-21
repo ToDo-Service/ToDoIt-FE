@@ -15,6 +15,7 @@ const HeaderContainer = styled.div<{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-right: ${(props) => (props.open ? "5vw" : "0")};
 
   //모바일 사이즈
   ${media.phone`
