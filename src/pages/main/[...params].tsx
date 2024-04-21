@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Layout from "./layout";
 import { useSession } from "next-auth/react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { jwtToken, SidebarLayout } from "@/reocoil";
@@ -12,6 +11,7 @@ import ProjectDetailLayout from "@/templates/ProjectDetailLayout";
 
 //스플리팅
 
+const Layout = dynamic(() => import("./layout"));
 const StaticLayout = dynamic(() => import("@/templates/StatisticsLayout"));
 const ToDoItLayout = dynamic(() => import("@/templates/ToDoItLayout"));
 const ProjectPageLayout = dynamic(
