@@ -38,6 +38,7 @@ const MainPageNavli = styled.li`
   width: 3vw;
   color: rgba(0, 0, 0, 0.5);
   height: 100%;
+  min-width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
