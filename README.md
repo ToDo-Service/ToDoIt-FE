@@ -25,7 +25,7 @@
 <aside>
  NEXTJS
 </aside>
-
+</br>
 <aside>
 TS
 </aside>
@@ -36,22 +36,18 @@ TS
 
 <aside>
 Styled-Components
-
 </aside>
-
+</br>
 <aside>
  Next-Auth
-
 </aside>
-
+</br>
 <aside>
  SWR
-
 </aside>
-
+</br>
 <aside>
 Recoil
-
 </aside>
 </br>
 </br>
