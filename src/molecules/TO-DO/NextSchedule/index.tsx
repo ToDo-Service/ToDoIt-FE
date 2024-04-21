@@ -3,10 +3,7 @@ import styled from "styled-components";
 
 const NextSchedueBox = styled.section`
   & span {
-    margin-left: 16px;
-  }
-  & .CalendarEvent {
-    margin-left: 1vw;
+    margin-left: 2px;
   }
 `;
 

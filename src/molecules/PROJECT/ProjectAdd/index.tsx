@@ -29,9 +29,8 @@ const ProjectboxAddMainbox = styled("div")<{
   }
 
   ${media.phone`
-  width:320px;
-  min-width: 320px;
-  
+    width:320px;
+    min-width: 320px;  
   `}
 `;
 

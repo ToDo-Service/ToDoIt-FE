@@ -3,10 +3,7 @@ import styled from "styled-components";
 
 const TodaySchedueBox = styled.section`
   & span {
-    margin-left: 16px;
-  }
-  & .BookmarkCheck {
-    margin-left: 1vw;
+    margin-left: 2px;
   }
 `;
 

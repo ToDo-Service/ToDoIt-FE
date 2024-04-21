@@ -54,19 +54,19 @@ const S_Content = styled.nav<{ open: boolean | null }>`
   border-radius: 6px;
   font-family: "PretendardVariable";
   font-weight: 350;
-
   min-width: 220px;
   animation: 0.7s
     ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
     forwards;
   & ul {
     list-style: none;
+    padding-left: 2rem;
   }
   & ul li {
     display: flex;
     align-items: center;
-    width: 95%;
-    height: 4.0039vh;
+    width: 90%;
+    height: 3.0039vh;
     line-height: 5vh;
     border-radius: 6px;
     cursor: pointer;
@@ -230,7 +230,9 @@ const Sidebar: FC = () => {
           <SidebarHeader />
           <h3
             className={
-              active === "/main/today" || active === "nextplan" ? "active" : ""
+              active === "/main/today" || active === "/main/nextplan"
+                ? "active"
+                : ""
             }
           >
             TO-DO
@@ -299,7 +301,7 @@ const Sidebar: FC = () => {
                     router.asPath === `/main/project/${item.id}` ? "active" : ""
                   }
                 >
-                  <Link href={`/main/project/${item.id}`}>{item.title}</Link>
+                  <Link href={`/main/project/${item.id}`}># {item.title}</Link>
                 </ProjectListli>
               );
             })}

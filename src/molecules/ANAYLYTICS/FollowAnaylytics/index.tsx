@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const FollowAnaylyticsBox = styled.section`
   & span {
-    margin-left: 16px;
+    margin-left: 2px;
   }
 `;
 
