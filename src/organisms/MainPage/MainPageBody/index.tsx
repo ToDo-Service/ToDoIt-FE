@@ -75,7 +75,6 @@ const StyledImageMobile = styled(Image)`
   border-radius: 20px;
   max-width: 350px;
   max-height: 700px;
-
   ${media.phone`
     display: block;
   `}
@@ -105,12 +104,12 @@ const MainPageBody = () => {
         <ImageContainer>
           <StyledImagePC
             fill
-            src="/Icon/MainPage/MainPage_PC.png"
+            src="/Icon/MainPage/MainpagePC.png"
             alt="메인페이지 사진"
           />
           <StyledImageMobile
             fill
-            src="/Icon/MainPage/MainPage_Moblie.png"
+            src="/Icon/MainPage/MainPageMoblie.png"
             alt="메인페이지 사진"
           />
         </ImageContainer>

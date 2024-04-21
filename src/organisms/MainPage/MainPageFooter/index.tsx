@@ -1,3 +1,5 @@
+
+
 const MainPageFooter = () => {
   return <div>MainPageFooter</div>;
 };
