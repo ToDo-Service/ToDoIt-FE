@@ -1,7 +1,7 @@
 **Main화면**
 
 
-<img width="478" height="600" alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
+<img width="678" height="600" alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
 
 <img width="371" height="600" alt="스크린샷 2024-04-21 오후 2 07 14" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/75b10747-c80b-408f-ad42-c1d1c64b548d">
 
