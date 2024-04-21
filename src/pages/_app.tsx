@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { LoadingSpinner } from "@/atoms/LoadingSpinner";
 import { useEffect, useState } from "react";
-import Layout from "./main/layout";
 
 const WrapStyled = styled.div`
   /* position: fixed; */
@@ -47,26 +46,26 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   const router = useRouter();
-  // const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const start = () => {
-  //     setLoading(true);
-  //   };
+  useEffect(() => {
+    const start = () => {
+      setLoading(true);
+    };
 
-  //   const end = () => {
-  //     setLoading(false);
-  //   };
+    const end = () => {
+      setLoading(false);
+    };
 
-  //   router.events.on("routeChangeStart", start);
-  //   router.events.on("routeChangeComplete", end);
-  //   router.events.on("routeChangeError", end);
-  //   return () => {
-  //     router.events.on("routeChangeStart", start);
-  //     router.events.on("routeChangeComplete", end);
-  //     router.events.on("routeChangeError", end);
-  //   };
-  // }, []);
+    router.events.on("routeChangeStart", start);
+    router.events.on("routeChangeComplete", end);
+    router.events.on("routeChangeError", end);
+    return () => {
+      router.events.on("routeChangeStart", start);
+      router.events.on("routeChangeComplete", end);
+      router.events.on("routeChangeError", end);
+    };
+  }, []);
 
   return (
     <>

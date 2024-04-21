@@ -11,8 +11,7 @@ import ProjectDetailLayout from "@/templates/ProjectDetailLayout";
 
 //스플리팅
 
-// const Layout = dynamic(() => import("./layout"));
-import Layout from "./layout";
+const Layout = dynamic(() => import("./layout"));
 const StaticLayout = dynamic(() => import("@/templates/StatisticsLayout"));
 const ToDoItLayout = dynamic(() => import("@/templates/ToDoItLayout"));
 const ProjectPageLayout = dynamic(
