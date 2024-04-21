@@ -1,9 +1,15 @@
 **Main화면**
 
 
+<<<<<<< HEAD
 <img width="678"  alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
 
 <img width="375"  alt="스크린샷 2024-04-21 오후 2 07 14" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/75b10747-c80b-408f-ad42-c1d1c64b548d">
+=======
+<img width="678"  alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
+
+<img width="375"  alt="스크린샷 2024-04-21 오후 2 07 14" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/75b10747-c80b-408f-ad42-c1d1c64b548d">
+>>>>>>> 4410cd7c2198456d571e778ed93597186882512f
 
 
 </br>
