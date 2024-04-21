@@ -1,4 +1,7 @@
+import { media } from "@/styles/media";
 import styled from "styled-components";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
 
 const MainPageHeaderMainbox = styled.div`
   width: 100vw;
@@ -8,11 +11,16 @@ const MainPageHeaderMainbox = styled.div`
   align-items: center;
   padding: 0 5vw;
   margin-bottom: 5vh;
+  position: relative;
 `;
 
 const MainPageNav = styled.nav`
   display: flex;
   align-items: center;
+
+  ${media.phone`
+    display: none;
+  `}
 `;
 
 const MainPageNavUl = styled.ul`
@@ -58,7 +66,6 @@ const MainPageBodyStartButton = styled.a`
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-
   transition: 0.5s ease-in-out;
 
   &:hover {
@@ -73,7 +80,37 @@ const MainPageBodyStartButton = styled.a`
   }
 `;
 
+const IconBox = styled.div`
+  display: none;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  ${media.phone`
+    display: flex;    
+ `}
+  &:hover {
+    background-color: rgba(12, 0, 24, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  &:active {
+    background-color: rgba(12, 0, 24, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+`;
+
+const MainPageMobileul = styled.ul`
+  width: 120%;
+  height: 50vh;
+  position: absolute;
+  background-color: white;
+  opacity: 0.5;
+`;
+
 const MainPageHeader = () => {
+  const [toggle, setToggle] = useState<boolean>(false);
   return (
     <MainPageHeaderMainbox>
       <div
@@ -87,12 +124,19 @@ const MainPageHeader = () => {
         <MainPageFavionLogo src="/Icon/Todoit/TodoitLogofavion.png" />
         <MainPageLogo src="/Icon/Todoit/TodoitLogo.png" />
       </div>
+      <IconBox onClick={() => setToggle(!toggle)}>
+        <GiHamburgerMenu size={28} color="#bda5db" />
+      </IconBox>
+      {/* {toggle && (
+        <MainPageMobileul>
+          <li>기능</li>
+        </MainPageMobileul>
+      )} */}
       <MainPageNav>
         <MainPageNavUl>
           <MainPageNavli>기능</MainPageNavli>
           <MainPageNavli>|</MainPageNavli>
         </MainPageNavUl>
-        {/* <span></span> */}
         <MainPageBodyStartButton href="/auth/Login">
           <span>시작하기</span>
         </MainPageBodyStartButton>

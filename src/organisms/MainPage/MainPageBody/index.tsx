@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { media } from "@/styles/media";
 
 // f1ebf9
 const MainPageBodyBox = styled.div`
@@ -56,11 +57,28 @@ const ImageContainer = styled.div`
 `;
 
 const StyledImagePC = styled(Image)`
+  display: block;
   position: relative !important;
   height: unset !important;
   border-radius: 20px;
   max-width: 1200px;
   max-height: 700px;
+  ${media.phone`
+    display: none;
+  `}
+`;
+
+const StyledImageMobile = styled(Image)`
+  display: none;
+  position: relative !important;
+  height: unset !important;
+  border-radius: 20px;
+  max-width: 350px;
+  max-height: 700px;
+
+  ${media.phone`
+    display: block;
+  `}
 `;
 
 const MainPageBody = () => {
@@ -88,6 +106,11 @@ const MainPageBody = () => {
           <StyledImagePC
             fill
             src="/Icon/MainPage/MainPage_PC.png"
+            alt="메인페이지 사진"
+          />
+          <StyledImageMobile
+            fill
+            src="/Icon/MainPage/MainPage_Moblie.png"
             alt="메인페이지 사진"
           />
         </ImageContainer>

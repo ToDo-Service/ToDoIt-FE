@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 interface Props {
   size: string;
-  show: boolean | null;
+  show: boolean;
   onclick: () => void;
 }
 
-const BurgerIcon = ({ size, show, onclick }: Props) => {
+const BurgerIcon = ({ size, onclick }: Props) => {
   return (
     <Icon.LayoutSidebar
       size={size}
