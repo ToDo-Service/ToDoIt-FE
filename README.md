@@ -55,11 +55,7 @@ Recoil
 </br>
 </br>
 [1차 스프린트] [https://velog.io/@omnipo/Todoit1차-스프린트]
-
 [2차 스프린트] [https://velog.io/@omnipo/Todoit2차-스프린트]
-
 [3차 스프린트] [https://velog.io/@omnipo/Todoit3차-스프린트]
-
-
 
 ## https://todoit-two.vercel.app/
