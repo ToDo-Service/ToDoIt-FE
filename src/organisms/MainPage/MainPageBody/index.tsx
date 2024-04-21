@@ -54,6 +54,42 @@ const ImageContainer = styled.div`
   position: relative;
   border-radius: 12px;
   margin-top: 9vh;
+  background-color: white;
+
+  & .circle1 {
+    border-radius: 50%;
+    background-color: red;
+    width: 1.2vh;
+    height: 1.2vh;
+    margin-right: 1vh;
+  }
+  & .circle2 {
+    border-radius: 50%;
+    background-color: orange;
+    width: 1.2vh;
+    height: 1.2vh;
+    margin-right: 1vh;
+  }
+  & .circle3 {
+    border-radius: 50%;
+    background-color: green;
+    width: 1.2vh;
+    height: 1.2vh;
+  }
+  & .circle_room {
+    display: flex;
+    margin: 0;
+    justify-content: end;
+    align-items: center;
+    padding-right: 1vw;
+    height: 3vh;
+    opacity: 0.5;
+    width: 100%;
+
+    ${media.phone`
+    display: none;
+    `}
+  }
 `;
 
 const StyledImagePC = styled(Image)`
@@ -102,6 +138,11 @@ const MainPageBody = () => {
         }}
       >
         <ImageContainer>
+          <div className="circle_room">
+            <div className="circle1" />
+            <div className="circle2" />
+            <div className="circle3" />
+          </div>
           <StyledImagePC
             fill
             src="/Icon/MainPage/MainpagePC.png"
