@@ -1,8 +1,11 @@
 **Main화면**
 
-<img width="678" alt="스크린샷 2024-03-27 오후 8 42 38" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/97a1de81-eb02-4bae-a5dd-b4690b8a89eb">
 
+<img width="678" alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
 </br>
+<img width="371" alt="스크린샷 2024-04-21 오후 2 07 14" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/75b10747-c80b-408f-ad42-c1d1c64b548d">
+
+
 </br>
 </br>
 
@@ -22,7 +25,6 @@
 
 <aside>
 TS
-
 </aside>
 
 ## Library
@@ -52,9 +54,11 @@ Recoil
 </br>
 </br>
 </br>
-[1차 스프린트] https://velog.io/@omnipo/Todoit1차-스프린트
+[1차 스프린트] [https://velog.io/@omnipo/Todoit1차-스프린트]
 
-[2차 스프린트] [https://velog.io/@omnipo/Todoit2차-스프린트](https://velog.io/@omnipo/Todoit2%EC%B0%A8-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8)
+[2차 스프린트] [https://velog.io/@omnipo/Todoit2차-스프린트]
+
+[3차 스프린트] [https://velog.io/@omnipo/Todoit3차-스프린트]
 
 
 
