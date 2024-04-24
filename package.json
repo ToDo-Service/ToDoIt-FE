@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.8.9",
+    "@atlaskit/css-reset": "6.9.0",
     "@tomickigrzegorz/react-circular-progress-bar": "1.1.2",
     "@types/node": "20.11.1",
     "@types/react": "18.2.47",
