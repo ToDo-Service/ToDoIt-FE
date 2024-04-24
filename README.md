@@ -1,10 +1,10 @@
 **Main화면**
 
+<div display="flex" width="100%" justify-content="center">
+ <img width="70%" height="330"  alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
 
-<img width="678"  alt="스크린샷 2024-04-21 오후 2 05 57" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/ae373570-743e-4743-9c44-428f6e320778">
-
-<img width="375"  alt="스크린샷 2024-04-21 오후 2 07 14" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/75b10747-c80b-408f-ad42-c1d1c64b548d">
-
+<img width="200" height="330" alt="스크린샷 2024-04-21 오후 2 07 14" src="https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/75b10747-c80b-408f-ad42-c1d1c64b548d">
+</div>
 
 </br>
 </br>
@@ -22,7 +22,7 @@
 <aside>
  NEXTJS
 </aside>
-
+</br>
 <aside>
 TS
 </aside>
@@ -33,22 +33,18 @@ TS
 
 <aside>
 Styled-Components
-
 </aside>
-
+</br>
 <aside>
  Next-Auth
-
 </aside>
-
+</br>
 <aside>
  SWR
-
 </aside>
-
+</br>
 <aside>
 Recoil
-
 </aside>
 </br>
 </br>
