@@ -134,6 +134,7 @@ const PlanFlexbox = styled.div`
      flex-direction: column;     
      align-items: center;
      justify-content: center;
+     order:1;
      
   `}
 `;
@@ -174,7 +175,7 @@ const CompleteText = styled.div`
            
       width:100vw;
       justify-content: center;
-      
+      order:0;
       & span{
         font-size:10px;
         margin-bottom: 5vh;
@@ -216,9 +217,9 @@ const ProjectBox = styled.div`
           flex-direction: column; 
           align-items: center;
            width:100%;
-           justify-content: center;
-       
-     
+           justify-content: center;            
+          order:3;
+           
          `}
 `;
 
