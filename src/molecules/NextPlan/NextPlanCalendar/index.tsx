@@ -247,14 +247,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
 
-  // let params = {
-  //   solYear: "2020",
-  //   solMonth: "03",
-  //   _type: "json",
-  //   ServiceKey:
-  //     "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
-  // };
-  // const test = useHoliday(params);
   // console.log(test);
 
   const isWeekend = (date: Date) => {
@@ -408,6 +400,16 @@ const Calender = () => {
       .fill(null)
       .map(() => React.createRef<HTMLDivElement>());
   }, []);
+
+  let params = {
+    ServiceKey:
+      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
+    solYear: "2024",
+    solMonth: "05",
+  };
+  let test: any = {};
+  useHoliday(params).then((res) => console.log(res));
+  console.log(test);
 
   return (
     <ScheduleCalendar>
