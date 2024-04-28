@@ -247,8 +247,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
   const GModal = useSetRecoilState(GlobalModal);
   const CurrentSelectedDate = useSetRecoilState(NextPlanCalender);
 
-  // console.log(test);
-
   const isWeekend = (date: Date) => {
     const dayOfWeek = getDay(date);
     return (dayOfWeek === 0 && "sunday") || (dayOfWeek === 6 && "saturday");
@@ -270,8 +268,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
       const isCurrentMonth = isSameMonth(day, monthStart);
       const isCurrentDay = isSameDay(day, selectedDate);
       const isWeekendDay = isWeekend(day);
-
-      // const isHolidayDay = ixsHoliday(day);
 
       const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""} ${
         isCurrentDay ? "texttoday Date" : ""
@@ -359,6 +355,15 @@ const Calender = () => {
       color: FindColor(item.project?.color),
     };
   });
+  let params = {
+    ServiceKey:
+      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
+    solYear: cureentYear,
+    solMonth: `0${month}`,
+  };
+  let Holiday = useHoliday(params);
+  console.log(month);
+  console.log(Holiday);
 
   for (let i = 0; i < 12; i++) {
     const CurrentMonthData = MonthData?.filter((item: any) => {
@@ -385,7 +390,6 @@ const Calender = () => {
     currentMonth = addMonths(currentMonth, 1);
   }
 
-  console.log(month);
   useEffect(() => {
     setMonthScrollPosition(scrollRef.current[month - 1]?.current?.offsetLeft);
     CalendarScrollRef.current?.scrollTo({
@@ -400,16 +404,6 @@ const Calender = () => {
       .fill(null)
       .map(() => React.createRef<HTMLDivElement>());
   }, []);
-
-  let params = {
-    ServiceKey:
-      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
-    solYear: "2024",
-    solMonth: "05",
-  };
-  let test: any = {};
-  useHoliday(params).then((res) => console.log(res));
-  console.log(test);
 
   return (
     <ScheduleCalendar>

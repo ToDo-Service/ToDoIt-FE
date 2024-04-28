@@ -1,17 +1,15 @@
-import axios from "axios";
+import useSWR from "swr";
+import PublicFetcher from "@/utils/PublicFetcher";
 
-export const useHoliday = async (params: any) => {
-  const response = await axios.get(
+export const useHoliday = (params: any) => {
+  const { data, error, isLoading } = useSWR(
     "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?",
-    {
-      headers: {
-        Accept: "application/json",
-      },
-      params: params,
-    }
+    (url) => PublicFetcher(url, params)
   );
 
-  const HolidayList = response.data.response.body.items;
-
-  return HolidayList;
+  return {
+    Data: data.response.body.item,
+    Error: error,
+    isLoading: isLoading,
+  };
 };
