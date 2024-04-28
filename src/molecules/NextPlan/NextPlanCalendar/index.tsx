@@ -121,6 +121,10 @@ const CalenderBodyRow = styled.div`
     color: #ff6262;
   }
 
+  & .holiday {
+    color: #ff6262;
+  }
+
   & .saturday {
     color: #7777ff;
   }
@@ -276,10 +280,22 @@ const RenderCells = ({ currentMonth, selectedDate, Data, Holiday }: any) => {
       const isCurrentMonth = isSameMonth(day, monthStart);
       const isCurrentDay = isSameDay(day, selectedDate);
       const isWeekendDay = isWeekend(day);
+      let isHailDay: String = "";
+      Holiday.map((item: any) => {
+        const HolidayDate =
+          Number(item.Date.toString().substr(6, 8)) < 10
+            ? `${Number(item.Date.toString().substr(6, 8)) - 0 - 1}`
+            : Number(item.Date.toString().substr(6, 8));
+        HolidayDate === formattedDate.toString() &&
+          (CurrentHoliday.push(<p className="holiday">{item.HolidayTitle}</p>),
+          (isHailDay = "holiday"));
+      });
 
       const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""} ${
         isCurrentDay ? "texttoday Date" : ""
-      } ${isCurrentMonth && isWeekendDay ? isWeekendDay : isWeekendDay} `;
+      } ${
+        isCurrentMonth && isWeekendDay ? isWeekendDay : isWeekendDay
+      } ${isHailDay}`;
 
       Data?.map((item: any) => {
         `${Number(item.date[2] - 0) - 1}` === formattedDate.toString() &&
@@ -294,16 +310,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data, Holiday }: any) => {
               {item.title}
             </CalenderData>
           );
-      });
-
-      Holiday.map((item: any) => {
-        const HolidayDate =
-          Number(item.Date.toString().substr(6, 8)) < 10
-            ? `${Number(item.Date.toString().substr(6, 8)) - 0 - 1}`
-            : Number(item.Date.toString().substr(6, 8));
-
-        HolidayDate === formattedDate.toString() &&
-          CurrentHoliday.push(<p className="holiday">{item.HolidayTitle}</p>);
       });
 
       formattedDate = format(day, "d");
