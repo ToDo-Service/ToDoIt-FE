@@ -5,7 +5,7 @@ import { format, addMonths, startOfWeek, addDays, getDay } from "date-fns";
 import { endOfWeek, isSameDay, isSameMonth } from "date-fns";
 import { startOfMonth, endOfMonth } from "date-fns";
 import styled from "styled-components";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import Fetcher from "@/utils/fetcher";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { GlobalModal, jwtToken, NextPlanCalender } from "@/reocoil";
@@ -162,6 +162,13 @@ const CalenderData = styled.div<{ Bgcolor: string }>`
 `;
 
 const CalenderCell = styled.div`
+  & .holiday {
+    font-size: 13px;
+    color: #ff6262;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   & span div:not(:last-child) {
     margin-bottom: 3px;
   }
@@ -232,13 +239,14 @@ const RenderDays = () => {
   return <DateRow>{days}</DateRow>;
 };
 
-const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
+const RenderCells = ({ currentMonth, selectedDate, Data, Holiday }: any) => {
   dayjs.locale("ko");
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
   let CurrentDateData: any = [];
+  let CurrentHoliday: any = [];
   const rows: any[] = [];
   let days: any[] = [];
   let day = startDate;
@@ -288,6 +296,16 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
           );
       });
 
+      Holiday.map((item: any) => {
+        const HolidayDate =
+          Number(item.Date.toString().substr(6, 8)) < 10
+            ? `${Number(item.Date.toString().substr(6, 8)) - 0 - 1}`
+            : Number(item.Date.toString().substr(6, 8));
+
+        HolidayDate === formattedDate.toString() &&
+          CurrentHoliday.push(<p className="holiday">{item.HolidayTitle}</p>);
+      });
+
       formattedDate = format(day, "d");
 
       days.push(
@@ -306,7 +324,10 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
             <p className="Date" style={{ marginBottom: "4px" }}>
               {formattedDate}
             </p>
-
+            {isSameMonth(day, monthStart) &&
+              CurrentHoliday.map((item: any) => {
+                return item;
+              })}
             {isSameMonth(day, monthStart) &&
               CurrentDateData.map((item: any, index: number) => {
                 return index < 2 && item;
@@ -317,6 +338,7 @@ const RenderCells = ({ currentMonth, selectedDate, Data }: any) => {
       );
 
       CurrentDateData = [];
+      CurrentHoliday = [];
 
       day = addDays(day, 1);
     }
@@ -340,7 +362,13 @@ const Calender = () => {
   const monthRef = useRef<HTMLDivElement>(null);
   const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
   const [monthScrollPosition, setMonthScrollPosition] = useState<any>(0);
-
+  let params = {
+    ServiceKey:
+      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
+    solYear: cureentYear,
+    solMonth: `0${month}`,
+  };
+  const Holiday = useHoliday(params);
   const { data } = useSWR(
     jwt && `https://laoh.site/api/todos/year?year=${cureentYear}`,
     (uri: string) => Fetcher(uri, jwt),
@@ -355,15 +383,13 @@ const Calender = () => {
       color: FindColor(item.project?.color),
     };
   });
-  let params = {
-    ServiceKey:
-      "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
-    solYear: cureentYear,
-    solMonth: `0${month}`,
-  };
-  let Holiday = useHoliday(params);
-  console.log(month);
-  console.log(Holiday);
+
+  const HolidayData = Holiday.Data.map((item: any) => {
+    return {
+      HolidayTitle: item.dateName,
+      Date: item.locdate,
+    };
+  });
 
   for (let i = 0; i < 12; i++) {
     const CurrentMonthData = MonthData?.filter((item: any) => {
@@ -384,6 +410,7 @@ const Calender = () => {
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           Data={CurrentMonthData}
+          Holiday={HolidayData}
         />
       </CalenderItem>
     );
@@ -397,6 +424,9 @@ const Calender = () => {
       left: monthScrollPosition,
       behavior: "smooth",
     });
+    mutate(
+      "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?"
+    );
   }, [month, scrollRef, monthScrollPosition]);
 
   useLayoutEffect(() => {
