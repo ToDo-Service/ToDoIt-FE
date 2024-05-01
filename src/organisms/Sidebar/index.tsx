@@ -17,14 +17,17 @@ import { media } from "@/styles/media";
 
 const S_Background = styled.div<{ open: boolean | null }>`
   height: ${(props) => (props.open !== null && props.open ? "100vh" : "10vh")};
-  width: 264px;
+  width: 270px;
   display: flex;
+  border-radius: 6px;
 
   animation: 0.7s
     ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
     forwards;
+
   ${media.phone`
   width: 270px;
+
   `}
   @keyframes PopUp {
     0% {
@@ -47,6 +50,20 @@ const S_Background = styled.div<{ open: boolean | null }>`
   }
 `;
 
+const TodoContent = styled.ul`
+  list-style: none;
+  margin-top: 84px;
+  padding: 0;
+  padding-left: 9%;
+`;
+
+const AnalyticsContent = styled.ul`
+  list-style: none;
+  margin-top: 10px;
+  padding: 0;
+  padding-left: 9%;
+`;
+
 const S_Content = styled.nav<{ open: boolean | null }>`
   height: 100%;
   width: 100%;
@@ -58,15 +75,18 @@ const S_Content = styled.nav<{ open: boolean | null }>`
   animation: 0.7s
     ${(props) => (props.open !== null && props.open ? "PopUp" : "PopOut")}
     forwards;
-  & ul {
-    list-style: none;
-    padding-left: 2rem;
-  }
+  /* & ul {
+    margin: 0;
+    padding: 0;
+  } */
   & ul li {
+    margin-top: 5px;
     display: flex;
     align-items: center;
     width: 90%;
-    height: 3.0039vh;
+    /* height: 3.0039vh; */
+    padding-left: 10px;
+    height: 41px;
     line-height: 5vh;
     border-radius: 6px;
     cursor: pointer;
@@ -80,7 +100,8 @@ const S_Content = styled.nav<{ open: boolean | null }>`
   }
   & h3 {
     margin-left: 14%;
-    margin-top: 20%;
+    margin-top: 45px;
+    margin-bottom: 0;
     color: #b3b3bd;
     font-size: 18px;
     width: fit-content;
@@ -120,16 +141,12 @@ const S_Content = styled.nav<{ open: boolean | null }>`
 const ProjectListli = styled("li")<{ color: string }>`
   display: flex;
   align-items: center;
-  max-height: 11px;
-  max-width: max-content;
+  height: 41px;
+  max-height: 41px;
 
   & a {
     text-decoration: none;
     color: ${(props) => (props.color ? `${props.color}` : "black")};
-  }
-
-  &:hover {
-    max-width: max-content;
   }
 `;
 
@@ -137,15 +154,17 @@ const ProjectListUl = styled.ul`
   overflow-y: scroll;
   height: max-content;
   position: relative;
-  margin-top: 20px;
+  margin-top: 10px;
+  padding: 0;
+  padding-left: 9%;
   overflow: scroll;
 
-  & li:first-child {
+  /* & li:first-child {
     margin-top: 5px;
-  }
+  } */
 
   & li:not(:first-child) {
-    margin-top: 20px;
+    margin-top: 0;
   }
   & {
     -ms-overflow-style: none;
@@ -228,16 +247,7 @@ const Sidebar: FC = () => {
       <S_Background open={sidePop}>
         <S_Content open={sidePop}>
           <SidebarHeader />
-          <h3
-            className={
-              active === "/main/today" || active === "/main/nextplan"
-                ? "active"
-                : ""
-            }
-          >
-            TO-DO
-          </h3>
-          <ul>
+          <TodoContent>
             <Link
               href={{ pathname: `/main/today` }}
               style={{ textDecoration: "none", color: "black" }}
@@ -256,7 +266,7 @@ const Sidebar: FC = () => {
                 <NextSchedule />
               </li>
             </Link>
-          </ul>
+          </TodoContent>
 
           <h3
             className={
@@ -267,7 +277,7 @@ const Sidebar: FC = () => {
           >
             ANAYLYTICS
           </h3>
-          <ul>
+          <AnalyticsContent>
             <Link
               href={{ pathname: `/main/statistics` }}
               style={{ textDecoration: "none", color: "black" }}
@@ -281,7 +291,7 @@ const Sidebar: FC = () => {
             <li>
               <FollowAnaylytics />
             </li>
-          </ul>
+          </AnalyticsContent>
           <Link
             href={{ pathname: `/main/project` }}
             style={{ textDecoration: "none", color: "black" }}
@@ -301,7 +311,7 @@ const Sidebar: FC = () => {
                     router.asPath === `/main/project/${item.id}` ? "active" : ""
                   }
                 >
-                  <Link href={`/main/project/${item.id}`}># {item.title}</Link>
+                  <Link href={`/main/project/${item.id}`}>{item.title}</Link>
                 </ProjectListli>
               );
             })}

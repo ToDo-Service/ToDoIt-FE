@@ -20,9 +20,9 @@ const SidebarHeaderContainer = styled.div`
 const UserNickName = styled.div`
   font-family: "Pretendard-Bold";
   font-weight: 300;
-  margin-left: 10%;
-  color: black;
-  font-size: 15px;
+  margin-left: 20px;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 20px;
   font-weight: 400;
 `;
 
@@ -38,6 +38,15 @@ const LogOut = styled.div`
   
   `}
 `;
+const UserEmail = styled.p`
+  font-family: "PretendardVariable";
+  margin-bottom: 0;
+  font-weight: 300;
+  margin-left: 20px;
+  color: rgba(37, 37, 48, 0.4);
+  font-size: 12px;
+  font-weight: 400;
+`;
 
 type Props = {
   children?: React.ReactNode;
@@ -49,7 +58,10 @@ const SidebarHeader = ({ children }: Props) => {
   return (
     <SidebarHeaderContainer>
       <UserIcon Img={session?.user?.image} email={session?.user?.email} />
-      <UserNickName>{session?.user?.name}</UserNickName>
+      <div>
+        <UserNickName>{session?.user?.name}</UserNickName>
+        <UserEmail>{session?.user?.email}</UserEmail>
+      </div>
       <LogOut onClick={() => signOut({ redirect: true, callbackUrl: "/" })}>
         로그아웃
       </LogOut>
