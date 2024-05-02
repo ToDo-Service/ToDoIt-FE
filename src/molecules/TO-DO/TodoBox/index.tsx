@@ -173,8 +173,8 @@ const TodoBox = ({ Data, category }: any) => {
       })
       .then((res) => {
         res.data.body === "complete"
-          ? useToast(`${Data.title} 완료 하셨군요`, true)
-          : useToast(`${Data.title} 취소 하였습니다.`, true);
+          ? useToast(`${Data.title} 완료!`, true)
+          : useToast(`${Data.title} 아직 진행 중이시군요!`, true);
         mutate("https://laoh.site/api/todos/today");
       })
       .catch((err) => {
@@ -220,7 +220,7 @@ const TodoBox = ({ Data, category }: any) => {
       })
       .then(() => {
         mutate("https://laoh.site/api/todos/today");
-        useToast(`${Data.title} 삭제 하겠습니다`, true);
+        useToast(`${Data.title} 삭제했습니다`, true);
       })
       .catch((err) => useToast("실패", false));
   };

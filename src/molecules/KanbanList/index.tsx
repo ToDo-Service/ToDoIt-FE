@@ -48,8 +48,8 @@ const TodoHeader = styled("div")<{ interval: string }>`
   & p {
     display: flex;
     align-items: center;
-    font-family: "Pretendard";
-    font-weight: bold;
+    font-family: "Pretendard-Bold";
+    font-weight: 300;
   }
 `;
 

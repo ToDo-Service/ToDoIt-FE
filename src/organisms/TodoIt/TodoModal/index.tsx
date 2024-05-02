@@ -162,7 +162,7 @@ const TodoModal = (props: any) => {
         return;
       }
       if (detail === "") {
-        alert("내욜을 입력하세요");
+        alert("내용을 입력하세요");
         e.preventDefault();
         return;
       }
@@ -290,7 +290,7 @@ const TodoModal = (props: any) => {
         <AddTodo
           onClick={() => setModal({ id: 0, method: "post", toggle: true })}
         >
-          <span>+ 할 일을 추가해주세요</span>
+          <span>+ 할 일을 추가하세요</span>
         </AddTodo>
       )}
       {modal.toggle && (
@@ -321,7 +321,7 @@ const TodoModal = (props: any) => {
                 >
                   {modal.method === "update"
                     ? "일정을 수정하세요!"
-                    : "새로 할 일을 추가해주세요!"}
+                    : "이번엔 어떤 것을 해볼까요?"}
                 </div>
               </div>
               <Form>

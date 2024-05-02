@@ -7,14 +7,14 @@ export const useToast = (message: string, isSucess: boolean) => {
     showCancelButton: false,
     showConfirmButton: false,
     background: "#ffffff",
-
+    color: "#862DDF",
     timer: 1000,
     timerProgressBar: false,
     didOpen: (toast) => {
       toast.addEventListener("mouseenter", Swal.stopTimer);
       toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
-    width: "320px",
+    width: "max-content",
   });
 
   if (isSucess) {
