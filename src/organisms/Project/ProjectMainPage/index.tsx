@@ -31,7 +31,7 @@ const ProjectPageMainBox = styled.div`
 `;
 const ProjectList = styled.div`
   overflow-y: scroll;
-  margin-top: 24px;
+  /* margin-top: 24px; */
   border-radius: 12px;
   & {
     -ms-overflow-style: none;
@@ -58,6 +58,7 @@ const ProjectUserName = styled.span`
   font-size: 20px;
   margin-top: 69px;
   margin-right: 34vw;
+  margin-bottom: 24px;
 
   ${media.phone`
   margin-right: 45vw;

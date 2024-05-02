@@ -7,8 +7,6 @@ export const useHoliday = (params: any) => {
     (url) => PublicFetcher(url, params)
   );
 
-  console.log(data.response.body);
-
   const HolidayList =
     data.response.body.totalCount === 1
       ? [data.response.body.items.item]

@@ -118,8 +118,8 @@ const NextPlanTodobox: FC<TodoProps> = (props) => {
       })
       .then((res) => {
         res.data.body === "complete"
-          ? useToast(`${props.item.title} 완료 하셨군요`, true)
-          : useToast(`${props.item.title} 취소 하였습니다.`, true);
+          ? useToast(`${props.item.title} 완료!`, true)
+          : useToast(`${props.item.title} 아직 진행 중이시군요!`, true);
         mutate("https://laoh.site/api/todos/today");
       })
       .catch((err) => {

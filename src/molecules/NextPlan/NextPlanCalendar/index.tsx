@@ -368,13 +368,22 @@ const Calender = () => {
   const monthRef = useRef<HTMLDivElement>(null);
   const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
   const [monthScrollPosition, setMonthScrollPosition] = useState<any>(0);
+  let Holiday = { Data: [], Error: "", isLoading: false };
   let params = {
     ServiceKey:
       "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
     solYear: cureentYear,
     solMonth: `0${month}`,
   };
-  const Holiday = useHoliday(params);
+  useEffect(() => {
+    params = {
+      ServiceKey:
+        "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
+      solYear: cureentYear,
+      solMonth: `0${month}`,
+    };
+  }, [month, cureentYear]);
+  Holiday = useHoliday(params);
   const { data } = useSWR(
     jwt && `https://laoh.site/api/todos/year?year=${cureentYear}`,
     (uri: string) => Fetcher(uri, jwt),
