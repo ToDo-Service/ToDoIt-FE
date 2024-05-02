@@ -17,6 +17,7 @@ const MainPageBodyBox = styled.div`
 
 const MainPageBodyMainText = styled.h1`
   font-family: "Pretendard-Bold";
+
   font-weight: 280;
   color: white;
   font-size: 40px;
