@@ -10,150 +10,123 @@ const MainPageBodyBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(white, #e1d0f6);
+  justify-content: center;
+  /* background-image: linear-gradient(white, #e1d0f6); */
+  background-color: #721cbb;
 `;
 
 const MainPageBodyMainText = styled.h1`
   font-family: "Pretendard-Bold";
-  font-weight: 300;
+  font-weight: 280;
+  color: white;
+  font-size: 40px;
+  margin-bottom: 0;
+
+  ${media.phone`
+  font-size: 20px;
+  text-align: center;
+  `}
 `;
 
 const MainPageBodydetailText = styled.p`
   font-family: "PretendardVariable";
-  font-weight: 350;
+  font-weight: 300;
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
-  margin-top: 3vh;
+  margin-top: 7.0313vh;
+  color: white;
+  font-size: 20px;
+  margin-bottom: 0;
+  ${media.phone`
+  font-size: 15px;
+  
+  `}
 `;
 
 const MainPageBodyStartButton = styled.a`
   text-decoration: none;
-  width: 108px;
-  height: 38px;
-  background-color: #9550ea;
+  width: 133px;
+  height: 41px;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  margin-top: 20px;
+  margin-top: 3.0273vh;
   transition: 0.5s ease-in-out;
 
   &:hover {
-    background-color: #6c39a9;
+    background-color: #711cbb9c;
+    color: white;
   }
 
   & span {
     font-family: "PretendardVariable";
     font-weight: 350;
-    color: white;
+    color: black;
     font-size: 20px;
   }
 `;
 
-const ImageContainer = styled.div`
-  position: relative;
-  border-radius: 12px;
-  margin-top: 9vh;
-  background-color: white;
+const TodoItLogo = styled.img`
+  width: 32.6389vw;
+  max-width: 470px;
+  max-height: 108px;
+  min-width: 470px;
+  min-height: 108px;
+  height: 10.5469vh;
 
-  & .circle1 {
-    border-radius: 50%;
-    background-color: red;
-    width: 1.2vh;
-    height: 1.2vh;
-    margin-right: 1vh;
-  }
-  & .circle2 {
-    border-radius: 50%;
-    background-color: orange;
-    width: 1.2vh;
-    height: 1.2vh;
-    margin-right: 1vh;
-  }
-  & .circle3 {
-    border-radius: 50%;
-    background-color: green;
-    width: 1.2vh;
-    height: 1.2vh;
-  }
-  & .circle_room {
-    display: flex;
-    margin: 0;
-    justify-content: end;
-    align-items: center;
-    padding-right: 1vw;
-    height: 3vh;
-    opacity: 0.5;
-    width: 100%;
-
-    ${media.phone`
-    display: none;
-    `}
-  }
-`;
-
-const StyledImagePC = styled(Image)`
-  display: block;
-  position: relative !important;
-  height: unset !important;
-  border-radius: 20px;
-  max-width: 1200px;
-  max-height: 700px;
   ${media.phone`
-    display: none;
-  `}
-`;
-
-const StyledImageMobile = styled(Image)`
-  display: none;
-  position: relative !important;
-  height: unset !important;
-  border-radius: 20px;
-  max-width: 350px;
-  max-height: 700px;
-  ${media.phone`
-    display: block;
+  padding: 0 20px;
   `}
 `;
 
 const MainPageBody = () => {
   return (
     <MainPageBodyBox>
-      <MainPageBodyMainText>생활을 기록하고 경쟁해보세요.</MainPageBodyMainText>
-      <MainPageBodydetailText>
-        TodoIt와 함께 친구들과 함께 <br />
-        하루를 기록할 수 있는 앱 입니다.
-      </MainPageBodydetailText>
-      <MainPageBodyStartButton href="/auth/Login">
-        <span>시작하기</span>
-      </MainPageBodyStartButton>
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false }}
         transition={{
-          ease: "easeInOut",
-          duration: 2,
+          ease: "easeIn",
+          duration: 1,
           y: { duration: 1 },
         }}
       >
-        <ImageContainer>
-          <div className="circle_room">
-            <div className="circle1" />
-            <div className="circle2" />
-            <div className="circle3" />
-          </div>
-          <StyledImagePC
-            fill
-            src="/Icon/MainPage/MainpagePC.png"
-            alt="메인페이지 사진"
-          />
-          <StyledImageMobile
-            fill
-            src="/Icon/MainPage/MainPageMoblie.png"
-            alt="메인페이지 사진"
-          />
-        </ImageContainer>
+        <TodoItLogo src="/Icon/TodoItMainLogo.png" alt="메인 로고" />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        transition={{
+          ease: "easeIn",
+          duration: 1,
+          y: { duration: 1 },
+        }}
+      >
+        <MainPageBodyMainText>
+          계획을 기록하고 완성해 보세요.
+        </MainPageBodyMainText>
+        <MainPageBodydetailText>
+          '할 일'을 '한 일'로 완성하기 위한 일정 관리 서비스,
+          <br /> 투두잇과 함께라면 당신의 계획이 의미 있게 될 거예요.
+        </MainPageBodydetailText>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        transition={{
+          ease: "easeIn",
+          duration: 1,
+          y: { duration: 1 },
+        }}
+      >
+        <MainPageBodyStartButton href="/auth/Login">
+          <span>시작하기</span>
+        </MainPageBodyStartButton>
       </motion.div>
     </MainPageBodyBox>
   );

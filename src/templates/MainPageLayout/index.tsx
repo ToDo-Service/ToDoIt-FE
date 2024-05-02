@@ -10,7 +10,7 @@ const MainPageLayout = () => {
 
   return (
     <>
-      <MainPageHeader />
+      {/* <MainPageHeader /> */}
       <MainPageBody />
       {/* <MainPageFooter /> */}
     </>
