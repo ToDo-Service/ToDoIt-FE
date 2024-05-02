@@ -52,7 +52,7 @@ const HeaderContainer = styled.div<{
 `;
 
 const HeaderTest = styled.p`
-  font-family: "Pretendard-Bold";
+  font-family: "Pretendard";
   font-weight: 300;
   font-size: 24px;
   margin-top: 7px;

@@ -23,7 +23,6 @@ const UserNickName = styled.div`
   margin-left: 20px;
   color: rgba(0, 0, 0, 0.8);
   font-size: 20px;
-  font-weight: 400;
 `;
 
 const LogOut = styled.div`

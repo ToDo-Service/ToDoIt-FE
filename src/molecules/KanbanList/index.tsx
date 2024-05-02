@@ -34,7 +34,6 @@ const TodoHeader = styled("div")<{ interval: string }>`
   height: max-content;
   opacity: 1;
   font-family: "Pretendard";
-  font-weight: bold;
   margin-bottom: 19px;
   display: flex;
   font-size: 20px;
@@ -48,8 +47,8 @@ const TodoHeader = styled("div")<{ interval: string }>`
   & p {
     display: flex;
     align-items: center;
-    font-family: "Pretendard-Bold";
-    font-weight: 300;
+    font-family: "Pretendard";
+    font-weight: 500;
   }
 `;
 
