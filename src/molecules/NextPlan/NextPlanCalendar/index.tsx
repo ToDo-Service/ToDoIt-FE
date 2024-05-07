@@ -286,10 +286,11 @@ const RenderCells = ({ currentMonth, selectedDate, Data, Holiday }: any) => {
           Number(item.Date.toString().substr(6, 8)) < 10
             ? `${Number(item.Date.toString().substr(6, 8)) - 0 - 1}`
             : Number(item.Date.toString().substr(6, 8));
-        HolidayDate === formattedDate.toString() &&
+        `${HolidayDate}` === formattedDate.toString() &&
           (CurrentHoliday.push(<p className="holiday">{item.HolidayTitle}</p>),
           (isHailDay = "holiday"));
       });
+      console.log(Holiday);
 
       const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""} ${
         isCurrentDay ? "texttoday Date" : ""
@@ -384,6 +385,7 @@ const Calender = () => {
     };
   }, [month, cureentYear]);
   Holiday = useHoliday(params);
+
   const { data } = useSWR(
     jwt && `https://laoh.site/api/todos/year?year=${cureentYear}`,
     (uri: string) => Fetcher(uri, jwt),

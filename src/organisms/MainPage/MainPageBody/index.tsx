@@ -54,14 +54,19 @@ const MainPageBodyStartButton = styled.a`
   align-items: center;
   border-radius: 8px;
   margin-top: 3.0273vh;
+
   transition: 0.5s ease-in-out;
 
   &:hover {
     background-color: #711cbb9c;
+  }
+
+  & span:hover {
     color: white;
   }
 
   & span {
+    transition: 0.5s ease-in-out;
     font-family: "PretendardVariable";
     font-weight: 350;
     color: black;
