@@ -104,6 +104,7 @@ const CalenderBodyRow = styled.div`
   width: 100%;
   max-width: 940px;
   height: 12.8906vh;
+  transition: 0.5s ease-in-out;
 
   & hr {
     margin-bottom: 50px;
@@ -290,7 +291,6 @@ const RenderCells = ({ currentMonth, selectedDate, Data, Holiday }: any) => {
           (CurrentHoliday.push(<p className="holiday">{item.HolidayTitle}</p>),
           (isHailDay = "holiday"));
       });
-      console.log(Holiday);
 
       const cellClassName = `col cell ${!isCurrentMonth ? "disabled" : ""} ${
         isCurrentDay ? "texttoday Date" : ""
@@ -370,19 +370,19 @@ const Calender = () => {
   const CalendarScrollRef = useRef<HTMLDivElement | null>(null);
   const [monthScrollPosition, setMonthScrollPosition] = useState<any>(0);
   let Holiday = { Data: [], Error: "", isLoading: false };
-  let params = {
+  let [params, setParmas] = useState<object>({
     ServiceKey:
       "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
     solYear: cureentYear,
     solMonth: `0${month}`,
-  };
+  });
   useEffect(() => {
-    params = {
+    setParmas({
       ServiceKey:
         "kZK9+ViVCIYkl9fywmHaud4eZaQngWRTlUSD4w+i8+bdquuwVkiR+xkj9+uFqQlwkIaZaDV9+hq+gJ27SapRjA==",
       solYear: cureentYear,
       solMonth: `0${month}`,
-    };
+    });
   }, [month, cureentYear]);
   Holiday = useHoliday(params);
 
