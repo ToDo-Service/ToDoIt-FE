@@ -129,6 +129,7 @@ const ProjectProgressHeader = styled.h3`
   font-weight: 280;
   margin-bottom: 33px;
 `;
+const ProjectDetailProgressBox = styled.div``;
 
 interface ProjectDetailProps {
   ProjectId: string;
@@ -147,16 +148,42 @@ const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
     { id: 3, name: "승찬", img: "/Icon/Modal/ModalExit.pg" },
   ]);
 
+  const [allList, setallList] = useState([
+    {
+      planedList: [
+        { id: 1, name: "일1", img: "/Icon/Modal/ModalExit.pg" },
+        { id: 2, name: "일2", img: "/Icon/Modal/ModalExit.pg" },
+        { id: 3, name: "일3", img: "/Icon/Modal/ModalExit.pg" },
+      ],
+    },
+    {
+      progressList: [
+        { id: 4, name: "일4", img: "/Icon/Modal/ModalExit.pg" },
+        { id: 5, name: "일5", img: "/Icon/Modal/ModalExit.pg" },
+        { id: 6, name: "일6", img: "/Icon/Modal/ModalExit.pg" },
+      ],
+    },
+    {
+      completeList: [
+        { id: 7, name: "일7", img: "/Icon/Modal/ModalExit.pg" },
+        { id: 8, name: "일8", img: "/Icon/Modal/ModalExit.pg" },
+        { id: 9, name: "일9", img: "/Icon/Modal/ModalExit.pg" },
+      ],
+    },
+  ]);
+
   const HeaderText: string = data?.body.project_info.title;
 
   const setModal = useSetRecoilState(Modal);
 
   const handleChange = (result: any) => {
     if (!result.destination) return;
-    const items = [...UserList];
+    console.log(result.source);
+    console.log(allList[1]);
+    const items = [...allList];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    setUserList(items);
+    setallList(items);
   };
 
   const openAddModal = () => {
@@ -176,106 +203,57 @@ const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
           );
         })}
       </ProjectDetailBelongPersonList>
+
       <DragDropContext onDragEnd={handleChange}>
-        <Droppable droppableId="projectlists">
-          {(provided) => (
-            <ProjectProgressList>
-              <div
-                className="projectlists"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                <ProjectProgressHeader>예정 업무</ProjectProgressHeader>
-                <ProejctDetailProgressLayout>
-                  {UserList.map((e: any, i: number) => {
-                    return (
-                      <Draggable
-                        draggableId={`test-${e.id}`}
-                        index={i}
-                        key={`test-${e.id}`}
-                      >
-                        {(provided, snapshot) => {
-                          return (
-                            <div
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              className="proejctitem"
-                            >
-                              {e.name}
-                            </div>
-                          );
-                        }}
-                      </Draggable>
-                    );
-                  })}
-                </ProejctDetailProgressLayout>
-              </div>
-              <div
-                className="projectlists"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                <ProjectProgressHeader>진행 업무</ProjectProgressHeader>
-                <ProejctDetailProgressLayout>
-                  {UserList.map((e: any, i: number) => {
-                    return (
-                      <Draggable
-                        draggableId={`test-${e.id}`}
-                        index={i}
-                        key={`test-${e.id}`}
-                      >
-                        {(provided, snapshot) => {
-                          return (
-                            <div
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              className="proejctitem"
-                            >
-                              {e.name}
-                            </div>
-                          );
-                        }}
-                      </Draggable>
-                    );
-                  })}
-                </ProejctDetailProgressLayout>
-              </div>
-              <div
-                className="projectlists"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                <ProjectProgressHeader>완료 업무</ProjectProgressHeader>
-                <ProejctDetailProgressLayout>
-                  {UserList.map((e: any, i: number) => {
-                    return (
-                      <Draggable
-                        draggableId={`test-${e.id}`}
-                        index={i}
-                        key={`test-${e.id}`}
-                      >
-                        {(provided, snapshot) => {
-                          return (
-                            <div
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              className="proejctitem"
-                            >
-                              {e.name}
-                            </div>
-                          );
-                        }}
-                      </Draggable>
-                    );
-                  })}
-                </ProejctDetailProgressLayout>
-              </div>
-            </ProjectProgressList>
-          )}
-        </Droppable>
+        {
+          <ProjectProgressList>
+            {allList.map((e: any, i: number) => {
+              return Object.values(e).map((item: any, index: number) => {
+                return (
+                  <ProjectDetailProgressBox>
+                    <ProjectProgressHeader>
+                      {Object.keys(e)[0]}
+                    </ProjectProgressHeader>
+                    <Droppable droppableId={Object.keys(e)[0]}>
+                      {(provided: any) => (
+                        <ProejctDetailProgressLayout>
+                          <div
+                            className="planlists"
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                          >
+                            {provided.placeholder}
+                            {
+                              // item.map((list: any, li: number) => {
+                              <Draggable
+                                draggableId={`test-${i}`}
+                                index={i}
+                                key={`test-${i}`}
+                              >
+                                {(provided, snapshot) => {
+                                  return (
+                                    <div
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
+                                      className="planlistsitem"
+                                    >
+                                      {`테스트${i}`}
+                                    </div>
+                                  );
+                                }}
+                              </Draggable>
+                            }
+                          </div>
+                        </ProejctDetailProgressLayout>
+                      )}
+                    </Droppable>
+                  </ProjectDetailProgressBox>
+                );
+              });
+            })}
+          </ProjectProgressList>
+        }
       </DragDropContext>
     </ProjectDetailMainPageBox>
   );
