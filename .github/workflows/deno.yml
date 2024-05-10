@@ -1,47 +1,14 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+name: Automatically Deployment
 
-# This workflow will install Deno then run `deno lint` and `deno test`.
-# For more information see: https://github.com/denoland/setup-deno
-
-
-#Action 탭에 나타날 Workflow 이름으로 필수 옵션은 아니다.
-name: CI
-
-
-#Workflow를 실행시키기 위한 Event 목록입니다.
-on:
-#하단 코드에 따라 develop 브랜치에 Push 또는 PR 이벤트가 발생한 경우에 Workflow가 실행
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
-  test:
+  deployment:
     runs-on: ubuntu-latest
 
+    # 해당 Job의 이름을 아래와 같이 설정하여 Actions 탭에서 확인할 수 있게 설정합니다.
+    name: Deploying to surge
+
     steps:
-      - name: Setup repo
-        uses: actions/checkout@v4
-
-      - name: Setup Deno
-        # uses: denoland/setup-deno@v1
-        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
-        with:
-          deno-version: v1.x
-
-      # Uncomment this step to verify the use of 'deno fmt' on each commit.
-      # - name: Verify formatting
-      #   run: deno fmt --check
-
-      - name: Run linter
-        run: deno lint
-
-      - name: Run tests
-        run: deno test -A
+      # 해당 레포지토리로 check-out하는 Action을 불러왔습니다.
+      - uses: actions/checkout@v2
