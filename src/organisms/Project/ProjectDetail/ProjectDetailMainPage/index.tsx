@@ -10,6 +10,7 @@ import { FC, useState } from "react";
 import { ProejectTodoAdd } from "@/organisms/Project/ProjectDetail/ProjectTodoAddModal";
 import { media } from "@/styles/media";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import ProjectDetailBox from "@/molecules/ProjectDetail/ProjectDetailBox";
 
 interface TodoItem {
   content: string;
@@ -110,7 +111,10 @@ const ProejctDetailProgressLayout = styled.div`
   max-height: 550px;
   width: 22.9167vw;
   height: 53.7109vh;
-  background-color: rgba(12, 0, 24, 0.04);
+
+  & div:last-child {
+    margin-top: 14px;
+  }
 `;
 
 const ProjectProgressList = styled.div`
@@ -119,7 +123,6 @@ const ProjectProgressList = styled.div`
   width: 100%;
   max-width: 1072px;
   justify-content: space-between;
-  /* padding-right: 3vw; */
 `;
 
 const ProjectProgressHeader = styled.h3`
@@ -150,21 +153,21 @@ const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
 
   const [allList, setallList] = useState([
     {
-      planedList: [
+      "예정 업무": [
         { id: 1, name: "일1", img: "/Icon/Modal/ModalExit.pg" },
         { id: 2, name: "일2", img: "/Icon/Modal/ModalExit.pg" },
         { id: 3, name: "일3", img: "/Icon/Modal/ModalExit.pg" },
       ],
     },
     {
-      progressList: [
+      "진행 업무": [
         { id: 4, name: "일4", img: "/Icon/Modal/ModalExit.pg" },
         { id: 5, name: "일5", img: "/Icon/Modal/ModalExit.pg" },
         { id: 6, name: "일6", img: "/Icon/Modal/ModalExit.pg" },
       ],
     },
     {
-      completeList: [
+      "완료 업무": [
         { id: 7, name: "일7", img: "/Icon/Modal/ModalExit.pg" },
         { id: 8, name: "일8", img: "/Icon/Modal/ModalExit.pg" },
         { id: 9, name: "일9", img: "/Icon/Modal/ModalExit.pg" },
@@ -238,12 +241,19 @@ const ProjectDeatailMainPage: FC<ProjectDetailProps> = (props) => {
                                       ref={provided.innerRef}
                                       className="planlistsitem"
                                     >
-                                      {`테스트${i}`}
+                                      <ProjectDetailBox title="" detail="" />
                                     </div>
                                   );
                                 }}
                               </Draggable>
                             }
+                            {Object.keys(e)[0] !== "완료 업무" && (
+                              <ProjectAdd
+                                width="22.7778vw"
+                                comment="+ 업무를 추가하세요"
+                                maxwidth="328px"
+                              />
+                            )}
                           </div>
                         </ProejctDetailProgressLayout>
                       )}
