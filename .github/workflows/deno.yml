@@ -1,0 +1,14 @@
+name: Automatically Deployment
+
+on: [push]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    # 해당 Job의 이름을 아래와 같이 설정하여 Actions 탭에서 확인할 수 있게 설정합니다.
+    name: Deploying to surge
+
+    steps:
+      # 해당 레포지토리로 check-out하는 Action을 불러왔습니다.
+      - uses: actions/checkout@v2
