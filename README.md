@@ -1,5 +1,3 @@
-**Main화면**
-
 <div display="flex" width="100%" justify-content="center">
  
 ![스크린샷 2024-05-03 오후 12 32 03](https://github.com/ToDo-Service/ToDoIt-FE/assets/94547692/cac5b7d2-7fa9-4bc0-986a-2937900156e7)
